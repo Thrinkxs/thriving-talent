@@ -4,7 +4,7 @@
 
 import { Handshake } from "lucide-react";
 import { Home } from "lucide-react";
-import { Calendar } from "lucide-react";
+import { Briefcase } from "lucide-react";
 
 
 
@@ -15,7 +15,7 @@ export const NavList = [
     path: "/dashboard",
   },
   {
-    icons: <Calendar size={20} color="white"  />,
+    icons: <Briefcase size={20} color="white"  />,
     title: "Jobs",
     path: "/jobs",
   },
