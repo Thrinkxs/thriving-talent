@@ -12,7 +12,7 @@ import cookieParser from "cookie-parser";
 
 // import { KeepRenderAwake } from "../src/utils/KeepRenderAwake";
 
-dotenv.config();
+// dotenv.config();
 
 const app = express();
 

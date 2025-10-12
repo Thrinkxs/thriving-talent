@@ -7,7 +7,7 @@ const MONGODB_USERNAME: string = process.env.MONGO_USERNAME || "";
 const MONGODB_PASSWORD: string = process.env.MONGO_PASSWORD || "";
 
 
-let MONGODB_URL= process.env.NODE_ENV === "development" ? `mongodb+srv://${MONGODB_USERNAME}:${MONGODB_PASSWORD}@thriving-talent.ortyr76.mongodb.net/development`:`mongodb+srv://${MONGODB_USERNAME}:${MONGODB_PASSWORD}@thriving-talent.ortyr76.mongodb.net/production`;
+let MONGODB_URL= process.env.NODE_ENV === "development" ? `mongodb+srv://${MONGODB_USERNAME}:${MONGODB_PASSWORD}@thriving.nlvjz3y.mongodb.net/development`:`mongodb+srv://${MONGODB_USERNAME}:${MONGODB_PASSWORD}@thriving.nlvjz3y.mongodb.net/production`;
 
 
 const SERVER_PORT = process.env.SERVER_PORT
