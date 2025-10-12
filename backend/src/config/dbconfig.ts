@@ -7,10 +7,8 @@ const MONGODB_USERNAME: string = process.env.MONGO_USERNAME || "";
 const MONGODB_PASSWORD: string = process.env.MONGO_PASSWORD || "";
 
 
-let MONGODB_URL= process.env.NODE_ENV === "development" ? `mongodb+srv://${MONGODB_USERNAME}:${MONGODB_PASSWORD}@muzestudio.1dlt1hv.mongodb.net/test`:`mongodb+srv://${MONGODB_USERNAME}:${MONGODB_PASSWORD}@muzestudio.1dlt1hv.mongodb.net/Swiftbooked`;
-// if( process.env.NODE_ENV === "production" ){
-//   MONGODB_URL= `mongodb+srv://${MONGODB_USERNAME}:${MONGODB_PASSWORD}@muzestudio.1dlt1hv.mongodb.net/Swiftbooked`;
-// }
+let MONGODB_URL= process.env.NODE_ENV === "development" ? `mongodb+srv://${MONGODB_USERNAME}:${MONGODB_PASSWORD}@thriving-talent.ortyr76.mongodb.net/development`:`mongodb+srv://${MONGODB_USERNAME}:${MONGODB_PASSWORD}@thriving-talent.ortyr76.mongodb.net/production`;
+
 
 const SERVER_PORT = process.env.SERVER_PORT
   ? Number(process.env.SERVER_PORT)
