@@ -1,0 +1,27 @@
+import bcrypt from "bcryptjs";
+
+export class Hasher {
+  public async hashPassword(password: string): Promise<string> {
+    const salt = await bcrypt.genSalt(10);
+    return await bcrypt.hash(password, salt);
+  }
+
+  public async verifyPassword(
+    password: string,
+    hash: string
+  ): Promise<Boolean> {
+    return await bcrypt.compare(password, hash);
+  }
+
+  public async hashTransactionPIN(pin: string): Promise<string> {
+    const saltRounds = 11;
+    return await bcrypt.hash(pin, saltRounds);
+  }
+
+  public async verifyTransactionPIN(
+    pin: string,
+    hash: string
+  ): Promise<Boolean> {
+    return await bcrypt.compare(pin, hash);
+  }
+}
