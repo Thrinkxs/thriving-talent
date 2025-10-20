@@ -10,6 +10,8 @@ import { Request, Response } from "express";
 import cookieParser from "cookie-parser";
 import AppError from "./utils/AppError";
 
+import clientRoute from "./api/routes/client/index.route";
+
 // import { KeepRenderAwake } from "../src/utils/KeepRenderAwake";
 
 // dotenv.config();
@@ -58,7 +60,7 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Express server is running on Azure Cloud");
 });
 
-// app.use("/api/client", clientRoute);
+app.use("/api/client", clientRoute);
 // app.use("/api/admin", adminRoute);
 
 app.use("/api/*", (req: Request, res: Response, next: NextFunction) => {

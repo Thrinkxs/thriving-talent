@@ -24,6 +24,20 @@ export const registerAccountController = async (
   const payload = req.body;
   try {
     const response = await authenticationService.registerAccount(payload);
+    const { accessToken, refreshToken } = response;
+
+    res.cookie("access-token", accessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 15 * 60 * 1000, // 15 minutes
+    });
+    res.cookie("refresh-token", refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+    });
 
     return res
       .status(201)
@@ -41,6 +55,21 @@ export const loginAccountController = async (
   const payload = req.body;
   try {
     const response = await authenticationService.loginAccount(payload);
+    const { accessToken, refreshToken } = response;
+
+    res.cookie("access-token", accessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 15 * 60 * 1000, // 15 minutes
+    });
+    res.cookie("refresh-token", refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+    });
+
     return res.status(200).json({
       message: "Login successful",
       data: response,

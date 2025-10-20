@@ -24,7 +24,7 @@ export class AuthenticationService {
     this.hasher = hasher;
   }
 
-  public async registerAccount(payload: any): Promise<IEmployer> {
+  public async registerAccount(payload: any) {
     payload.email = payload.email.toLowerCase();
     const { email, password } = payload;
     const accountExistence = await this.checkAccountExistence(email);
@@ -37,7 +37,11 @@ export class AuthenticationService {
     const employer = await Employer.create(payload);
 
     await this.sendVerificationEmail({ email: employer.email });
-    return employer;
+    const { accessToken, refreshToken } = await this.getAuthorizationToken(
+      employer.id
+    );
+    
+    return { employer, accessToken, refreshToken };
   }
 
   public async loginAccount(payload: any) {
