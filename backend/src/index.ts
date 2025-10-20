@@ -1,4 +1,4 @@
-import express, { json, urlencoded } from "express";
+import express, { json, NextFunction, urlencoded } from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
@@ -8,7 +8,7 @@ import { dbconfig } from "../src/config/dbconfig";
 import { Request, Response } from "express";
 
 import cookieParser from "cookie-parser";
-
+import AppError from "./utils/AppError";
 
 // import { KeepRenderAwake } from "../src/utils/KeepRenderAwake";
 
@@ -58,8 +58,25 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Express server is running on Azure Cloud");
 });
 
-// app.use("/api/auth", authenticationRoute);
-// app.use("/api/user", userRoute);
+// app.use("/api/client", clientRoute);
+// app.use("/api/admin", adminRoute);
+
+app.use("/api/*", (req: Request, res: Response, next: NextFunction) => {
+  throw new AppError(404, "Page not found");
+});
+
+app.use((error: any, req: Request, res: Response, next: NextFunction) => {
+  if (error instanceof AppError) {
+    res.status(error.statusCode).json({
+      message: error.message,
+    });
+  } else {
+    res.status(500).json({
+      meesage: "Internal Server Error",
+      details: error.message,
+    });
+  }
+});
 
 //Server
 app.listen(port, () => {
