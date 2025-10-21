@@ -9,8 +9,8 @@ import { useRouter } from "next/router";
 import { userRoleEnum } from "@/layout/utils/enum";
 
 export default function LoginPageOverview() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("thrivingtalent@gmail.com");
+  const [password, setPassword] = useState("123456");
   const [showPassword, setShowPassword] = useState(false);
 
   const { login } = useAuth();
