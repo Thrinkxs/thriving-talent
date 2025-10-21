@@ -1,61 +1,85 @@
-"use client"
+"use client";
 
-import type React from "react"
-import { useState } from "react"
-import Link from "next/link"
-import Image from "next/image"
+import type React from "react";
+import { useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { userRoleEnum } from "@/layout/utils/enum";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/contexts/auth-context";
 
-export default function SignupPage() {
-  const [step, setStep] = useState(1)
-  const [role, setRole] = useState("")
-  const [uploadedFile, setUploadedFile] = useState<string>("")
-  const [videoFile, setVideoFile] = useState<string>("")
-  const [uploadProgress, setUploadProgress] = useState(0)
-  const [videoProgress, setVideoProgress] = useState(0)
+export default function SignupPageOverview() {
+  const [step, setStep] = useState(1);
+  const [role, setRole] = useState("");
+  const [uploadedFile, setUploadedFile] = useState<string>("");
+  const [videoFile, setVideoFile] = useState<string>("");
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [videoProgress, setVideoProgress] = useState(0);
+
+  const router = useRouter();
+  const { signup } = useAuth();
 
   const handleRoleSelect = (selectedRole: string) => {
-    setRole(selectedRole)
-  }
+    setRole(selectedRole);
+  };
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
+    const file = e.target.files?.[0];
     if (file) {
-      setUploadedFile(file.name)
-      setUploadProgress(0)
+      setUploadedFile(file.name);
+      setUploadProgress(0);
       const interval = setInterval(() => {
         setUploadProgress((prev) => {
           if (prev >= 100) {
-            clearInterval(interval)
-            return 100
+            clearInterval(interval);
+            return 100;
           }
-          return prev + Math.random() * 30
-        })
-      }, 500)
+          return prev + Math.random() * 30;
+        });
+      }, 500);
     }
-  }
+  };
 
   const handleVideoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
+    const file = e.target.files?.[0];
     if (file) {
-      setVideoFile(file.name)
-      setVideoProgress(0)
+      setVideoFile(file.name);
+      setVideoProgress(0);
       const interval = setInterval(() => {
         setVideoProgress((prev) => {
           if (prev >= 100) {
-            clearInterval(interval)
-            return 100
+            clearInterval(interval);
+            return 100;
           }
-          return prev + Math.random() * 25
-        })
-      }, 600)
+          return prev + Math.random() * 25;
+        });
+      }, 600);
     }
-  }
+  };
 
   const handleNextStep = () => {
     if (role) {
-      setStep(2)
+      setStep(2);
     }
-  }
+  };
+
+  const handleSubmit = async () => {
+    try {
+      await signup(
+        "thrivingtalent@gmail.com",
+        "123456",
+        "John Doe",
+        userRoleEnum.USER
+      );
+      //   if (role === "recruiter") {
+      //     router.push("/dashboard/recruiter");
+      //   } else {
+      router.push("/user/dashboard");
+      //   }
+    } catch (err) {
+      alert("Failed to create account. Please try again.");
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 font-sans">
@@ -64,16 +88,28 @@ export default function SignupPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 min-h-screen">
           {/* Left Side - Image */}
           <div className="relative h-96 lg:h-full">
-            <Image src="/signup side image.jpg" alt="Team" fill className="object-cover" />
+            <Image
+              src="/signup side image.jpg"
+              alt="Team"
+              fill
+              className="object-cover"
+            />
             <div className="absolute top-10 left-6 w-64 h-16">
-              <Image src="/thriving talent logo.png" alt="Thriving Talents" fill className="object-contain" />
+              <Image
+                src="/thriving talent logo.png"
+                alt="Thriving Talents"
+                fill
+                className="object-contain"
+              />
             </div>
           </div>
 
           {/* Right Side - Role Selection */}
           <div className="bg-white p-8 lg:p-12 flex flex-col justify-center">
             <div className="mt-16">
-              <h2 className="text-3xl font-bold text-gray-900 mb-8 font-sans">Select your role</h2>
+              <h2 className="text-3xl font-bold text-gray-900 mb-8 font-sans">
+                Select your role
+              </h2>
 
               <div className="space-y-4">
                 {/* Employer Button */}
@@ -112,7 +148,10 @@ export default function SignupPage() {
               {/* Login Link */}
               <p className="text-center text-gray-600 text-sm mt-8 font-sans">
                 Already Have An Account ?{" "}
-                <Link href="/login" className="text-blue-600 hover:text-blue-700 font-semibold">
+                <Link
+                  href="/login"
+                  className="text-blue-600 hover:text-blue-700 font-semibold"
+                >
                   Log in
                 </Link>
               </p>
@@ -125,17 +164,31 @@ export default function SignupPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 min-h-screen">
           {/* Left Side - Image */}
           <div className="relative h-96 lg:h-full">
-            <Image src="/signup side image.jpg" alt="Team" fill className="object-cover" />
+            <Image
+              src="/signup side image.jpg"
+              alt="Team"
+              fill
+              className="object-cover"
+            />
             <div className="absolute top-10 left-6 w-64 h-16">
-              <Image src="/thriving talent logo.png" alt="Thriving Talents" fill className="object-contain" />
+              <Image
+                src="/thriving talent logo.png"
+                alt="Thriving Talents"
+                fill
+                className="object-contain"
+              />
             </div>
           </div>
 
           {/* Right Side - Upload Form */}
           <div className="bg-white p-8 lg:p-12 flex flex-col justify-center">
             <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-2 font-sans">Upload your CV</h2>
-              <p className="text-gray-600 text-sm mb-8 font-sans">Upload your CV in PDF or DOCX format.</p>
+              <h2 className="text-3xl font-bold text-gray-900 mb-2 font-sans">
+                Upload your CV
+              </h2>
+              <p className="text-gray-600 text-sm mb-8 font-sans">
+                Upload your CV in PDF or DOCX format.
+              </p>
 
               {/* File Upload Area */}
               <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center mb-6">
@@ -165,16 +218,21 @@ export default function SignupPage() {
                   </label>
                 </p>
                 <p className="text-gray-500 text-xs font-sans">
-                  Supported formats: JPEG, PNG, GIF, JPG, PDF, XLS, AI, Word, JPF
+                  Supported formats: JPEG, PNG, GIF, JPG, PDF, XLS, AI, Word,
+                  JPF
                 </p>
               </div>
 
               {uploadedFile && (
                 <div className="mb-6">
-                  <p className="text-sm font-medium text-gray-700 mb-2 font-sans">Uploading</p>
+                  <p className="text-sm font-medium text-gray-700 mb-2 font-sans">
+                    Uploading
+                  </p>
                   <div className="flex items-center gap-3">
                     <div className="flex-1">
-                      <p className="text-sm text-gray-600 font-sans mb-2">{uploadedFile}</p>
+                      <p className="text-sm text-gray-600 font-sans mb-2">
+                        {uploadedFile}
+                      </p>
                       <div className="w-full h-0.5 bg-gray-200 rounded-full overflow-hidden">
                         <div
                           className="h-full bg-blue-600 rounded-full transition-all duration-300"
@@ -184,12 +242,16 @@ export default function SignupPage() {
                     </div>
                     <button
                       onClick={() => {
-                        setUploadedFile("")
-                        setUploadProgress(0)
+                        setUploadedFile("");
+                        setUploadProgress(0);
                       }}
                       className="text-gray-400 hover:text-gray-600 flex-shrink-0"
                     >
-                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                      <svg
+                        className="w-4 h-4"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
                         <path
                           fillRule="evenodd"
                           d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
@@ -212,7 +274,10 @@ export default function SignupPage() {
               {/* Login Link */}
               <p className="text-center text-gray-600 text-sm mt-8 font-sans">
                 Already Have An Account ?{" "}
-                <Link href="/login" className="text-blue-600 hover:text-blue-700 font-semibold">
+                <Link
+                  href="/login"
+                  className="text-blue-600 hover:text-blue-700 font-semibold"
+                >
                   Log in
                 </Link>
               </p>
@@ -225,19 +290,32 @@ export default function SignupPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 min-h-screen">
           {/* Left Side - Image */}
           <div className="relative h-96 lg:h-full">
-            <Image src="/signup side image.jpg" alt="Team" fill className="object-cover" />
+            <Image
+              src="/signup side image.jpg"
+              alt="Team"
+              fill
+              className="object-cover"
+            />
             <div className="absolute top-10 left-6 w-64 h-16">
-              <Image src="/thriving talent logo.png" alt="Thriving Talents" fill className="object-contain" />
+              <Image
+                src="/thriving talent logo.png"
+                alt="Thriving Talents"
+                fill
+                className="object-contain"
+              />
             </div>
           </div>
 
           {/* Right Side - Video Upload Form */}
           <div className="bg-white p-8 lg:p-12 flex flex-col justify-center">
             <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-2 font-sans">Introduce yourself</h2>
+              <h2 className="text-3xl font-bold text-gray-900 mb-2 font-sans">
+                Introduce yourself
+              </h2>
               <p className="text-gray-600 text-sm mb-8 font-sans">
-                Submit a short video (2 - 3 minutes) to showcase your skills and personality. This is your chance to
-                make a great first impression!
+                Submit a short video (2 - 3 minutes) to showcase your skills and
+                personality. This is your chance to make a great first
+                impression!
               </p>
 
               {/* File Upload Area */}
@@ -259,18 +337,29 @@ export default function SignupPage() {
                   Drag & drop files or{" "}
                   <label className="text-blue-600 hover:text-blue-700 font-semibold cursor-pointer">
                     Browse
-                    <input type="file" onChange={handleVideoUpload} className="hidden" accept=".mp4,.mov,.avi,.mkv" />
+                    <input
+                      type="file"
+                      onChange={handleVideoUpload}
+                      className="hidden"
+                      accept=".mp4,.mov,.avi,.mkv"
+                    />
                   </label>
                 </p>
-                <p className="text-gray-500 text-xs font-sans">Supported formats: MP4</p>
+                <p className="text-gray-500 text-xs font-sans">
+                  Supported formats: MP4
+                </p>
               </div>
 
               {videoFile && (
                 <div className="mb-6">
-                  <p className="text-sm font-medium text-gray-700 mb-2 font-sans">Uploading</p>
+                  <p className="text-sm font-medium text-gray-700 mb-2 font-sans">
+                    Uploading
+                  </p>
                   <div className="flex items-center gap-3">
                     <div className="flex-1">
-                      <p className="text-sm text-gray-600 font-sans mb-2">{videoFile}</p>
+                      <p className="text-sm text-gray-600 font-sans mb-2">
+                        {videoFile}
+                      </p>
                       <div className="w-full h-0.5 bg-gray-200 rounded-full overflow-hidden">
                         <div
                           className="h-full bg-blue-600 rounded-full transition-all duration-300"
@@ -280,12 +369,16 @@ export default function SignupPage() {
                     </div>
                     <button
                       onClick={() => {
-                        setVideoFile("")
-                        setVideoProgress(0)
+                        setVideoFile("");
+                        setVideoProgress(0);
                       }}
                       className="text-gray-400 hover:text-gray-600 flex-shrink-0"
                     >
-                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                      <svg
+                        className="w-4 h-4"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
                         <path
                           fillRule="evenodd"
                           d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
@@ -299,9 +392,7 @@ export default function SignupPage() {
 
               {/* Finish Button */}
               <button
-                onClick={() => {
-                  alert("Signup completed!")
-                }}
+                onClick={() => handleSubmit()}
                 className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors mt-6 text-base font-sans"
               >
                 Finish
@@ -310,7 +401,10 @@ export default function SignupPage() {
               {/* Login Link */}
               <p className="text-center text-gray-600 text-sm mt-8 font-sans">
                 Already Have An Account ?{" "}
-                <Link href="/login" className="text-blue-600 hover:text-blue-700 font-semibold">
+                <Link
+                  href="/login"
+                  className="text-blue-600 hover:text-blue-700 font-semibold"
+                >
                   Log in
                 </Link>
               </p>
@@ -319,5 +413,5 @@ export default function SignupPage() {
         </div>
       )}
     </div>
-  )
+  );
 }
