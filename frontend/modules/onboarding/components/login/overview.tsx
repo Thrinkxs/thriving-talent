@@ -5,7 +5,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useAuth } from "@/contexts/auth-context";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { userRoleEnum } from "@/layout/utils/enum";
 
 export default function LoginPageOverview() {
