@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useAuth } from "@/contexts/auth-context";
 import { Button } from "@/components/ui/button";
-import { Menu, X, LogOut, Bell, Upload } from "lucide-react";
+import { Menu, X, LogOut, Bell, Upload, FileText } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
@@ -23,6 +23,8 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
   const navItems =
     user?.role === userRoleEnum.RECRUITER ? recruiterNavItems : userNavItems;
 
+  const isUserRecruiter = user?.role === userRoleEnum.RECRUITER;
+
   return (
     <div className="min-h-screen bg-gray-100">
       <div className="fixed top-0 left-0 right-0 z-20 bg-white border-b border-gray-200">
@@ -38,10 +40,21 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
           </div>
 
           <div className="flex items-center gap-3">
-            <Button className="bg-black hover:bg-gray-900 text-white rounded-full px-6">
-              <Upload size={18} className="mr-2" />
-              Upload Resume
-            </Button>
+            {/* Action  Button  */}
+
+            {isUserRecruiter ? (
+              <Link href="/recruiter/post-job">
+                <Button className="bg-black hover:bg-gray-900 text-white rounded-full px-6 cursor-pointer">
+                  <FileText size={18} className="mr-2" />
+                  Post a Job
+                </Button>
+              </Link>
+            ) : (
+              <Button className="bg-black hover:bg-gray-900 text-white rounded-full px-6 cursor-pointer">
+                <Upload size={18} className="mr-2" />
+                Upload Resume
+              </Button>
+            )}
             <button className="p-2 hover:bg-gray-100 rounded-full">
               <Bell size={20} />
             </button>

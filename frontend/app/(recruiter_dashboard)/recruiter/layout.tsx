@@ -8,7 +8,7 @@ export default function UserDashboardRootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <AuthGuard requiredRole={userRoleEnum.USER}>
+    <AuthGuard requiredRole={userRoleEnum.RECRUITER}>
       <DashboardLayout>{children}</DashboardLayout>
     </AuthGuard>
   );

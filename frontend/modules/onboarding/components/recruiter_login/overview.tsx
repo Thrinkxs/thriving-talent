@@ -8,31 +8,32 @@ import { useAuth } from "@/contexts/auth-context";
 import { useRouter } from "next/navigation";
 import { userRoleEnum } from "@/layout/utils/enum";
 
-export default function LoginPageOverview() {
-  const [email, setEmail] = useState("thrivingtalent@gmail.com");
+export default function RecruiterLoginPageOverview() {
+  const [email, setEmail] = useState("thrivingtalent02@gmail.com");
   const [password, setPassword] = useState("123456");
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const { login } = useAuth();
+  const { login, signup } = useAuth();
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!email || !password) {
       alert("Please fill in all fields");
       return;
     }
 
+    setLoading(true);
     try {
-      await login(email, password, userRoleEnum.USER);
-      //   if (role === userRoleEnum.RECRUITER) {
-      // router.push("/dashboard/recruiter");
-      //   } else {
-      router.push("/user/dashboard");
+      await signup(email, password, "John Doe", userRoleEnum.RECRUITER);
+      await login(email, password, userRoleEnum.RECRUITER);
+      router.push("/recruiter/dashboard");
       //   }
     } catch (err) {
       alert("Failed to login. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -60,7 +61,7 @@ export default function LoginPageOverview() {
       {/* Login Card */}
       <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl p-8">
         <h1 className="text-2xl font-bold text-gray-900 mb-6 text-center font-sans">
-          Login to your account
+          Login as a Recruiter
         </h1>
 
         <form onSubmit={handleSubmit} className="space-y-5">
@@ -152,33 +153,12 @@ export default function LoginPageOverview() {
           {/* Login Button */}
           <button
             type="submit"
+            disabled={loading}
             className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 px-4 rounded-lg transition-colors mt-6 font-sans"
           >
-            Login now
+            {loading ? "Logging In.." : "Login now"}
           </button>
         </form>
-
-        {/* Sign Up Link */}
-        <p className="text-center text-gray-600 text-sm mt-6 font-sans">
-          Don't Have An Account?{" "}
-          <Link
-            href="/signup"
-            className="text-blue-600 hover:text-blue-700 font-semibold"
-          >
-            Sign up
-          </Link>
-        </p>
-
-        {/* ADDING FOR TESTING PURPOSE THIS TO BE REMOVED LATER  */}
-        <p className="text-center text-gray-600 text-sm mt-6 font-sans">
-          Sign in as a recruiter{" "}
-          <Link
-            href="/login/recruiter"
-            className="text-blue-600 hover:text-blue-700 font-semibold"
-          >
-            here
-          </Link>
-        </p>
       </div>
     </div>
   );
