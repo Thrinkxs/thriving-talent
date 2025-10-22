@@ -1,25 +1,53 @@
-"use client"
+"use client";
 
-import type React from "react"
-import { useState } from "react"
-import Link from "next/link"
-import Image from "next/image"
+import type React from "react";
+import { useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { useAuth } from "@/contexts/auth-context";
+import { useRouter } from "next/router";
+import { userRoleEnum } from "@/layout/utils/enum";
 
-export default function LoginPage() {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [showPassword, setShowPassword] = useState(false)
+export default function LoginPageOverview() {
+  const [email, setEmail] = useState("thrivingtalent@gmail.com");
+  const [password, setPassword] = useState("123456");
+  const [showPassword, setShowPassword] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    // Handle login logic here
-  }
+  const { login } = useAuth();
+  const router = useRouter();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!email || !password) {
+      alert("Please fill in all fields");
+      return;
+    }
+
+    try {
+      await login(email, password, userRoleEnum.USER);
+      //   if (role === userRoleEnum.RECRUITER) {
+      // router.push("/dashboard/recruiter");
+      //   } else {
+      router.push("/user/dashboard");
+      //   }
+    } catch (err) {
+      alert("Failed to login. Please try again.");
+    }
+  };
 
   return (
     <div className="min-h-screen bg-[#050A24] flex flex-col items-center justify-center px-4 py-12 font-sans relative">
       {/* Logo */}
       <div className="absolute" style={{ top: "39px", left: "32px" }}>
-        <div style={{ width: "300px", height: "74px", position: "relative", opacity: 1 }}>
+        <div
+          style={{
+            width: "300px",
+            height: "74px",
+            position: "relative",
+            opacity: 1,
+          }}
+        >
           <Image
             src="/thriving talent logo.png"
             alt="Thriving Talents"
@@ -31,12 +59,16 @@ export default function LoginPage() {
 
       {/* Login Card */}
       <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl p-8">
-        <h1 className="text-2xl font-bold text-gray-900 mb-6 text-center font-sans">Login to your account</h1>
+        <h1 className="text-2xl font-bold text-gray-900 mb-6 text-center font-sans">
+          Login to your account
+        </h1>
 
         <form onSubmit={handleSubmit} className="space-y-5">
           {/* Email Input */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Email
+            </label>
             <input
               type="email"
               value={email}
@@ -50,8 +82,13 @@ export default function LoginPage() {
           {/* Password Input */}
           <div>
             <div className="flex items-center justify-between mb-2">
-              <label className="block text-sm font-medium text-gray-700">Password</label>
-              <Link href="/" className="text-blue-500 hover:text-blue-600 text-sm font-medium">
+              <label className="block text-sm font-medium text-gray-700">
+                Password
+              </label>
+              <Link
+                href="/"
+                className="text-blue-500 hover:text-blue-600 text-sm font-medium"
+              >
                 Forgot ?
               </Link>
             </div>
@@ -124,11 +161,14 @@ export default function LoginPage() {
         {/* Sign Up Link */}
         <p className="text-center text-gray-600 text-sm mt-6 font-sans">
           Don't Have An Account?{" "}
-          <Link href="/signup" className="text-blue-600 hover:text-blue-700 font-semibold">
+          <Link
+            href="/signup"
+            className="text-blue-600 hover:text-blue-700 font-semibold"
+          >
             Sign up
           </Link>
         </p>
       </div>
     </div>
-  )
+  );
 }
