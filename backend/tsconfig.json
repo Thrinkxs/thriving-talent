@@ -1,48 +1,14 @@
 {
-  // Visit https://aka.ms/tsconfig to read more about this file
   "compilerOptions": {
-    // File Layout
-    // "rootDir": "./src",
-    "outDir": "./build",
-
-    // Environment Settings
-    // See also https://aka.ms/tsconfig/module
+    "target": "es6",
     "module": "commonjs",
-    "target": "es2020",
-    "types": [],
-    // "moduleResolution": "node",   
-    // For nodejs:
-    "lib": ["es2020"],
-    // "types": ["node"],
-    // and npm install -D @types/node
-
-    // Other Outputs
-    "sourceMap": true,
-    "declaration": true,
-    "declarationMap": true,
-
-    // Stricter Typechecking Options
-    "noUncheckedIndexedAccess": true,
-    "exactOptionalPropertyTypes": true,
-
-    // Style Options
-    // "noImplicitReturns": true,
-    // "noImplicitOverride": true,
-    // "noUnusedLocals": true,
-    // "noUnusedParameters": true,
-    // "noFallthroughCasesInSwitch": true,
-    // "noPropertyAccessFromIndexSignature": true,
-    "forceConsistentCasingInFileNames": true,
+    "outDir": "build",
+    "strict": false,
     "esModuleInterop": true,
-    // Recommended Options
-    "strict": true,
-    "jsx": "react-jsx",
-    // "verbatimModuleSyntax": true,
-    "isolatedModules": true,
-    "noUncheckedSideEffectImports": true,
-    "moduleDetection": "force",
-    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "typeRoots": ["./types"],
+    "allowSyntheticDefaultImports": true
   },
-  // "include": ["src/**/*.ts", "src/**/*.tsx"],
-  // "exclude": ["node_modules"]
+  "include": ["src/**/*.ts", "index.ts", "../proto2/index.ts"],
+  "exclude": ["node_modules"]
 }

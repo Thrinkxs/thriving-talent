@@ -8,7 +8,6 @@ const resend = new Resend(process.env.RESEND_API_KEY as string);
 export class EmailService {
   async sendVerificationEmail(payload: any): Promise<void> {
     const { email, otp } = payload;
-    console.log("the otp:", otp);
     try {
       // const template = await ejs.renderFile("email_templates/otp.ejs", {
       //   email,
