@@ -15,4 +15,12 @@ export interface ExtendedResponse extends Response {
   productData?: any;
 }
 
+export interface IJobFilter {
+  jobID?: string;
+  search?: string;
+  status?: string;
+  page?: string;
+  limit?: string;
+}
+
 export const OBJECT_ID_REGEX = /^[0-9a-fA-F]{24}$/;
