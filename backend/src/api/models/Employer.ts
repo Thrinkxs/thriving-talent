@@ -9,6 +9,12 @@ export interface IEmployer extends Document {
   password?: string;
   isVerified: boolean;
   status?: string;
+  registrationNumber?: string;
+  sector?: string;
+  industry?: string;
+  numberOfEmployees?: number;
+  roleInOrganization?: string;
+  address?: string;
   isDeleted: boolean;
   __v?: number;
 }
@@ -23,6 +29,12 @@ const EmployerSchema = new Schema<IEmployer>(
     password: { type: String, required: true },
     isVerified: { type: Boolean, default: false },
     status: { type: String, enum: ["active", "suspended"], default: "active" },
+    registrationNumber: { type: String, trim: true },
+    sector: { type: String, trim: true },
+    industry: { type: String, trim: true },
+    numberOfEmployees: { type: Number },
+    roleInOrganization: { type: String, trim: true },
+    address: { type: String, trim: true },
     isDeleted: { type: Boolean, default: false },
   },
   {

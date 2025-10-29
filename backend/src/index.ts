@@ -11,6 +11,7 @@ import cookieParser from "cookie-parser";
 import AppError from "./utils/AppError";
 
 import clientRoute from "./api/routes/client/index.route";
+import cacheConnection from "./config/cache";
 
 // import { KeepRenderAwake } from "../src/utils/KeepRenderAwake";
 
@@ -48,6 +49,11 @@ mongoose
   })
   .catch((error) => {
     console.log("Error connecting to MongoDB: ", error);
+  });
+
+cacheConnection()
+  .then(() => {
+    console.log("Connected to Cache server");
   })
   .catch((error: any) => {
     console.error("Failed to connect to Cache", error.message);

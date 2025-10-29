@@ -12,21 +12,12 @@ export class EmployerService {
     return employer;
   }
 
-  public async updateProfile(
-    employer: IEmployer,
-    payload: {
-      fullName?: string;
-      companyName?: string;
-      description?: string;
-      images?: string[];
-    }
-  ) {
-    const { fullName, companyName, description, images } = payload;
-
-    if (fullName) employer.fullName = fullName;
-    if (companyName) employer.companyName = companyName;
-    if (description) employer.description = description;
-    if (images) employer.images = images;
+  public async updateProfile(employer: IEmployer, payload: Partial<IEmployer>) {
+    Object.keys(payload).forEach((key) => {
+      if (payload[key] !== undefined) {
+        (employer as any)[key] = payload[key];
+      }
+    });
 
     return await employer.save();
   }

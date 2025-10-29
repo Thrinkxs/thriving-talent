@@ -15,9 +15,9 @@ export class EmailService {
       // });
 
       const response = await resend.emails.send({
-        from: `Palé ${sender}`,
+        from: `Thriving Talent ${sender}`,
         to: email,
-        subject: " Your Palé User Verification Code",
+        subject: " Your Thriving Talent User Verification Code",
         html: `Your verification code is: ${otp}`,
       });
       logger.info("User verification email sent");
@@ -34,9 +34,9 @@ export class EmailService {
       //   otp,
       // });
       const response = await resend.emails.send({
-        from: `Palé ${sender}`,
+        from: `Thriving Talent ${sender}`,
         to: email,
-        subject: "Update Your Palé Password",
+        subject: "Update Your Thriving Talent Password",
         html: `Your password update code is: ${otp}`,
       });
       logger.info(`Password update email sent to: ${email}`);
@@ -53,10 +53,10 @@ export class EmailService {
       //   email,
       // });
       const response = await resend.emails.send({
-        from: `Palé ${sender}`,
+        from: `Thriving Talent ${sender}`,
         to: email,
-        subject: "Welcome to Palé",
-        html: `Welcome to Palé`,
+        subject: "Welcome to Thriving Talent",
+        html: `Welcome to Thriving Talent`,
       });
       logger.info(`Welcome email sent to: ${email}`);
     } catch (error: any) {
@@ -73,7 +73,7 @@ export class EmailService {
   //     //   otp,
   //     // });
   //     const response = await resend.emails.send({
-  //       from: `Palé ${sender}`,
+  //       from: `Thriving Talent ${sender}`,
   //       to: email,
   //       subject: "Important: Login 2FA",
   //       html: `Your login 2FA code is: ${otp}`,
@@ -91,10 +91,10 @@ export class EmailService {
       //   email,
       // });
       const response = await resend.emails.send({
-        from: `Palé ${sender}`,
+        from: `Thriving Talent ${sender}`,
         to: email,
-        subject: "Welcome to Palé",
-        html: `Welcome to Palé
+        subject: "Welcome to Thriving Talent",
+        html: `Welcome to Thriving Talent
         Email: ${email}
         Here's your temporary password: ${password}
         `,
@@ -114,7 +114,7 @@ export class EmailService {
     // console.log(message, subject, recipients);
     try {
       const response = await resend.emails.send({
-        from: `Palé ${sender}`,
+        from: `Thriving Talent ${sender}`,
         to: recipients,
         subject: subject,
         html: message,
