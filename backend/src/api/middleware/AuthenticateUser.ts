@@ -4,6 +4,7 @@ import cookie from "cookie";
 import { AuthenticationTokenGenerator } from "../services/Unique.Service";
 import { Employer } from "../models/Employer";
 import { ExtendedRequest } from "../../utils/Interface";
+import { Intern } from "../models/Intern";
 // type AuthenticatedRequestHandler = RequestHandler<{}, any, any, any, Record<string, any>>;
 
 interface AuthenticatedRequest extends Request {
@@ -41,26 +42,26 @@ export const tokenAuthentication = (
 };
 
 export const employerVerification = async (
-  req: ExtendedRequest | any,
+  req: ExtendedRequest,
   res: Response,
   next: NextFunction
 ) => {
   return tokenAuthentication(req, res, async () => {
-    const { accountID } = req.account!;
-    if (!req.account || !accountID) {
+    const { id: employerID } = req.employer!;
+    if (!req.employer || !employerID) {
       return res
         .status(403)
         .json({ message: "Missing Profile: Account not found" });
     }
-    const account = await Employer.findOne({
-      _id: accountID,
+    const employer = await Employer.findOne({
+      _id: employerID,
       isDeleted: false,
     });
-    if (!account)
+    if (!employer)
       return res
         .status(403)
         .json({ message: "Missing Profile: Account not found" });
-    const { status } = account;
+    const { status } = employer;
 
     if (status == "suspended") {
       return res.status(403).json({
@@ -69,7 +70,42 @@ export const employerVerification = async (
       });
     }
 
-    req.account = account;
+    req.employer = employer;
+
+    return next();
+  });
+};
+
+export const internVerification = async (
+  req: ExtendedRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  return tokenAuthentication(req, res, async () => {
+    const { id: internID } = req.intern!;
+    if (!req.intern || !internID) {
+      return res
+        .status(403)
+        .json({ message: "Missing Profile: Account not found" });
+    }
+    const intern = await Intern.findOne({
+      _id: internID,
+      isDeleted: false,
+    });
+    if (!intern)
+      return res
+        .status(403)
+        .json({ message: "Missing Profile: Account not found" });
+    const { status } = intern;
+
+    if (status == "suspended") {
+      return res.status(403).json({
+        message:
+          "Unauthorized: Your account has been suspended, please contact admin for more information",
+      });
+    }
+
+    req.intern = intern;
 
     return next();
   });

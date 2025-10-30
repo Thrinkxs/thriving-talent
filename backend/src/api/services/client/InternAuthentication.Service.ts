@@ -1,4 +1,4 @@
-import { Employer, IEmployer } from "../../models/Employer";
+import { Intern, IIntern } from "../../models/Intern";
 import AppError from "../../../utils/AppError";
 import { Hasher } from "../../../utils/HashPassword";
 import { CacheService } from "../Cache.Service";
@@ -29,46 +29,46 @@ export class AuthenticationService {
     const { email, password } = payload;
     const accountExistence = await this.checkAccountExistence(email);
     if (accountExistence) {
-      throw new AppError(409, "Employer already exist");
+      throw new AppError(409, "Intern already exist");
     }
     payload.password = await this.hasher.hashPassword(password);
     // payload.referralCode = uuidv4().slice(0, 10).toLowerCase();
 
-    const employer = await Employer.create(payload);
+    const intern = await Intern.create(payload);
 
-    await this.sendVerificationEmail({ email: employer.email });
+    await this.sendVerificationEmail({ email: intern.email });
     const { accessToken, refreshToken } = await this.getAuthorizationToken(
-      employer.id
+      intern.id
     );
 
-    return { employer, accessToken, refreshToken };
+    return { intern, accessToken, refreshToken };
   }
 
   public async loginAccount(payload: any) {
     const { email, password } = payload;
-    const employer = await this.checkAccountExistence(email.toLowerCase());
-    if (!employer) {
+    const intern = await this.checkAccountExistence(email.toLowerCase());
+    if (!intern) {
       throw new AppError(401, "Invalid email or password");
     }
     const isMatch = await this.hasher.verifyPassword(
       password,
-      employer.password!
+      intern.password!
     );
     if (!isMatch) {
       throw new AppError(401, "Invalid email or password");
     }
 
     const { accessToken, refreshToken } = await this.getAuthorizationToken(
-      employer.id
+      intern.id
     );
-    return { employer, accessToken, refreshToken };
+    return { intern, accessToken, refreshToken };
   }
 
   // public async socialLogin(payload: any) {
   //   const { email, firstname, lastname } = payload;
-  //   let employer = await this.checkAccountExistence(email.toLowerCase());
-  //   if (!employer) {
-  //     employer = await Employer.create({
+  //   let intern = await this.checkAccountExistence(email.toLowerCase());
+  //   if (!intern) {
+  //     intern = await Intern.create({
   //       email,
   //       firstname,
   //       lastname,
@@ -77,10 +77,10 @@ export class AuthenticationService {
   //   }
 
   //   const { accessToken, refreshToken } = await this.getAuthorizationToken(
-  //     employer.id
+  //     intern.id
   //   );
-  //   await employer.save();
-  //   return { employer, accessToken, refreshToken };
+  //   await intern.save();
+  //   return { intern, accessToken, refreshToken };
   // }
 
   public async sendVerificationEmail(filter: any) {
@@ -100,14 +100,14 @@ export class AuthenticationService {
       throw new AppError(401, "Invalid verification code");
     }
 
-    let employer = await this.checkAccountExistence(email.toLowerCase());
-    if (!employer) {
-      throw new AppError(404, "Employer not found");
+    let intern = await this.checkAccountExistence(email.toLowerCase());
+    if (!intern) {
+      throw new AppError(404, "Intern not found");
     }
 
-    employer.isVerified = true;
-    employer = await employer.save();
-    return employer;
+    intern.isVerified = true;
+    intern = await intern.save();
+    return intern;
   }
 
   public async forgotPassword(payload: any) {
@@ -115,7 +115,7 @@ export class AuthenticationService {
 
     let account = await this.checkAccountExistence(email.toLowerCase());
     if (!account) {
-      throw new AppError(404, "Employer not found");
+      throw new AppError(404, "Intern not found");
     }
 
     const otp = await this.getPasswordResetOTP(email);
@@ -126,12 +126,12 @@ export class AuthenticationService {
 
   public async verifyPasswordResetOTP(payload: any) {
     const { email, otp } = payload;
-    let employer = await this.checkAccountExistence(email.toLowerCase());
-    if (!employer) {
-      throw new AppError(404, "Employer not found");
+    let intern = await this.checkAccountExistence(email.toLowerCase());
+    if (!intern) {
+      throw new AppError(404, "Intern not found");
     }
     let cachedResponse = await this.cacheService.getCachedPasswordResetOTP(
-      employer.email
+      intern.email
     );
 
     let cachedResponseJSON = JSON.parse(cachedResponse);
@@ -141,7 +141,7 @@ export class AuthenticationService {
     }
     cachedResponseJSON.isOTPValid = true;
     await this.cacheService.cachePasswordResetOTP(
-      employer.email,
+      intern.email,
       JSON.stringify(cachedResponseJSON)
     );
     return;
@@ -175,13 +175,13 @@ export class AuthenticationService {
     if (!cachedAccountID) {
       throw new AppError(401, "Invalid refresh token");
     }
-    const employer = await Employer.findOne({
+    const intern = await Intern.findOne({
       _id: cachedAccountID,
       isDeleted: false,
     });
-    if (!employer) throw new AppError(404, "Employer not found");
+    if (!intern) throw new AppError(404, "Intern not found");
     const accessToken = this.authenticationTokenGenerator.generateToken({
-      id: employer.id,
+      id: intern.id,
     });
 
     return { accessToken };
@@ -193,11 +193,11 @@ export class AuthenticationService {
   }
 
   private async checkAccountExistence(email: string) {
-    const employer = await Employer.findOne({
+    const intern = await Intern.findOne({
       email,
       isDeleted: false,
     });
-    return employer;
+    return intern;
   }
 
   private async getAuthorizationToken(accountID: string) {

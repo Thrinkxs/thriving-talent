@@ -1,41 +1,33 @@
-import mongoose, { InferSchemaType, Schema } from "mongoose";
+import { Document, model, Schema } from "mongoose";
 
-const InternSchema = new mongoose.Schema({
-  fullName: {
-    type: String,
-    required: true,
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  isVerified: {
-    type: Boolean,
-    default: false,
-  },
-  phone: {
-    type: String,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
+export interface IIntern extends Document {
+  fullName: string;
+  email: string;
+  isVerified: boolean;
+  phone?: string;
+  password?: string;
+  gender: string;
+  status: string;
+  profileImage?: string;
+  introVideo?: string;
+  isDeleted?: boolean;
+}
 
+const InternSchema = new Schema<IIntern>({
+  fullName: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  isVerified: { type: Boolean, default: false },
+  phone: { type: String },
+  password: { type: String, required: true },
+  status: { type: String, enum: ["active", "suspended"], default: "active" },
   gender: {
     type: String,
     enum: ["Male", "Female", "Prefer not to say"],
     required: true,
   },
-  profileImage: {
-    type: String,
-  },
-  introVideo: {
-    type: String,
-  },
+  profileImage: { type: String },
+  introVideo: { type: String },
+  isDeleted: { type: Boolean, default: false },
 });
 
-type Intern = InferSchemaType<typeof InternSchema>;
-const Intern = mongoose.model("Intern", InternSchema);
-
-export default Intern;
+export const Intern = model<IIntern>("Intern", InternSchema);
