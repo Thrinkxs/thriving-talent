@@ -35,10 +35,10 @@ const NavBar = () => {
 
   return (
     <div
-      className="px-4 sm:px-6 md:pr-10 bg-white sticky top-0 z-50"
+      className="px-4 sm:px-6 md:px-20 md:pr-10 bg-white sticky top-0 z-50 py-10"
       style={{ backgroundColor: showBackground ? "#040024" : "white" }}
     >
-      <nav className="hidden md:flex md:flex-row justify-between items-center  ">
+      <nav className="hidden md:flex md:flex-row justify-between items-center">
         <div className=" cursor-pointer ">
           {/* <Logo /> */}
 
@@ -46,7 +46,7 @@ const NavBar = () => {
             <Image
               src={thrivingTalentLogo}
               alt="ThrivingTalent Logo"
-              width={50}
+              width={100}
             />
             {/* <span
               className="mt-3 font-bold"
@@ -61,21 +61,29 @@ const NavBar = () => {
             className="md:flex md:gap-5 "
             style={{ color: showBackground ? "white" : "black" }}
           >
-            <li className="transition ease-in-out delay-150 hover:-translate-x-1 hover:text-btn duration-300 mx-1.5 sm:mx-6">
-              <Link href="/pricing">Pricing</Link>
+            <li className="transition ease-in-out delay-150 hover:-translate-x-1 hover:text-thrive-blue duration-300 mx-1.5 sm:mx-6">
+              <Link href="/">Jobs</Link>
             </li>
-            <li className="transition ease-in-out delay-150 hover:-translate-x-1 hover:text-btn duration-300 mx-1.5 sm:mx-6">
+            {/* <li className="transition ease-in-out delay-150 hover:-translate-x-1 hover:text-thrive-blue duration-300 mx-1.5 sm:mx-6">
               <NavMenu showBackground={showBackground} />
+            </li> */}
+            <li className="transition ease-in-out delay-150 hover:-translate-x-1 hover:text-thrive-blue duration-300 mx-1.5 sm:mx-6">
+              <Link href="/">Companies</Link>
             </li>
-            <li className="transition ease-in-out delay-150 hover:-translate-x-1 hover:text-btn duration-300 mx-1.5 sm:mx-6">
-              <Link href="/customers">Customers</Link>
+            <li className="transition ease-in-out delay-150 hover:-translate-x-1 hover:text-thrive-blue duration-300 mx-1.5 sm:mx-6">
+              <Link href="/">About</Link>
+            </li>
+            <li className="transition ease-in-out delay-150 hover:-translate-x-1 hover:text-thrive-blue duration-300 mx-1.5 sm:mx-6">
+              <Link href="/">Contact</Link>
             </li>
           </ul>
         </div>
         <div className="py-4">
-          <Button>
-            <Link href="/login">Sign In</Link>
-          </Button>
+          <Link href="/login">
+            <Button className="bg-thrive-blue hover:bg-thrive-blue/80 px-20 py-20 cursor-pointer">
+              Sign In
+            </Button>
+          </Link>
         </div>
       </nav>
 

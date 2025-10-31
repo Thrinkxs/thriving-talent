@@ -8,14 +8,12 @@ import { TestimonialsSection } from "@/components/Testimonials/Testimonials";
 
 export default function HomePage() {
   return (
-    <main>
-      <NavBar />
+    <main className="">
       <HeroSection />
       <WhyChooseUs />
       <InternsSection />
       <TestimonialsSection />
       <CTASection />
-      <Footer />
     </main>
   );
 }

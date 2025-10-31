@@ -1,21 +1,21 @@
-*,
+/* *,
 *:before,
 *:after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
+} */
 
 .container {
-  color: #7366fb;
+  color: #2020d0;
   padding-left: 0;
   padding-right: 0;
 }
 
-nav {
+.hamburger-nav {
   display: flex;
   justify-content: space-between;
-  /* padding: 15px 15px; */
+  padding: 0px 6px;
 
   .logo-container {
     overflow-y: hidden;
@@ -51,7 +51,7 @@ nav {
   flex-direction: column;
   */
   /* align-items: center; */
-  background-color: #040220;
+  background-color: #000000;
 
   ul {
     list-style: none;

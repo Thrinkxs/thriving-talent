@@ -11,28 +11,23 @@ import { Button } from "@/components/ui/button";
 const MOBILE_NAV_ITEMS = [
   {
     id: 0,
-    navTitle: "Pricing",
-    navHref: "/pricing",
+    navTitle: "Jobs",
+    navHref: "/jobs",
   },
   {
     id: 1,
-    navTitle: "Blog",
-    navHref: "/blog",
+    navTitle: "companies",
+    navHref: "/companies",
   },
   {
     id: 2,
-    navTitle: "Contact Support",
-    navHref: "/contact",
+    navTitle: "About",
+    navHref: "/about",
   },
   {
     id: 3,
-    navTitle: "About us",
-    navHref: "/about-us",
-  },
-  {
-    id: 4,
-    navTitle: "Customers",
-    navHref: "/customers",
+    navTitle: "Contact",
+    navHref: "/contact",
   },
 ];
 
@@ -135,27 +130,19 @@ const HamburgerNav = ({ showBackground }: HamburgerNavProps) => {
       <motion.nav
         initial="closed"
         animate={mobileNavOpen ? "opened" : "closed"}
+        className="hamburger-nav"
       >
         <div className="logo-container">
-          {/* <motion.h1 variants={hideNavItemsVariant}>Design Agency</motion.h1> */}
           <motion.div
             variants={hideNavItemsVariant}
             className=" cursor-pointer "
           >
-            {/* <Logo /> */}
-
             <Link href="/" className="flex">
               <Image
                 src={thrivingTalentLogo}
                 alt="ThrivingTalent Logo"
-                width={50}
+                width={100}
               />
-              <span
-                className="mt-3 font-bold"
-                style={{ color: showBackground ? "white" : "black" }}
-              >
-                Swiftbooked
-              </span>
             </Link>
           </motion.div>
         </div>
@@ -178,9 +165,8 @@ const HamburgerNav = ({ showBackground }: HamburgerNavProps) => {
                 <Image
                   src={thrivingTalentLogo}
                   alt="ThrivingTalent Logo"
-                  width={50}
+                  width={100}
                 />
-                <span className="mt-3 font-bold">Thriving Talent</span>
               </Link>
             </div>
 
@@ -213,7 +199,9 @@ const HamburgerNav = ({ showBackground }: HamburgerNavProps) => {
           </motion.ul>
           <motion.div variants={fadeInVariant} className="login-btn">
             <Link href="/login">
-              <Button>Login</Button>
+              <Button className="bg-thrive-blue px-20 py-20 hover:bg-thrive-blue/80 cursor-pointer">
+                Login
+              </Button>
             </Link>
           </motion.div>
         </motion.div>

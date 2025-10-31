@@ -1,15 +1,15 @@
-"use client"
+"use client";
 
-import Image from "next/image"
-import { ThumbsUp } from "lucide-react"
-import { useState, useEffect } from "react"
+import Image from "next/image";
+import { ThumbsUp } from "lucide-react";
+import { useState, useEffect } from "react";
 
 interface Testimonial {
-  id: number
-  name: string
-  role: string
-  text: string
-  image: string
+  id: number;
+  name: string;
+  role: string;
+  text: string;
+  image: string;
 }
 
 const testimonials: Testimonial[] = [
@@ -55,24 +55,25 @@ const testimonials: Testimonial[] = [
     text: "If you want real marketing that works and effective implementation - mobile app's got you covered.",
     image: "/testimonial-3.png",
   },
-]
+];
 
 export function TestimonialsSection() {
-  const [currentIndex, setCurrentIndex] = useState(0)
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % testimonials.length)
-    }, 5000)
-    return () => clearInterval(interval)
-  }, [])
+      setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
-    <section className="w-full px-4 py-16 md:py-24 bg-white relative">
+    <section className="w-full px-4 py-16 md:py-24 bg-white relative mt-40">
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          background: "radial-gradient(circle at 50% 50%, rgba(0,0,0,0.01) 0%, transparent 70%)",
+          background:
+            "radial-gradient(circle at 50% 50%, rgba(0,0,0,0.01) 0%, transparent 70%)",
         }}
       />
 
@@ -86,40 +87,53 @@ export function TestimonialsSection() {
           </h2>
         </div>
 
-        <div className="hidden md:grid grid-cols-2 gap-8 md:gap-10">
+        <div className="hidden md:grid grid-cols-2 gap-8 md:gap-10 mt-96">
           {testimonials.map((testimonial, index) => (
-            <div key={testimonial.id} className="relative pt-12" style={{ animationDelay: `${index * 0.1}s` }}>
+            <div
+              key={testimonial.id}
+              className="relative pt-12"
+              style={{ animationDelay: `${index * 0.1}s` }}
+            >
               <div
-                className="bg-white rounded-2xl p-6 md:p-8 relative"
+                className="mt-40 bg-white rounded-2xl p-6 md:p-8 relative"
                 style={{
                   boxShadow: "0px 94px 200px 0px #15151526",
                 }}
               >
-                <div className="absolute -top-8 left-6 md:left-8">
+                <div className="absolute -top-20 left-6 md:left-8">
                   <Image
                     src={testimonial.image || "/placeholder.svg"}
                     alt={testimonial.name}
-                    width={64}
-                    height={64}
-                    className="w-16 h-16 rounded-full object-cover border-4 border-white"
+                    width={200}
+                    height={200}
+                    className="w-60 h-60 rounded-full object-cover border-4 border-white"
                   />
                 </div>
 
                 <div className="flex gap-1 justify-end mb-6">
                   {[...Array(5)].map((_, i) => (
-                    <svg key={i} className="w-4 h-4 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
+                    <svg
+                      key={i}
+                      className="w-4 h-4 text-blue-500"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
                       <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                     </svg>
                   ))}
                 </div>
 
                 <div className="mb-6">
-                  <p className="text-gray-700 text-sm md:text-base leading-relaxed">{testimonial.text}</p>
+                  <p className="text-gray-700 text-sm md:text-base leading-relaxed">
+                    {testimonial.text}
+                  </p>
                 </div>
 
                 <div className="flex items-center justify-between">
                   <div>
-                    <h3 className="font-semibold text-gray-900 text-sm">{testimonial.name}</h3>
+                    <h3 className="font-semibold text-gray-900 text-sm">
+                      {testimonial.name}
+                    </h3>
                     <p className="text-xs text-gray-500">{testimonial.role}</p>
                   </div>
                   <div className="flex items-center gap-2">
@@ -144,7 +158,10 @@ export function TestimonialsSection() {
                 }}
               >
                 {testimonials.map((testimonial) => (
-                  <div key={testimonial.id} className="w-full flex-shrink-0 px-2">
+                  <div
+                    key={testimonial.id}
+                    className="w-full flex-shrink-0 px-2"
+                  >
                     <div className="relative pt-12">
                       <div
                         className="bg-white rounded-2xl p-6 relative"
@@ -156,34 +173,47 @@ export function TestimonialsSection() {
                           <Image
                             src={testimonial.image || "/placeholder.svg"}
                             alt={testimonial.name}
-                            width={64}
-                            height={64}
-                            className="w-16 h-16 rounded-full object-cover border-4 border-white"
+                            width={200}
+                            height={200}
+                            className="w-40 h-40  rounded-full object-cover border-4 border-white"
                           />
                         </div>
 
                         <div className="flex gap-1 justify-end mb-6">
                           {[...Array(5)].map((_, i) => (
-                            <svg key={i} className="w-4 h-4 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
+                            <svg
+                              key={i}
+                              className="w-4 h-4 text-blue-500"
+                              fill="currentColor"
+                              viewBox="0 0 20 20"
+                            >
                               <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                             </svg>
                           ))}
                         </div>
 
                         <div className="mb-6">
-                          <p className="text-gray-700 text-sm leading-relaxed">{testimonial.text}</p>
+                          <p className="text-gray-700 text-sm leading-relaxed">
+                            {testimonial.text}
+                          </p>
                         </div>
 
                         <div className="flex items-center justify-between">
                           <div>
-                            <h3 className="font-semibold text-gray-900 text-sm">{testimonial.name}</h3>
-                            <p className="text-xs text-gray-500">{testimonial.role}</p>
+                            <h3 className="font-semibold text-gray-900 text-sm">
+                              {testimonial.name}
+                            </h3>
+                            <p className="text-xs text-gray-500">
+                              {testimonial.role}
+                            </p>
                           </div>
                           <div className="flex items-center gap-2">
                             <button className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center hover:bg-blue-600 transition-colors">
                               <ThumbsUp className="w-4 h-4 text-white" />
                             </button>
-                            <span className="text-xs text-gray-500">Testimonial</span>
+                            <span className="text-xs text-gray-500">
+                              Testimonial
+                            </span>
                           </div>
                         </div>
                       </div>
@@ -226,5 +256,5 @@ export function TestimonialsSection() {
         }
       `}</style>
     </section>
-  )
+  );
 }

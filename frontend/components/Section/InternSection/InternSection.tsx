@@ -1,11 +1,13 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import Link from "next/link"
-import Image from "next/image"
+import { useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import phoneFrame from "@/public/phone.png";
+import { Button } from "@/components/ui/button";
 
 export function InternsSection() {
-  const [isHovered, setIsHovered] = useState(false)
+  const [isHovered, setIsHovered] = useState(false);
 
   return (
     <section className="w-full bg-white flex justify-center items-center">
@@ -28,26 +30,29 @@ export function InternsSection() {
           <div className="h-[1px] bg-white w-full max-w-md opacity-70"></div>
 
           <p className="text-xs sm:text-sm md:text-base text-blue-100 leading-relaxed">
-            Upload your CV to instantly get noticed by companies and connect with employers
-            to secure your internship in under 2 hours.
+            Upload your CV to instantly get noticed by companies and connect
+            with employers to secure your internship in under 2 hours.
           </p>
-
-          <Link
-            href="/"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-            className="inline-flex items-center justify-center px-4 sm:px-6 py-2 sm:py-3 bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 w-fit"
-          >
-            Start using Thriving Talents
-          </Link>
+          <div className="mt-20">
+            <Link
+              href="/"
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+              className=""
+            >
+              <Button className="cursor-pointer inline-flex items-center justify-center px-20 py-20 bg-thrive-blue hover:bg-thrive-blue/80 text-white text-xs sm:text-sm font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 w-fit">
+                Start using Thriving Talents
+              </Button>
+            </Link>
+          </div>
         </div>
 
         {/* Right Image */}
-        <div className="relative w-[180px] sm:w-[240px] md:w-[300px] flex justify-center items-end">
+        <div className="hidden relative w-[180px] sm:w-[240px] md:w-[300px] md:flex justify-center items-end">
           <Image
-            src="/phone-frame.png"
+            src={phoneFrame}
             alt="Phone mockup showing upload interface"
-            width={300}
+            width={500}
             height={600}
             className="object-contain translate-y-5 sm:translate-y-6 md:translate-y-8"
             priority
@@ -72,5 +77,5 @@ export function InternsSection() {
         }
       `}</style>
     </section>
-  )
+  );
 }

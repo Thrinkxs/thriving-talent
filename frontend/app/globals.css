@@ -3,7 +3,13 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@theme {
+  --color-thrive-blue: #2020d0;
+  --color-thrive-red: #fe2728;
+}
+
 @theme inline {
+  --spacing: 1px;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);

@@ -18,7 +18,7 @@ export function HeroSection() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white font-sans">
+    <div className="min-h-screen bg-white font-sans mt-20">
       {/* Hero Section */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 py-12 sm:py-16 lg:py-20">
         <div className="grid items-center gap-8 sm:gap-12 lg:grid-cols-2">
@@ -35,7 +35,7 @@ export function HeroSection() {
             </h1>
 
             <p
-              className={`max-w-md text-sm sm:text-base leading-relaxed text-gray-600 transition-all duration-1000 delay-500 ${
+              className={`mt-10 max-w-md text-sm sm:text-base leading-relaxed text-gray-600 transition-all duration-1000 delay-500 ${
                 isVisible
                   ? "translate-y-0 opacity-100"
                   : "translate-y-10 opacity-0"
@@ -46,22 +46,22 @@ export function HeroSection() {
             </p>
 
             <div
-              className={`flex flex-wrap gap-3 sm:gap-4 transition-all duration-1000 delay-700 ${
+              className={`mt-10 flex flex-wrap gap-3 sm:gap-4 transition-all duration-1000 delay-700 ${
                 isVisible
                   ? "translate-y-0 opacity-100"
                   : "translate-y-10 opacity-0"
               }`}
             >
-              <Button className="rounded-md bg-blue-600 px-6 sm:px-8 py-3 sm:py-6 text-sm sm:text-base font-medium text-white transition-all hover:scale-105 hover:bg-blue-700 hover:shadow-xl active:scale-95">
+              <Button className="rounded-md bg-blue-600 px-20 py-20 text-sm sm:text-base font-medium text-white transition-all hover:scale-105 hover:bg-blue-700 hover:shadow-xl active:scale-95">
                 Intern
               </Button>
-              <Button className="rounded-md bg-red-600 px-6 sm:px-8 py-3 sm:py-6 text-sm sm:text-base font-medium text-white transition-all hover:scale-105 hover:bg-red-700 hover:shadow-xl active:scale-95">
+              <Button className="rounded-md bg-red-600 px-20 py-20 text-sm sm:text-base font-medium text-white transition-all hover:scale-105 hover:bg-red-700 hover:shadow-xl active:scale-95">
                 Employer
               </Button>
             </div>
 
             <div
-              className={`flex flex-wrap gap-8 sm:gap-12 pt-4 transition-all duration-1000 delay-900 ${
+              className={`mt-10 flex flex-wrap gap-8 sm:gap-12 pt-4 transition-all duration-1000 delay-900 ${
                 isVisible
                   ? "translate-y-0 opacity-100"
                   : "translate-y-10 opacity-0"
@@ -90,7 +90,7 @@ export function HeroSection() {
 
           {/* Right Image */}
           <div
-            className={`relative transition-all duration-1000 delay-500 ${
+            className={`mt-10 md:mt-0 relative transition-all duration-1000 delay-500 ${
               isVisible
                 ? "translate-x-0 opacity-100"
                 : "translate-x-10 opacity-0"
@@ -146,35 +146,35 @@ export function HeroSection() {
             `}</style>
 
             <div className="overflow-hidden">
-              <div className="logo-track">
+              <div className="logo-track h-60 w-full">
                 {/* One logical set of logos */}
-                <div className="flex gap-8 sm:gap-12 lg:gap-16">
-                  <div className="flex-shrink-0 flex items-center justify-center h-12 sm:h-14">
+                <div className="flex gap-8 sm:gap-12 lg:gap-16 mt-20">
+                  <div className="flex-shrink-0 flex items-center justify-center h-8 sm:h-10">
                     <LinkedInLogo />
                   </div>
-                  <div className="flex-shrink-0 flex items-center justify-center h-12 sm:h-14">
+                  <div className="flex-shrink-0 flex items-center justify-center h-8 sm:h-10">
                     <AsanaLogo />
                   </div>
-                  <div className="flex-shrink-0 flex items-center justify-center h-12 sm:h-14">
+                  <div className="flex-shrink-0 flex items-center justify-center h-8 sm:h-10">
                     <ToyotaLogo />
                   </div>
-                  <div className="flex-shrink-0 flex items-center justify-center h-12 sm:h-14">
+                  <div className="flex-shrink-0 flex items-center justify-center h-8 sm:h-10">
                     <ZoomLogo />
                   </div>
                 </div>
 
                 {/* Repeated visually via CSS animation */}
-                <div className="flex gap-8 sm:gap-12 lg:gap-16">
-                  <div className="flex-shrink-0 flex items-center justify-center h-12 sm:h-14">
+                <div className="flex gap-8 sm:gap-12 lg:gap-16 mt-20">
+                  <div className="flex-shrink-0 flex items-center justify-center h-8 sm:h-10">
                     <LinkedInLogo />
                   </div>
-                  <div className="flex-shrink-0 flex items-center justify-center h-12 sm:h-14">
+                  <div className="flex-shrink-0 flex items-center justify-center h-8 sm:h-10">
                     <AsanaLogo />
                   </div>
-                  <div className="flex-shrink-0 flex items-center justify-center h-12 sm:h-14">
+                  <div className="flex-shrink-0 flex items-center justify-center h-8 sm:h-10">
                     <ToyotaLogo />
                   </div>
-                  <div className="flex-shrink-0 flex items-center justify-center h-12 sm:h-14">
+                  <div className="flex-shrink-0 flex items-center justify-center h-8 sm:h-10">
                     <ZoomLogo />
                   </div>
                 </div>

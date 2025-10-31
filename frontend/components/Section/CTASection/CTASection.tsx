@@ -1,13 +1,13 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import Image from "next/image"
+import Link from "next/link";
+import Image from "next/image";
 
 export function CTASection() {
   return (
     <section className="w-full px-4 py-10 bg-white flex justify-center">
       <div
-        className="relative overflow-hidden bg-gradient-to-r from-red-500 to-red-600 rounded-[40px] flex items-center justify-between px-10 md:px-16"
+        className="relative overflow-hidden bg-gradient-to-r from-thrive-red to-thrive-red/70 rounded-[40px] flex items-center justify-between px-10 md:px-16"
         style={{
           width: "1190px",
           height: "450px",
@@ -20,7 +20,8 @@ export function CTASection() {
           </h2>
 
           <p className="text-sm md:text-base text-red-100 mb-5 leading-relaxed">
-            Get started with Thriving Talents today and recruit top talents in just 2 hours. No credit card required.
+            Get started with Thriving Talents today and recruit top talents in
+            just 2 hours. No credit card required.
           </p>
 
           <Link
@@ -32,12 +33,12 @@ export function CTASection() {
         </div>
 
         {/* Right Image — Inside but Slightly Cropped */}
-        <div className="relative w-[400px] h-[400px] flex justify-end items-end">
+        <div className="mt-[250px] relative w-[500px] h-[500px] flex justify-end items-end">
           <Image
             src="/woman1.png"
             alt="Woman in magenta"
-            width={400}
-            height={400}
+            width={800}
+            height={800}
             className="object-cover translate-y-10"
           />
         </div>
@@ -60,5 +61,5 @@ export function CTASection() {
         }
       `}</style>
     </section>
-  )
+  );
 }
