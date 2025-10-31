@@ -6,10 +6,12 @@
 import Link from "next/link";
 
 import { useEffect, useState } from "react";
+
 import Image from "next/image";
 import thrivingTalentLogo from "@/public/thrivingTalentLogo.png";
-// import HamburgerNav from "./ThrivingTalentNav/HamburgerNav";
-// import NavMenu from "./ThrivingTalentNav/NavMenu";
+import HamburgerNav from "./HamburgerNav/HamburgerNav";
+import NavMenu from "./NavMenu/NavMenu";
+import { Button } from "@/components/ui/button";
 
 const NavBar = () => {
   const [showBackground, setShowBackground] = useState(false);
@@ -41,13 +43,17 @@ const NavBar = () => {
           {/* <Logo /> */}
 
           <Link href="/" className="flex">
-              <Image src={thrivingTalentLogo} alt="Thriving Talent logo" width={50} />
-            <span
+            <Image
+              src={thrivingTalentLogo}
+              alt="ThrivingTalent Logo"
+              width={50}
+            />
+            {/* <span
               className="mt-3 font-bold"
               style={{ color: showBackground ? "white" : "black" }}
             >
-              Thriving Talent
-            </span>
+              Swiftbooked
+            </span> */}
           </Link>
         </div>
         <div className="md:flex md:flex-row md:justify-center md:items-center">
@@ -58,22 +64,24 @@ const NavBar = () => {
             <li className="transition ease-in-out delay-150 hover:-translate-x-1 hover:text-btn duration-300 mx-1.5 sm:mx-6">
               <Link href="/pricing">Pricing</Link>
             </li>
-            {/* <li className="transition ease-in-out delay-150 hover:-translate-x-1 hover:text-btn duration-300 mx-1.5 sm:mx-6">
+            <li className="transition ease-in-out delay-150 hover:-translate-x-1 hover:text-btn duration-300 mx-1.5 sm:mx-6">
               <NavMenu showBackground={showBackground} />
-            </li> */}
+            </li>
             <li className="transition ease-in-out delay-150 hover:-translate-x-1 hover:text-btn duration-300 mx-1.5 sm:mx-6">
               <Link href="/customers">Customers</Link>
             </li>
           </ul>
         </div>
-        {/* <div className="py-4">
-          <RoundedThrivingTalentButton text="Log in" path="/signin" />
-        </div> */}
+        <div className="py-4">
+          <Button>
+            <Link href="/login">Sign In</Link>
+          </Button>
+        </div>
       </nav>
 
-      {/* <div className="md:hidden">
+      <div className="md:hidden">
         <HamburgerNav showBackground={showBackground} />
-      </div> */}
+      </div>
     </div>
   );
 };

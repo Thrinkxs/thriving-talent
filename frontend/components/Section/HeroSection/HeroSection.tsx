@@ -8,8 +8,7 @@ import {
   AsanaLogo,
   ToyotaLogo,
   ZoomLogo,
-} from "../../../components/thriving-talent-ui/company-logos";
-import { Header } from "./header";
+} from "../../thriving-talent-ui/company-logos";
 
 export function HeroSection() {
   const [isVisible, setIsVisible] = useState(false);
@@ -20,8 +19,6 @@ export function HeroSection() {
 
   return (
     <div className="min-h-screen bg-white font-sans">
-      <Header />
-
       {/* Hero Section */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 py-12 sm:py-16 lg:py-20">
         <div className="grid items-center gap-8 sm:gap-12 lg:grid-cols-2">

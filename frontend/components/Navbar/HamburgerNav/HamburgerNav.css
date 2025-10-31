@@ -1,0 +1,103 @@
+*,
+*:before,
+*:after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  color: #7366fb;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  /* padding: 15px 15px; */
+
+  .logo-container {
+    overflow-y: hidden;
+
+    h1 {
+      text-transform: uppercase;
+      font-size: 15px;
+    }
+  }
+
+  .menu-container {
+    overflow-y: hidden;
+
+    div {
+      text-transform: uppercase;
+      font-size: 13px;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  /* display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  */
+  /* align-items: center; */
+  background-color: #040220;
+
+  ul {
+    list-style: none;
+    margin-top: 40px;
+
+    li {
+      margin: 20px 0;
+      overflow-y: hidden;
+      user-select: none;
+
+      div {
+        text-align: left;
+        text-transform: capitalize;
+        margin: 0px 0px 0px 40px;
+        /* font-size: 34px; */
+      }
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+
+  .contact {
+    margin-top: 80px;
+    display: flex;
+
+    h5 {
+      font-weight: normal;
+
+      &:first-of-type {
+        margin-right: 40px;
+      }
+    }
+  }
+}
+
+.mobile-nav-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 20px 0px 20px;
+}
+
+.login-btn {
+  display: flex;
+  justify-content: start;
+  margin-top: 40px;
+  margin-left: 40px;
+}
