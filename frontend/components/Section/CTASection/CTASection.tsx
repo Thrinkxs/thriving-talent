@@ -2,10 +2,11 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { Button } from "@/components/ui/button";
 
 export function CTASection() {
   return (
-    <section className="w-full px-4 py-10 bg-white flex justify-center">
+    <section className="w-full py-10 bg-white flex justify-center">
       <div
         className="relative overflow-hidden bg-gradient-to-r from-thrive-red to-thrive-red/70 rounded-[40px] flex items-center justify-between px-10 md:px-16"
         style={{
@@ -24,16 +25,15 @@ export function CTASection() {
             just 2 hours. No credit card required.
           </p>
 
-          <Link
-            href="/"
-            className="inline-flex items-center justify-center px-6 py-3 bg-black hover:bg-gray-900 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 w-fit"
-          >
-            Start for free
+          <Link href="/">
+            <Button className="inline-flex items-center justify-center px-6 py-3 bg-black hover:bg-gray-900 text-white font-semibold rounded transition-all duration-300 transform hover:scale-105 w-fit">
+              Start for free
+            </Button>
           </Link>
         </div>
 
         {/* Right Image — Inside but Slightly Cropped */}
-        <div className="mt-[250px] relative w-[500px] h-[500px] flex justify-end items-end">
+        <div className="hidden mt-[250px] relative w-[500px] h-[500px] lg:flex justify-end items-end">
           <Image
             src="/woman1.png"
             alt="Woman in magenta"

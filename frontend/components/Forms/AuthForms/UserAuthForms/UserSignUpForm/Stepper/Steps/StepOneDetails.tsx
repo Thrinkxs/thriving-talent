@@ -1,0 +1,131 @@
+"use client";
+import { useFormContext } from "react-hook-form";
+import {
+  FormField,
+  FormItem,
+  FormControl,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { DatePicker } from "@/components/ui/date-picker";
+
+export default function StepOneDetails({ nextStep }: { nextStep: () => void }) {
+  const { control } = useFormContext();
+
+  return (
+    <div className="space-y-5">
+      <h2 className="text-xl font-semibold text-center">
+        Personal Information
+      </h2>
+
+      <FormField
+        name="name"
+        control={control}
+        render={({ field }) => (
+          <FormItem>
+            <FormControl>
+              <Input
+                className="rounded text-gray-500"
+                placeholder="Full Name"
+                {...field}
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        name="email"
+        control={control}
+        render={({ field }) => (
+          <FormItem>
+            <FormControl>
+              <Input
+                className="rounded text-gray-500"
+                placeholder="Email"
+                type="email"
+                {...field}
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        name="phone"
+        control={control}
+        render={({ field }) => (
+          <FormItem>
+            <FormControl>
+              <Input
+                className="rounded text-gray-500"
+                placeholder="Phone Number"
+                {...field}
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+
+      <FormField
+        control={control}
+        name="birthday"
+        render={({ field }) => (
+          <FormItem className="flex flex-col">
+            <FormControl>
+              <DatePicker
+                value={field.value || null}
+                onChange={field.onChange}
+                label="When's your birthday?"
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+
+      <FormField
+        control={control}
+        name="sex"
+        render={({ field }) => (
+          <FormItem>
+            <FormControl>
+              <Select onValueChange={field.onChange}>
+                <SelectTrigger className="md:h-12 w-full rounded text-gray-500">
+                  <SelectValue placeholder="Select gender" />
+                </SelectTrigger>
+                <SelectContent className="z-50 bg-white">
+                  <SelectGroup>
+                    <SelectLabel>Sex</SelectLabel>
+                    <SelectItem value="male">
+                      <div className="flex gap-2">
+                        <div> Male</div>{" "}
+                      </div>
+                    </SelectItem>
+
+                    <SelectItem value="female">
+                      <div className="flex gap-2">
+                        <div> Female</div>{" "}
+                      </div>
+                    </SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+    </div>
+  );
+}

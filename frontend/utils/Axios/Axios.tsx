@@ -1,6 +1,5 @@
 // "use"
 import axios from "axios";
-import useAuthStore from "@/lib/store/auth-store/auth-store";
 import Cookies from "js-cookie";
 
 export const BASE_URL =
@@ -50,7 +49,6 @@ Axios.interceptors.response.use(
         // return Axios(originalRequest);
       } catch (err) {
         console.log("an error occured", err);
-        useAuthStore.getState().logout();
         window.location.replace("/signin");
       }
     }

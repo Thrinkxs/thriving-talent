@@ -35,7 +35,7 @@ const NavBar = () => {
 
   return (
     <div
-      className="px-4 sm:px-6 md:px-20 md:pr-10 bg-white sticky top-0 z-50 py-10"
+      className="px-6 md:pr-10 bg-white sticky top-0 z-50 py-2"
       style={{ backgroundColor: showBackground ? "#040024" : "white" }}
     >
       <nav className="hidden md:flex md:flex-row justify-between items-center">
@@ -80,7 +80,7 @@ const NavBar = () => {
         </div>
         <div className="py-4">
           <Link href="/login">
-            <Button className="bg-thrive-blue hover:bg-thrive-blue/80 px-20 py-20 cursor-pointer">
+            <Button className="bg-thrive-blue hover:bg-thrive-blue/80 px-10 py-2 cursor-pointer text-white rounded">
               Sign In
             </Button>
           </Link>

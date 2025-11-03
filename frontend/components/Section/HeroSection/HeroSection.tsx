@@ -18,9 +18,9 @@ export function HeroSection() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white font-sans mt-20">
+    <div className="min-h-screen bg-white font-sans">
       {/* Hero Section */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 py-12 sm:py-16 lg:py-20">
+      <section className="mx-auto max-w-7xl py-12">
         <div className="grid items-center gap-8 sm:gap-12 lg:grid-cols-2">
           {/* Left Content */}
           <div className="space-y-6 sm:space-y-8">
@@ -52,10 +52,10 @@ export function HeroSection() {
                   : "translate-y-10 opacity-0"
               }`}
             >
-              <Button className="rounded-md bg-blue-600 px-20 py-20 text-sm sm:text-base font-medium text-white transition-all hover:scale-105 hover:bg-blue-700 hover:shadow-xl active:scale-95">
+              <Button className="rounded bg-blue-600 px-10 py-2 text-sm sm:text-base font-medium text-white transition-all hover:scale-105 hover:bg-blue-700 hover:shadow-xl active:scale-95">
                 Intern
               </Button>
-              <Button className="rounded-md bg-red-600 px-20 py-20 text-sm sm:text-base font-medium text-white transition-all hover:scale-105 hover:bg-red-700 hover:shadow-xl active:scale-95">
+              <Button className="rounded bg-red-600 px-10 py-2 text-sm sm:text-base font-medium text-white transition-all hover:scale-105 hover:bg-red-700 hover:shadow-xl active:scale-95">
                 Employer
               </Button>
             </div>
@@ -146,9 +146,9 @@ export function HeroSection() {
             `}</style>
 
             <div className="overflow-hidden">
-              <div className="logo-track h-60 w-full">
+              <div className="logo-track h-20 w-full">
                 {/* One logical set of logos */}
-                <div className="flex gap-8 sm:gap-12 lg:gap-16 mt-20">
+                <div className="flex gap-8 mt-5">
                   <div className="flex-shrink-0 flex items-center justify-center h-8 sm:h-10">
                     <LinkedInLogo />
                   </div>
@@ -164,7 +164,7 @@ export function HeroSection() {
                 </div>
 
                 {/* Repeated visually via CSS animation */}
-                <div className="flex gap-8 sm:gap-12 lg:gap-16 mt-20">
+                <div className="flex gap-8 mt-5">
                   <div className="flex-shrink-0 flex items-center justify-center h-8 sm:h-10">
                     <LinkedInLogo />
                   </div>

@@ -68,7 +68,7 @@ export function TestimonialsSection() {
   }, []);
 
   return (
-    <section className="w-full px-4 py-16 md:py-24 bg-white relative mt-40">
+    <section className="w-full py-16 md:py-24 bg-white relative mt-10">
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
@@ -87,7 +87,7 @@ export function TestimonialsSection() {
           </h2>
         </div>
 
-        <div className="hidden md:grid grid-cols-2 gap-8 md:gap-10 mt-96">
+        <div className="hidden md:grid grid-cols-2 gap-8 md:gap-10 mt-4">
           {testimonials.map((testimonial, index) => (
             <div
               key={testimonial.id}
@@ -95,18 +95,18 @@ export function TestimonialsSection() {
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               <div
-                className="mt-40 bg-white rounded-2xl p-6 md:p-8 relative"
+                className="mt-4 bg-white rounded-2xl p-6 md:p-8 relative"
                 style={{
                   boxShadow: "0px 94px 200px 0px #15151526",
                 }}
               >
-                <div className="absolute -top-20 left-6 md:left-8">
+                <div className="absolute -top-10 left-6 md:left-8">
                   <Image
                     src={testimonial.image || "/placeholder.svg"}
                     alt={testimonial.name}
                     width={200}
                     height={200}
-                    className="w-60 h-60 rounded-full object-cover border-4 border-white"
+                    className="w-20 h-20 rounded-full object-cover border-4 border-white"
                   />
                 </div>
 
@@ -175,7 +175,7 @@ export function TestimonialsSection() {
                             alt={testimonial.name}
                             width={200}
                             height={200}
-                            className="w-40 h-40  rounded-full object-cover border-4 border-white"
+                            className="w-20 h-20  rounded-full object-cover border-4 border-white"
                           />
                         </div>
 

@@ -15,7 +15,7 @@ export default function BaseLayout({
     <html lang="en">
       <body>
         <NavBar />
-        <div className={`${_geist.className} px-6 sm:px-20`}>{children}</div>
+        <div className={`${_geist.className} px-6`}>{children}</div>
         <Footer />
 
         <Analytics />

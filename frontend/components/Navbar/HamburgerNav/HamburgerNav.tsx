@@ -199,7 +199,7 @@ const HamburgerNav = ({ showBackground }: HamburgerNavProps) => {
           </motion.ul>
           <motion.div variants={fadeInVariant} className="login-btn">
             <Link href="/login">
-              <Button className="bg-thrive-blue px-20 py-20 hover:bg-thrive-blue/80 cursor-pointer">
+              <Button className="rounded text-white bg-thrive-blue px-10 py-2 hover:bg-thrive-blue/80 cursor-pointer">
                 Login
               </Button>
             </Link>

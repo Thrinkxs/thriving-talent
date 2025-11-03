@@ -48,7 +48,7 @@ export function WhyChooseUs() {
         <div className="absolute inset-0 bg-gradient-to-b from-white via-transparent to-white pointer-events-none" />
       </div>
 
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 mt-20">
+      <div className="relative mx-auto max-w-7xl">
         {/* Heading */}
         <div
           className={`mb-8 sm:mb-12 lg:mb-16 transition-all duration-1000 ${
@@ -63,7 +63,7 @@ export function WhyChooseUs() {
         <div className="grid gap-8 sm:gap-12 lg:gap-16 lg:grid-cols-3 items-end">
           {/* Left Content */}
           <div
-            className={`mt-20 md:mt-0 lg:col-span-1 flex flex-col justify-end transition-all duration-1000 delay-300 ${
+            className={`lg:col-span-1 flex flex-col justify-end transition-all duration-1000 delay-300 ${
               isVisible
                 ? "translate-x-0 opacity-100"
                 : "-translate-x-10 opacity-0"
@@ -95,7 +95,7 @@ export function WhyChooseUs() {
           </div>
 
           {/* Right Stats Grid */}
-          <div className="mt-20 md:mt-0 lg:col-span-2">
+          <div className="lg:col-span-2">
             <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 lg:grid-rows-2">
               {stats.map((stat, index) => (
                 <div
@@ -108,7 +108,7 @@ export function WhyChooseUs() {
                     isVisible
                       ? "translate-y-0 opacity-100"
                       : "translate-y-10 opacity-0"
-                  } mt-20`}
+                  }`}
                   style={{ transitionDelay: `${500 + index * 200}ms` }}
                 >
                   <div className="space-y-2 sm:space-y-3">
