@@ -1,0 +1,168 @@
+/**
+ * This is the login form for the users
+ */
+
+"use client";
+
+import Link from "next/link";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { userSignInSchema } from "@/lib/schema";
+import { Axios } from "@/utils/Axios/Axios";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import { useState } from "react";
+import { TbLoader2 } from "react-icons/tb";
+import { MailIcon, Eye } from "lucide-react";
+import { PasswordInput } from "../../../../ui/password-input";
+import { LuLoader } from "react-icons/lu";
+import { IconInput } from "../../../../ui/icon-input";
+import Cookies from "js-cookie";
+
+const RecruiterSignInForm = () => {
+  const [loading, isLoading] = useState<Boolean>(false);
+
+  const router = useRouter();
+  const form = useForm<z.infer<typeof userSignInSchema>>({
+    resolver: zodResolver(userSignInSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  const onSubmit = async (values: z.infer<typeof userSignInSchema>) => {
+    isLoading(true);
+    try {
+      const response = await Axios.post("/api/business/login", values);
+      if (response.status === 200) {
+        toast.success("Successfully signed in. Welcome");
+        const data = await response.data;
+        console.log("response data", data);
+        Cookies.set("access-token", data.business.token);
+        Cookies.set("refresh-token", data.business.refreshToken, {
+          httOnly: true,
+        });
+
+        router.push("/dashboard");
+      }
+    } catch (error: any) {
+      toast.error(error.response?.data?.message || "Error logging in");
+    } finally {
+      isLoading(false);
+    }
+  };
+
+  return (
+    <section className="flex justify-center pt-[100px] bg-thrive-dark-blue min-h-screen text-white">
+      <div>
+        <div className="py-6 px-10 w-full md:w-[650px] shadow-md rounded-md">
+          <h1 className="text-4xl font-semibold text-center mb-5 text-white">
+            Welcome back
+          </h1>
+          <div className="flex justify-center">
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-4 md:w-[400px]"
+              >
+                <div className="grid gap-7">
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <Input
+                            placeholder="Email"
+                            {...field}
+                            type="email"
+                            suffix={<MailIcon />}
+                            className="rounded"
+                          />
+                        </FormControl>
+
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="password"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <PasswordInput
+                            placeholder="Password "
+                            {...field}
+                            autoComplete="off"
+                            className="rounded"
+                          />
+                        </FormControl>
+
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div className="flex justify-center pt-2">
+                  {!loading ? (
+                    <Button
+                      type="submit"
+                      className="rounded w-full px-10 bg-thrive-blue hover:bg-thrive-blue/90"
+                    >
+                      Sign In
+                    </Button>
+                  ) : (
+                    <Button
+                      type="button"
+                      className="rounded w-full px-10 bg-thrive-blue hover:bg-thrive-blue/90"
+                    >
+                      <LuLoader className="animate-spin" />
+                    </Button>
+                  )}
+                </div>
+              </form>
+            </Form>
+          </div>
+        </div>
+        <div className="flex justify-center">
+          <div className="flex justify-start md:w-[400px]">
+            <Link
+              href="/forgot-password"
+              className="text-my-gray-text mt-1 hover:text-blue-400 text-xs"
+            >
+              Forgot password?
+            </Link>
+          </div>
+        </div>
+        <div className="flex justify-center">
+          <div className="flex justify-start mt-4 md:w-[400px] text-xs">
+            <p className="text-my-gray-text">Don&#39;t have an account? </p>
+            <div className="ml-3 font-bold">
+              <Link href="/recruiter/signup" className="hover:text-blue-400">
+                {" "}
+                Sign up
+              </Link>
+              <hr className=" h-[2px] bg-black " />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default RecruiterSignInForm;
