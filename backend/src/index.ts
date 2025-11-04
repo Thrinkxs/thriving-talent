@@ -63,7 +63,7 @@ cacheConnection()
 // KeepRenderAwake();
 
 app.get("/", (req: Request, res: Response) => {
-  res.send("Express server is running on Azure Cloud");
+  res.send("Express server is running on Render Cloud");
 });
 
 app.use("/api/client", clientRoute);
