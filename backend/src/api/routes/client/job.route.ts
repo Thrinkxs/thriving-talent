@@ -3,7 +3,7 @@ import { employerVerification } from "../../middleware/AuthenticateUser";
 import {
   getJobsController,
   createJobController,
-  getJobController,
+  getPersonalJobs,
   updateJobController,
   deleteJobController,
 } from "../../controller/client/job.controller";
@@ -16,7 +16,7 @@ router.use(employerVerification);
 router
   .route("/personal")
   .post(createJobController)
-  .get(getJobController)
+  .get(getPersonalJobs)
   .patch(updateJobController)
   .delete(deleteJobController);
 

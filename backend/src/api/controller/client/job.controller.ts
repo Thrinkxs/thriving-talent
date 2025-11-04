@@ -9,7 +9,7 @@ export const createJobController = async (
   res: Response,
   next: NextFunction
 ) => {
-  const account = req.account!;
+  const account = req.employer!;
   const payload = req.body;
   try {
     const response = await jobService.createJob(account, payload);
@@ -22,12 +22,12 @@ export const createJobController = async (
   }
 };
 
-export const getJobController = async (
+export const getPersonalJobs = async (
   req: ExtendedRequest,
   res: Response,
   next: NextFunction
 ) => {
-  const account = req.account!;
+  const account = req.employer!;
   const filter = req.query as IJobFilter;
   try {
     const response = await jobService.getPersonalJobs(account, filter);
@@ -45,7 +45,7 @@ export const updateJobController = async (
   res: Response,
   next: NextFunction
 ) => {
-  const account = req.account!;
+  const account = req.employer!;
   const payload = req.body;
   try {
     const response = await jobService.updateJob(account, payload);
@@ -63,7 +63,7 @@ export const deleteJobController = async (
   res: Response,
   next: NextFunction
 ) => {
-  const account = req.account!;
+  const account = req.employer!;
   const { jobID } = req.query as { jobID: string };
   try {
     await jobService.deleteJob(account, jobID);
