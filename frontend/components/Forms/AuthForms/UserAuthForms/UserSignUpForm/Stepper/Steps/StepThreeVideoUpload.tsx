@@ -71,12 +71,6 @@ export default function StepThreeVideoUpload({ nextStep, prevStep }: any) {
           {errors.video.message as string}
         </p>
       )}
-
-      {errors.video && (
-        <p className="text-red-500 text-sm mt-2">
-          {errors.video.message as string}
-        </p>
-      )}
     </div>
   );
 }

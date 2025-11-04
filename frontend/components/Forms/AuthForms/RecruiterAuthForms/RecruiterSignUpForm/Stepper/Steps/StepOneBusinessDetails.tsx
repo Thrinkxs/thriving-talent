@@ -1,5 +1,5 @@
 "use client";
-import { useFormContext } from "react-hook-form";
+import { Form, useFormContext } from "react-hook-form";
 import {
   FormField,
   FormItem,
@@ -17,27 +17,32 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { DatePicker } from "@/components/ui/date-picker";
+import {
+  businessIndustries,
+  businessSectors,
+} from "@/lib/recruiterOnboardingData";
 
-export default function StepOneDetails({ nextStep }: { nextStep: () => void }) {
+export default function StepOneBusinessDetails({
+  nextStep,
+}: {
+  nextStep: () => void;
+}) {
   const { control } = useFormContext();
 
   return (
     <div className="space-y-5">
-      <h2 className="text-xl font-semibold text-center">
-        Personal Information
-      </h2>
+      <h2 className="text-xl font-semibold text-center">Business Details</h2>
 
       <FormField
-        name="name"
+        name="businessName"
         control={control}
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Full Name</FormLabel>
+            <FormLabel>Business Name</FormLabel>
             <FormControl>
               <Input
                 className="rounded text-gray-500"
-                placeholder="Full Name"
+                placeholder="Business Name"
                 {...field}
               />
             </FormControl>
@@ -46,15 +51,15 @@ export default function StepOneDetails({ nextStep }: { nextStep: () => void }) {
         )}
       />
       <FormField
-        name="email"
+        name="businessEmail"
         control={control}
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Email</FormLabel>
+            <FormLabel>Business Email</FormLabel>
             <FormControl>
               <Input
                 className="rounded text-gray-500"
-                placeholder="Email"
+                placeholder="Business Email"
                 type="email"
                 {...field}
               />
@@ -64,15 +69,15 @@ export default function StepOneDetails({ nextStep }: { nextStep: () => void }) {
         )}
       />
       <FormField
-        name="phone"
+        name="businessRegistrationNumber"
         control={control}
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Phone Number</FormLabel>
+            <FormLabel>Business Registration Number</FormLabel>
             <FormControl>
               <Input
                 className="rounded text-gray-500"
-                placeholder="Phone Number"
+                placeholder="Business Registration Number"
                 {...field}
               />
             </FormControl>
@@ -83,16 +88,26 @@ export default function StepOneDetails({ nextStep }: { nextStep: () => void }) {
 
       <FormField
         control={control}
-        name="birthday"
+        name="businessSector"
         render={({ field }) => (
-          <FormItem className="flex flex-col">
-            <FormLabel>Date of Birth</FormLabel>
+          <FormItem>
+            <FormLabel>Business Sector</FormLabel>
             <FormControl>
-              <DatePicker
-                value={field.value || null}
-                onChange={field.onChange}
-                label="When's your birthday?"
-              />
+              <Select onValueChange={field.onChange}>
+                <SelectTrigger className="md:h-12 w-full rounded text-gray-500">
+                  <SelectValue placeholder="Select your business sector" />
+                </SelectTrigger>
+                <SelectContent className="z-50 bg-white">
+                  <SelectGroup>
+                    <SelectLabel>Business Sector</SelectLabel>
+                    {businessSectors.map((sector) => (
+                      <SelectItem key={sector} value={sector}>
+                        {sector}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -101,29 +116,23 @@ export default function StepOneDetails({ nextStep }: { nextStep: () => void }) {
 
       <FormField
         control={control}
-        name="sex"
+        name="businessIndustry"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Sex</FormLabel>
+            <FormLabel>Business Industry</FormLabel>
             <FormControl>
               <Select onValueChange={field.onChange}>
                 <SelectTrigger className="md:h-12 w-full rounded text-gray-500">
-                  <SelectValue placeholder="Select gender" />
+                  <SelectValue placeholder="Select your business industry" />
                 </SelectTrigger>
                 <SelectContent className="z-50 bg-white">
                   <SelectGroup>
-                    <SelectLabel>Sex</SelectLabel>
-                    <SelectItem value="male">
-                      <div className="flex gap-2">
-                        <div> Male</div>{" "}
-                      </div>
-                    </SelectItem>
-
-                    <SelectItem value="female">
-                      <div className="flex gap-2">
-                        <div> Female</div>{" "}
-                      </div>
-                    </SelectItem>
+                    <SelectLabel>Business Industry</SelectLabel>
+                    {businessIndustries.map((industry) => (
+                      <SelectItem key={industry} value={industry}>
+                        {industry}
+                      </SelectItem>
+                    ))}
                   </SelectGroup>
                 </SelectContent>
               </Select>

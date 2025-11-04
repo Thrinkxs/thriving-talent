@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/form";
 import { PasswordInput } from "@/components/ui/password-input";
 
-export default function StepFourPassword({ prevStep }: any) {
+export default function StepThreePassword({ prevStep }: any) {
   const { control } = useFormContext();
 
   return (
@@ -20,7 +20,7 @@ export default function StepFourPassword({ prevStep }: any) {
         control={control}
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Password</FormLabel>
+            <FormLabel> Password </FormLabel>
             <FormControl>
               <PasswordInput placeholder="Password" {...field} />
             </FormControl>

@@ -12,14 +12,12 @@ export default function BaseLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body>
-        <NavBar />
-        <div className={`${_geist.className} px-6`}>{children}</div>
-        <Footer />
+    <>
+      <NavBar />
+      <div className={`${_geist.className} px-6`}>{children}</div>
+      <Footer />
 
-        <Analytics />
-      </body>
-    </html>
+      <Analytics />
+    </>
   );
 }

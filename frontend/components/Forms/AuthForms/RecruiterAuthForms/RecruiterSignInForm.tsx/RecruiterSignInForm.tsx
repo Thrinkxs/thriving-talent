@@ -31,7 +31,7 @@ import { LuLoader } from "react-icons/lu";
 import { IconInput } from "../../../../ui/icon-input";
 import Cookies from "js-cookie";
 
-const UserSignInForm = () => {
+const RecruiterSignInForm = () => {
   const [loading, isLoading] = useState<Boolean>(false);
 
   const router = useRouter();
@@ -152,7 +152,7 @@ const UserSignInForm = () => {
           <div className="flex justify-start mt-4 md:w-[400px] text-xs">
             <p className="text-my-gray-text">Don&#39;t have an account? </p>
             <div className="ml-3 font-bold">
-              <Link href="/user/signup" className="hover:text-blue-400">
+              <Link href="/recruiter/signup" className="hover:text-blue-400">
                 {" "}
                 Sign up
               </Link>
@@ -165,4 +165,4 @@ const UserSignInForm = () => {
   );
 };
 
-export default UserSignInForm;
+export default RecruiterSignInForm;

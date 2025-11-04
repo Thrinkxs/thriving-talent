@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 
 export default function RoleForm() {
   const router = useRouter();
@@ -26,33 +27,33 @@ export default function RoleForm() {
       </h1>
 
       <div className="flex flex-col gap-4 w-full max-w-sm">
-        <button
+        <Button
           onClick={() => setSelectedRole("intern")}
           className={`w-full py-3 rounded-lg border-2 font-semibold transition-all duration-200
             ${
               selectedRole === "intern"
-                ? "bg-[#9ABEF0] border-[#D1E9FF] text-white"
+                ? "bg-[#9ABEF0] border-[#D1E9FF] text-white hover:bg-[#9ABEF0]/80"
                 : "border-[#D1E9FF] text-thrive-blue bg-transparent hover:bg-blue-50"
             }`}
         >
           I’m an Intern
-        </button>
+        </Button>
 
-        <button
+        <Button
           onClick={() => setSelectedRole("employer")}
           className={`w-full py-3 rounded-lg border-2 font-semibold transition-all duration-200
             ${
               selectedRole === "employer"
-                ? "bg-[#9ABEF0] border-[#D1E9FF] text-white"
+                ? "bg-[#9ABEF0] border-[#D1E9FF] text-white hover:bg-[#9ABEF0]/80"
                 : "border-[#D1E9FF] text-thrive-blue bg-transparent hover:bg-blue-50"
             }`}
         >
           I’m an Employer
-        </button>
+        </Button>
       </div>
 
-      {/* NEXT BUTTON */}
-      <button
+      {/* Next Button */}
+      <Button
         onClick={handleNext}
         disabled={!selectedRole}
         className={`mt-8 w-full max-w-sm py-3 rounded-lg font-semibold transition-colors duration-200
@@ -63,7 +64,7 @@ export default function RoleForm() {
           }`}
       >
         Next
-      </button>
+      </Button>
     </div>
   );
 }

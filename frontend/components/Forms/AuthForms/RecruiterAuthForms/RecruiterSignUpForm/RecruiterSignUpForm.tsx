@@ -12,42 +12,49 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
 import { Axios } from "@/utils/Axios/Axios";
-import { userSignUpSchema } from "@/lib/schema";
+import { recruiterSignUpSchema } from "@/lib/schema";
 import { Stepper } from "./Stepper/Stepper";
-import StepOneDetails from "./Stepper/Steps/StepOneDetails";
-import StepTwoCVUpload from "./Stepper/Steps/StepTwoCVUpload";
-import StepThreeVideoUpload from "./Stepper/Steps/StepThreeVideoUpload";
-import StepFourPassword from "./Stepper/Steps/StepFourPassword";
+import StepOneDetails from "./Stepper/Steps/StepOneBusinessDetails";
+import StepTwoBusinessInfo from "./Stepper/Steps/StepTwoBusinessInfo";
+import StepFourPassword from "./Stepper/Steps/StepThreePassword";
 import Cookies from "js-cookie";
 import Link from "next/link";
 
-export default function UserSignUpForm() {
-  const methods = useForm<z.infer<typeof userSignUpSchema>>({
-    resolver: zodResolver(userSignUpSchema),
+export default function RecruiterSignUpForm() {
+  const methods = useForm<z.infer<typeof recruiterSignUpSchema>>({
+    resolver: zodResolver(recruiterSignUpSchema),
     mode: "onChange",
     defaultValues: {
-      name: "",
-      email: "",
-      phone: "",
-      birthday: undefined,
-      sex: undefined,
-      cv: undefined,
-      video: undefined,
+      businessName: "",
+      businessEmail: "",
+      businessRegistrationNumber: "",
+      businessIndustry: "",
+      businessSector: "",
+      businessRole: "",
+      employees: "",
+      businessAddress: "",
       password: "",
       confirmPassword: "",
     },
   });
 
   const [step, setStep] = useState(0);
-  const steps = ["Personal Details", "Upload CV", "Upload Video", "Password"];
+  const steps = ["Business Details", "Business Info", "Password"];
 
   const nextStep = async () => {
-    let stepFields: (keyof z.infer<typeof userSignUpSchema>)[] = [];
+    let stepFields: (keyof z.infer<typeof recruiterSignUpSchema>)[] = [];
 
-    if (step === 0) stepFields = ["name", "email", "phone", "birthday", "sex"];
-    if (step === 1) stepFields = ["cv"];
-    if (step === 2) stepFields = ["video"];
-    if (step === 3) stepFields = ["password", "confirmPassword"];
+    if (step === 0)
+      stepFields = [
+        "businessName",
+        "businessEmail",
+        "businessRegistrationNumber",
+        "businessSector",
+        "businessIndustry",
+      ];
+    if (step === 1)
+      stepFields = ["businessRole", "employees", "businessAddress"];
+    if (step === 2) stepFields = ["password", "confirmPassword"];
 
     const isValid = await methods.trigger(stepFields, { shouldFocus: true });
 
@@ -61,15 +68,17 @@ export default function UserSignUpForm() {
 
   const prevStep = () => setStep((prev) => prev - 1);
 
-  const onSubmit = async (formValues: z.infer<typeof userSignUpSchema>) => {
-    console.log("Submitting form with values:", formValues);
+  const onSubmit = async (
+    formValues: z.infer<typeof recruiterSignUpSchema>
+  ) => {
+    console.log("Submitting form with values recruiter:", formValues);
     const formData = new FormData();
     Object.entries(formValues).forEach(([key, value]) => {
       formData.append(key, value as any);
     });
 
     try {
-      const response = await Axios.post("/api/intern/signup", formData);
+      const response = await Axios.post("/api/employee/signup", formData);
       if (response.status === 201) {
         toast.success("Successfully created your account. Welcome");
         const data = await response.data;
@@ -97,12 +106,9 @@ export default function UserSignUpForm() {
           >
             {step === 0 && <StepOneDetails nextStep={nextStep} />}
             {step === 1 && (
-              <StepTwoCVUpload nextStep={nextStep} prevStep={prevStep} />
+              <StepTwoBusinessInfo nextStep={nextStep} prevStep={prevStep} />
             )}
-            {step === 2 && (
-              <StepThreeVideoUpload nextStep={nextStep} prevStep={prevStep} />
-            )}
-            {step === 3 && <StepFourPassword prevStep={prevStep} />}
+            {step === 2 && <StepFourPassword prevStep={prevStep} />}
 
             <div className="flex justify-between mt-6">
               {step > 0 && (
@@ -138,7 +144,10 @@ export default function UserSignUpForm() {
               <div className="flex justify-start mt-4 md:w-[400px] text-xs">
                 <p className="text-my-gray-text">Already have an account? </p>
                 <div className="ml-3 font-bold">
-                  <Link href="/user/signin" className="hover:text-thrive-blue">
+                  <Link
+                    href="/recruiter/signin"
+                    className="hover:text-thrive-blue"
+                  >
                     {" "}
                     Sign in
                   </Link>

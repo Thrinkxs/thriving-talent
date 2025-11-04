@@ -12,7 +12,6 @@ export const userSignUpSchema = z
     name: z.string().min(2, "Name is required"),
     email: z.string().email("Invalid email"),
     phone: z.string().min(7, "Enter a valid phone number"),
-    // age: z.number().min(1, "Age is required"),
     birthday: z.date({ error: "Birthday is required" }).refine(
       // Checking if the user is of valid age, 18 and above
       (birthday) => {
@@ -31,14 +30,32 @@ export const userSignUpSchema = z
       }
     ),
     sex: z.enum(["male", "female"]),
-    // cv: z.instanceof(File, { message: "Please upload your CV" }),
-    // video: z.instanceof(File, { message: "Please upload your video" }),
     cv: z.any().refine((file) => file instanceof File, {
       message: "CV is required",
     }),
     video: z.any().refine((file) => file instanceof File, {
       message: "Video is required",
     }),
+    password: z.string().min(6, "Password must be at least 6 characters"),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
+
+export const recruiterSignUpSchema = z
+  .object({
+    businessName: z.string().min(2, "Businessn name is required"),
+    businessRegistrationNumber: z
+      .string()
+      .min(2, "Business Registration Number is required"),
+    businessSector: z.string().min(2, "Business sector is required"),
+    businessIndustry: z.string().min(2, "Business industry is required"),
+    businessRole: z.string().min(2, "Role is required"),
+    businessAddress: z.string().min(2, "Address is required"),
+    employees: z.string().min(1, "Number of employees is required"),
+    businessEmail: z.string().email("Invalid email"),
     password: z.string().min(6, "Password must be at least 6 characters"),
     confirmPassword: z.string(),
   })

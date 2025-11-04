@@ -13,17 +13,15 @@ export default function BaseLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body>
-        <div className={`${_geist.className} relative`}>
-          <div className="absolute left-5 top-5">
-            <Logo imageLogoWidth={100} />
-          </div>
-          {children}
+    <>
+      <div className={`${_geist.className} relative`}>
+        <div className="absolute left-5 top-5">
+          <Logo imageLogoWidth={100} />
         </div>
-        <Footer />
-        <Analytics />
-      </body>
-    </html>
+        {children}
+      </div>
+      <Footer />
+      <Analytics />
+    </>
   );
 }
