@@ -1,12 +1,14 @@
 import { Request, Response } from "express";
 import { IEmployer } from "../api/models/Employer";
+import { IIntern } from "../api/models/Intern";
 
 export interface AdminAuthorizationHeader {
   adminID: string;
 }
 
 export interface ExtendedRequest extends Request {
-  account?: IEmployer;
+  employer?: IEmployer;
+  intern?: IIntern;
   //   admin?: IAdmin;
 }
 

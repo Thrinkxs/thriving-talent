@@ -1,19 +1,19 @@
 import { Request, Response, NextFunction } from "express";
-import { EmployerService } from "../../services/client/Employer.Service";
+import { InternService } from "../../services/client/Intern.Service";
 import { ExtendedRequest } from "../../../utils/Interface";
 
-const employerService = new EmployerService();
+const internService = new InternService();
 
 export const getProfileController = async (
   req: ExtendedRequest,
   res: Response,
   next: NextFunction
 ) => {
-  const employer = req.employer!;
+  const intern = req.intern!;
   try {
-    const response = await employerService.getProfile(employer);
+    const response = await internService.getProfile(intern);
     return res.status(200).json({
-      message: "Employer profile retrieved successfully",
+      message: "Intern profile retrieved successfully",
       data: response,
     });
   } catch (error: any) {
@@ -26,10 +26,10 @@ export const updateProfileController = async (
   res: Response,
   next: NextFunction
 ) => {
-  const employer = req.employer!;
+  const intern = req.intern!;
   const payload = req.body;
   try {
-    const response = await employerService.updateProfile(employer, payload);
+    const response = await internService.updateProfile(intern, payload);
     return res
       .status(200)
       .json({ message: "Profile updated successfully", data: response });
@@ -43,10 +43,10 @@ export const updatePasswordController = async (
   res: Response,
   next: NextFunction
 ) => {
-  const employer = req.employer!;
+  const intern = req.intern!;
   const payload = req.body;
   try {
-    const response = await employerService.updatePassword(employer, payload);
+    const response = await internService.updatePassword(intern, payload);
     return res
       .status(200)
       .json({ message: "Password updated successfully", data: response });
@@ -60,9 +60,9 @@ export const deleteProfileController = async (
   res: Response,
   next: NextFunction
 ) => {
-  const employer = req.employer!;
+  const intern = req.intern!;
   try {
-    const response = await employerService.deleteProfile(employer);
+    const response = await internService.deleteProfile(intern);
     return res.status(200).json({ message: "Profile deleted successfully" });
   } catch (error: any) {
     next(error);

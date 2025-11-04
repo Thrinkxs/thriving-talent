@@ -1,9 +1,12 @@
-import { developmentLogger } from "./developmentLogger";
-import { productionLogger } from "./productionLogger";
+import developerLogger from "./developmentLogger";
+import productionLogger from "./productionLogger";
 
-const env = process.env.NODE_ENV || "development";
+let logger: any;
 
-// Export the appropriate logger based on environment
-const logger = env === "production" ? productionLogger : developmentLogger;
+if (process.env.NODE_ENV === "development") {
+  logger = developerLogger();
+} else if (process.env.NODE_ENV === "production") {
+  logger = productionLogger();
+}
 
 export default logger;
