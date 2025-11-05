@@ -30,12 +30,8 @@ export const userSignUpSchema = z
       }
     ),
     sex: z.enum(["male", "female"]),
-    cv: z.any().refine((file) => file instanceof File, {
-      message: "CV is required",
-    }),
-    video: z.any().refine((file) => file instanceof File, {
-      message: "Video is required",
-    }),
+    cv: z.string().min(1, "CV is required"),
+    video: z.string().min(1, "Introduction video is required"),
     password: z.string().min(6, "Password must be at least 6 characters"),
     confirmPassword: z.string(),
   })

@@ -10,7 +10,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-
 import { Axios } from "@/utils/Axios/Axios";
 import { recruiterSignUpSchema } from "@/lib/schema";
 import { Stepper } from "./Stepper/Stepper";
