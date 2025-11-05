@@ -1,11 +1,15 @@
-export default function UserDashboardRootLayout({
+import RecruiterSideBar from "@/components/ThriveSideBar/RecruiterSideBar";
+
+export default function RecruiterDashboardRootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <div>
-      <div>{children}</div>
-    </div>
+    <>
+      <RecruiterSideBar>
+        <div className="mt-8 sm:mt-0">{children}</div>
+      </RecruiterSideBar>
+    </>
   );
 }

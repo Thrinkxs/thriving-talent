@@ -1,6 +1,4 @@
-import { AuthGuard } from "@/(security)/auth-guard";
-import { DashboardLayout } from "@/layout/components/dashboard-layout";
-import { userRoleEnum } from "@/layout/utils/enum";
+import UserSideBar from "@/components/ThriveSideBar/UserSideBar";
 
 export default function UserDashboardRootLayout({
   children,
@@ -8,8 +6,10 @@ export default function UserDashboardRootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <AuthGuard requiredRole={userRoleEnum.USER}>
-      <DashboardLayout>{children}</DashboardLayout>
-    </AuthGuard>
+    <div className="bg-thrive-dashboard-background">
+      <UserSideBar>
+        <div className="mt-8 sm:mt-0">{children}</div>
+      </UserSideBar>
+    </div>
   );
 }

@@ -31,6 +31,10 @@ const config = {
       colors: {
         "thrive-blue": "#2020d0",
         "thrive-red": "#fe2728",
+        "thrive-light-blue": "#E7EEFB",
+        "thrive-green": "#8EE69E",
+        "thrive-dark-red": "#E6A98E",
+        "thrive-dashboard-background": "#DFE2E9",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -120,12 +124,21 @@ const config = {
       },
       backgroundColor: {
         "thrive-blue": "#2020d0",
+        "thrive-dashboard-background": "#DFE2E9",
         "thrive-red": "#fe2728",
+        "thrive-light-blue": "#E7EEFB",
+        "thrive-green": "#8EE69E",
+        "thrive-dark-red": "#E6A98E",
         "thrive-dark-blue": "#050A24",
       },
       textColor: {
         "thrive-blue": "#2020d0",
+        "thrive-dashboard-background": "#DFE2E9",
         "thrive-red": "#fe2728",
+        "thrive-light-blue": "#E7EEFB",
+        "thrive-green": "#8EE69E",
+        "thrive-dark-red": "#E6A98E",
+        "thrive-dark-blue": "#050A24",
       },
       fontFamily: {
         // telma: ["Telma", "sans-serif"],
