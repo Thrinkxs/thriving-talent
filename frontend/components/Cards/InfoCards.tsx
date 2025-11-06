@@ -26,7 +26,7 @@ const InfoCards = ({
   const isPositive = percentageChange !== undefined && percentageChange > 0;
 
   return (
-    <div className="bg-white rounded-3xl p-5 w-[300px]">
+    <div className="bg-white rounded-3xl p-5 w-[350px]">
       {/* Header: Icon + Title */}
       <div className="flex items-center gap-4">
         <div
