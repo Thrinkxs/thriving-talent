@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import { NextFunction, Request, Response, RequestHandler } from "express";
-import cookie from "cookie";
+// import cookie from "cookie";
+import * as cookie from "cookie";
 import { AuthenticationTokenGenerator } from "../services/Unique.Service";
 import { Employer } from "../models/Employer";
 import { ExtendedRequest } from "../../utils/Interface";

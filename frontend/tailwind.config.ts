@@ -130,6 +130,7 @@ const config = {
         "thrive-green": "#8EE69E",
         "thrive-dark-red": "#E6A98E",
         "thrive-dark-blue": "#050A24",
+        "thrive-input": "#EDF2F6",
       },
       textColor: {
         "thrive-blue": "#2020d0",
@@ -139,6 +140,7 @@ const config = {
         "thrive-green": "#8EE69E",
         "thrive-dark-red": "#E6A98E",
         "thrive-dark-blue": "#050A24",
+        "thrive-input": "#EDF2F6",
       },
       fontFamily: {
         // telma: ["Telma", "sans-serif"],

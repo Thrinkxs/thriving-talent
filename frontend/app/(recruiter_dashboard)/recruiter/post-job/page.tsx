@@ -1,6 +1,11 @@
-import PostJobOverview from "@/modules/recruiter_dashboard/components/post-job/overview";
 import React from "react";
 
-export default function PostJobPage() {
-  return <PostJobOverview />;
-}
+const PostJobPage = () => {
+  return (
+    <div>
+      <h1>Post Job Page</h1>
+    </div>
+  );
+};
+
+export default PostJobPage;

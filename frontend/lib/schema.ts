@@ -59,3 +59,31 @@ export const recruiterSignUpSchema = z
     message: "Passwords do not match",
     path: ["confirmPassword"],
   });
+
+export const profileFormSchema = z.object({
+  companyPhoto: z.string().optional(),
+  fullName: z
+    .string()
+    .min(3, { message: "Full name is required" })
+    .max(255, { message: "Full name is required" }),
+  companyName: z
+    .string()
+    .min(3, { message: "Company name is required" })
+    .max(255, { message: "Company name is required" }),
+  email: z.string().email({ message: "A valid email is required" }),
+  phoneNumber: z.string().min(1, { message: "A valid email is required" }),
+  description: z
+    .string()
+    .min(3, { message: "Description is too short" })
+    .max(255, { message: "Description is too long" }),
+});
+
+export const resetPasswordFormSchema = z
+  .object({
+    password: z.string().min(6, "Password must be at least 6 characters"),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });

@@ -1,5 +1,10 @@
+import { SettingsTab } from "@/components/Tabs/SettingsTab/SettingsTab";
 import React from "react";
 
 export default function SettingsPage() {
-  return <div>Settings Page (Coming Soon)</div>;
+  return (
+    <div>
+      <SettingsTab />
+    </div>
+  );
 }

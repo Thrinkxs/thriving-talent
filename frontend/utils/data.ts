@@ -1,3 +1,5 @@
+export type JobType = (typeof FAKE_JOBS)[number];
+
 export const FAKE_JOBS = [
   {
     id: 1,

@@ -120,6 +120,8 @@ export class AuthenticationService {
 
     const otp = await this.getPasswordResetOTP(email);
 
+    console.log("the otp boy:", otp);
+
     await this.emailService.sendPasswordResetOTP({ email, otp });
     return;
   }

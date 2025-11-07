@@ -1,6 +1,6 @@
 import InfoCards from "@/components/Cards/InfoCards";
 import JobCard from "@/components/Cards/JobCard";
-import { FAKE_JOBS } from "@/modules/user_dashboard/utils/data";
+import { FAKE_JOBS } from "@/utils/data";
 import { IconBriefcaseFilled } from "@tabler/icons-react";
 
 export default function UserDashboardPage() {
