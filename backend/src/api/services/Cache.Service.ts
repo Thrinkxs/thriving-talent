@@ -12,7 +12,7 @@ export class CacheService {
     }
   }
 
-  public async getCachedVerificationOTP(email: string): Promise<string> {
+  public async getCachedVerificationOTP(email: string) {
     email = `email-verification-${email.toLowerCase()}`;
     const verificationCode = await redisClient.get(email);
     if (!verificationCode) throw new AppError(404, "Expired OTP");
@@ -29,7 +29,7 @@ export class CacheService {
     }
   }
 
-  public async getCached2FAOTP(email: string): Promise<string> {
+  public async getCached2FAOTP(email: string) {
     email = `2FA-${email.toLowerCase()}`;
     const verificationCode = await redisClient.get(email);
     if (!verificationCode) throw new AppError(404, "Expired OTP");
@@ -56,7 +56,7 @@ export class CacheService {
     }
   }
 
-  public async getCachedPasswordResetOTP(email: string): Promise<string> {
+  public async getCachedPasswordResetOTP(email: string) {
     email = `password-reset-${email.toLowerCase()}`;
     const cacheResponse = await redisClient.get(email);
     if (!cacheResponse) throw new AppError(404, "Expired OTP");
@@ -84,7 +84,7 @@ export class CacheService {
     }
   }
 
-  public async getCachedPasswordUpdateOTP(userID: string): Promise<string> {
+  public async getCachedPasswordUpdateOTP(userID: string) {
     userID = `password-update-${userID}`;
     const otp = await redisClient.get(userID);
     if (!otp) throw new AppError(404, "Expired OTP");
@@ -153,7 +153,7 @@ export class CacheService {
   //   }
   // }
 
-  // public async getCachedLoginOTP(email: string): Promise<string> {
+  // public async getCachedLoginOTP(email: string) {
   //   try {
   //     email = `login-${email.toLowerCase()}`;
   //     const otp = await redisClient.get(email);
@@ -174,7 +174,7 @@ export class CacheService {
     }
   }
 
-  public async getAuthorizationToken(refreshToken: string): Promise<string> {
+  public async getAuthorizationToken(refreshToken: string) {
     try {
       const refreshSecret = await redisClient.get(refreshToken);
       if (!refreshSecret) throw new AppError(404, "Expired Token");
