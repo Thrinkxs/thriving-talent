@@ -132,9 +132,9 @@ export class AuthenticationService {
     if (!employer) {
       throw new AppError(404, "Employer not found");
     }
-    let cachedResponse = await this.cacheService.getCachedPasswordResetOTP(
+    let cachedResponse = (await this.cacheService.getCachedPasswordResetOTP(
       employer.email
-    ) as string;
+    )) as string;
 
     let cachedResponseJSON = JSON.parse(cachedResponse);
 
@@ -157,7 +157,7 @@ export class AuthenticationService {
     }
 
     const cachedResponseJSON =
-      await this.cacheService.getCachedPasswordResetOTP(email) as string;
+      (await this.cacheService.getCachedPasswordResetOTP(email)) as string;
 
     if (JSON.parse(cachedResponseJSON).isOTPValid === false) {
       throw new AppError(401, "Invalid OTP");

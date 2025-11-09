@@ -85,7 +85,12 @@ export class AuthenticationService {
 
   public async sendVerificationEmail(filter: any) {
     const { email } = filter;
+    const account = await this.checkAccountExistence(email.toLowerCase());
+    if (!account) {
+      throw new AppError(404, "Intern not found");
+    }
     const otp = this.authenticationTokenGenerator.generateOTP(6);
+    console.log(otp);
     await this.cacheService.cacheVerificationOTP(email, otp);
 
     await this.emailService.sendVerificationEmail({ email, otp });
@@ -119,6 +124,7 @@ export class AuthenticationService {
     }
 
     const otp = await this.getPasswordResetOTP(email);
+    console.log(otp);
 
     await this.emailService.sendPasswordResetOTP({ email, otp });
     return;
@@ -130,9 +136,9 @@ export class AuthenticationService {
     if (!intern) {
       throw new AppError(404, "Intern not found");
     }
-    let cachedResponse = await this.cacheService.getCachedPasswordResetOTP(
+    let cachedResponse = (await this.cacheService.getCachedPasswordResetOTP(
       intern.email
-    );
+    )) as string;
 
     let cachedResponseJSON = JSON.parse(cachedResponse);
 
@@ -155,7 +161,7 @@ export class AuthenticationService {
     }
 
     const cachedResponseJSON =
-      await this.cacheService.getCachedPasswordResetOTP(email);
+      (await this.cacheService.getCachedPasswordResetOTP(email)) as string;
 
     if (JSON.parse(cachedResponseJSON).isOTPValid === false) {
       throw new AppError(401, "Invalid OTP");

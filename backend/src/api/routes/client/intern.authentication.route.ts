@@ -9,7 +9,7 @@ import {
   resetPasswordController,
   getAccessTokenController,
   logoutAccountController,
-} from "../../controller/client/employer.authentication.controller";
+} from "../../controller/client/intern.authentication.controller";
 
 const router = Router();
 

@@ -1,15 +1,15 @@
 import { Router } from "express";
-import { employerVerification } from "../../middleware/AuthenticateUser";
+import { internVerification } from "../../middleware/AuthenticateUser";
 import {
   deleteProfileController,
   getProfileController,
   updatePasswordController,
   updateProfileController,
-} from "../../controller/client/employer.controller";
+} from "../../controller/client/intern.controller";
 
 const router = Router();
 
-router.use(employerVerification);
+router.use(internVerification);
 router
   .route("/profile")
   .get(getProfileController)

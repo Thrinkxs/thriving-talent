@@ -96,11 +96,14 @@ export class JobService {
   }
 
   public async getJobs(filter: IJobFilter) {
-    const { jobID, search, status, page, limit } = filter;
+    const { jobID, companyID, search, type, status, page, limit } = filter;
     const query: any = {};
 
     if (jobID) {
       query._id = jobID;
+    }
+    if (companyID) {
+      query.company = companyID;
     }
 
     if (search) {
@@ -113,6 +116,9 @@ export class JobService {
 
     if (status) {
       query.status = status;
+    }
+    if (type) {
+      query.type = type;
     }
 
     const jobs = await paginateModelWithPopulate(

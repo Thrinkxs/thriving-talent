@@ -3,7 +3,7 @@ import { CacheService } from "../../services/Cache.Service";
 import { EmailService } from "../../services/Email.Service";
 import { AuthenticationTokenGenerator } from "../../services/Unique.Service";
 import { Hasher } from "../../../utils/HashPassword";
-import { AuthenticationService } from "../../services/client/EmployerAuthentication.Service";
+import { AuthenticationService } from "../../services/client/InternAuthentication.Service";
 
 const hasher = new Hasher();
 const cacheService = new CacheService();
