@@ -35,7 +35,8 @@ export const tokenAuthentication = (
     const authorizationInfo = new AuthenticationTokenGenerator().verifyToken(
       token
     );
-    req.account = authorizationInfo;
+    req.employer = authorizationInfo;
+    req.intern = authorizationInfo;
     return next();
   } catch (error: any) {
     return res.status(401).json({ message: "Unauthenticated: Invalid token" });

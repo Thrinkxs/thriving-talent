@@ -134,7 +134,7 @@ export class AuthenticationService {
     }
     let cachedResponse = await this.cacheService.getCachedPasswordResetOTP(
       employer.email
-    );
+    ) as string;
 
     let cachedResponseJSON = JSON.parse(cachedResponse);
 
@@ -157,7 +157,7 @@ export class AuthenticationService {
     }
 
     const cachedResponseJSON =
-      await this.cacheService.getCachedPasswordResetOTP(email);
+      await this.cacheService.getCachedPasswordResetOTP(email) as string;
 
     if (JSON.parse(cachedResponseJSON).isOTPValid === false) {
       throw new AppError(401, "Invalid OTP");
