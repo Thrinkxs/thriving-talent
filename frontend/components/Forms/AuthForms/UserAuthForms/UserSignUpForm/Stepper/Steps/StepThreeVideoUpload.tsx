@@ -18,7 +18,7 @@ export default function StepThreeVideoUpload({ nextStep, prevStep }: any) {
     formState: { errors },
   } = useFormContext();
 
-  const video = watch("video");
+  const introVideo = watch("introVideo");
 
   // const onDrop = useCallback(
   //   (acceptedFiles: File[]) => {
@@ -40,7 +40,13 @@ export default function StepThreeVideoUpload({ nextStep, prevStep }: any) {
         }
 
         setFileName(file.name);
-        await uploadFile(file, setValue, setIsUploading, "video", "video");
+        await uploadFile(
+          file,
+          setValue,
+          setIsUploading,
+          "introVideo",
+          "introVideo"
+        );
       }
     },
     [setValue]
@@ -67,7 +73,7 @@ export default function StepThreeVideoUpload({ nextStep, prevStep }: any) {
           isDragActive
             ? "border-thrive-blue bg-thrive-blue/5"
             : "border-gray-300",
-          errors.video ? "border-red-500" : ""
+          errors.introVideo ? "border-red-500" : ""
         )}
       >
         <input {...getInputProps()} />
@@ -80,7 +86,7 @@ export default function StepThreeVideoUpload({ nextStep, prevStep }: any) {
         )}
       </div>
 
-      {video && (
+      {introVideo && (
         <div className="mt-4 space-y-2">
           <p className="text-sm text-gray-700">
             <strong>{fileName}</strong>
@@ -94,9 +100,9 @@ export default function StepThreeVideoUpload({ nextStep, prevStep }: any) {
         </div>
       )}
 
-      {errors.video && (
+      {errors.introVideo && (
         <p className="text-red-500 text-sm mt-2">
-          {errors.video.message as string}
+          {errors.introVideo.message as string}
         </p>
       )}
     </div>

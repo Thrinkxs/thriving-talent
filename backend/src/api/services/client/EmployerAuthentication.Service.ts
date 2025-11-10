@@ -86,6 +86,7 @@ export class AuthenticationService {
   public async sendVerificationEmail(filter: any) {
     const { email } = filter;
     const otp = this.authenticationTokenGenerator.generateOTP(6);
+    console.log("otp is", otp);
     await this.cacheService.cacheVerificationOTP(email, otp);
 
     await this.emailService.sendVerificationEmail({ email, otp });
@@ -96,6 +97,7 @@ export class AuthenticationService {
     const { email, verificationCode } = payload;
     const cachedVeificaitonCode =
       await this.cacheService.getCachedVerificationOTP(email);
+    console.log("cached verification code", cachedVeificaitonCode);
     if (cachedVeificaitonCode !== verificationCode) {
       throw new AppError(401, "Invalid verification code");
     }

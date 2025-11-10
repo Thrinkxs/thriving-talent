@@ -12,10 +12,8 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -28,7 +26,6 @@ import { TbLoader2 } from "react-icons/tb";
 import { MailIcon, Eye } from "lucide-react";
 import { PasswordInput } from "../../../../ui/password-input";
 import { LuLoader } from "react-icons/lu";
-import { IconInput } from "../../../../ui/icon-input";
 import Cookies from "js-cookie";
 
 const UserSignInForm = () => {
@@ -46,19 +43,23 @@ const UserSignInForm = () => {
   const onSubmit = async (values: z.infer<typeof userSignInSchema>) => {
     isLoading(true);
     try {
-      const response = await Axios.post("/api/business/login", values);
+      const response = await Axios.post(
+        "/api/client/intern/auth/login",
+        values
+      );
       if (response.status === 200) {
         toast.success("Successfully signed in. Welcome");
-        const data = await response.data;
+        const data = await response.data.data.employer;
         console.log("response data", data);
-        Cookies.set("access-token", data.business.token);
-        Cookies.set("refresh-token", data.business.refreshToken, {
-          httOnly: true,
+        Cookies.set("access-token", response.data.data.accessToken);
+        Cookies.set("refresh-token", response.data.data.refreshToken, {
+          // httpOnly: true,
         });
 
-        router.push("/dashboard");
+        router.push("/user/dashboard");
       }
     } catch (error: any) {
+      isLoading(false);
       toast.error(error.response?.data?.message || "Error logging in");
     } finally {
       isLoading(false);
@@ -118,21 +119,16 @@ const UserSignInForm = () => {
                   />
                 </div>
                 <div className="flex justify-center pt-2">
-                  {!loading ? (
-                    <Button
-                      type="submit"
-                      className="rounded w-full px-10 bg-thrive-blue hover:bg-thrive-blue/90"
-                    >
-                      Sign In
-                    </Button>
-                  ) : (
-                    <Button
-                      type="button"
-                      className="rounded w-full px-10 bg-thrive-blue hover:bg-thrive-blue/90"
-                    >
-                      <LuLoader className="animate-spin" />
-                    </Button>
-                  )}
+                  <Button
+                    type="submit"
+                    className="rounded w-full px-10 bg-thrive-blue hover:bg-thrive-blue/90"
+                  >
+                    {loading ? (
+                      <TbLoader2 className="animate-spin" />
+                    ) : (
+                      "Sign In"
+                    )}
+                  </Button>
                 </div>
               </form>
             </Form>

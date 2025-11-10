@@ -59,6 +59,7 @@ export class CacheService {
   public async getCachedPasswordResetOTP(email: string) {
     email = `password-reset-${email.toLowerCase()}`;
     const cacheResponse = await redisClient.get(email);
+    console.log("cache response", cacheResponse);
     if (!cacheResponse) throw new AppError(404, "Expired OTP");
     return cacheResponse;
   }

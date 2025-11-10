@@ -18,20 +18,24 @@ import StepTwoBusinessInfo from "./Stepper/Steps/StepTwoBusinessInfo";
 import StepFourPassword from "./Stepper/Steps/StepThreePassword";
 import Cookies from "js-cookie";
 import Link from "next/link";
+import { TbLoader2 } from "react-icons/tb";
+import { useRouter } from "next/navigation";
 
 export default function RecruiterSignUpForm() {
+  const [isLoading, setIsLoading] = useState<Boolean>(false);
   const methods = useForm<z.infer<typeof recruiterSignUpSchema>>({
     resolver: zodResolver(recruiterSignUpSchema),
     mode: "onChange",
     defaultValues: {
-      businessName: "",
-      businessEmail: "",
-      businessRegistrationNumber: "",
-      businessIndustry: "",
-      businessSector: "",
-      businessRole: "",
-      employees: "",
-      businessAddress: "",
+      fullName: "",
+      companyName: "",
+      registrationNumber: "",
+      email: "",
+      industry: "",
+      sector: "",
+      roleInOrganization: "",
+      numberOfEmployees: undefined,
+      address: "",
       password: "",
       confirmPassword: "",
     },
@@ -45,14 +49,15 @@ export default function RecruiterSignUpForm() {
 
     if (step === 0)
       stepFields = [
-        "businessName",
-        "businessEmail",
-        "businessRegistrationNumber",
-        "businessSector",
-        "businessIndustry",
+        "fullName",
+        "companyName",
+        "email",
+        "registrationNumber",
+        "sector",
+        "industry",
       ];
     if (step === 1)
-      stepFields = ["businessRole", "employees", "businessAddress"];
+      stepFields = ["roleInOrganization", "numberOfEmployees", "address"];
     if (step === 2) stepFields = ["password", "confirmPassword"];
 
     const isValid = await methods.trigger(stepFields, { shouldFocus: true });
@@ -67,29 +72,33 @@ export default function RecruiterSignUpForm() {
 
   const prevStep = () => setStep((prev) => prev - 1);
 
+  const router = useRouter();
+
   const onSubmit = async (
     formValues: z.infer<typeof recruiterSignUpSchema>
   ) => {
+    setIsLoading(true);
     console.log("Submitting form with values recruiter:", formValues);
-    const formData = new FormData();
-    Object.entries(formValues).forEach(([key, value]) => {
-      formData.append(key, value as any);
-    });
-
     try {
-      const response = await Axios.post("/api/employee/signup", formData);
+      const response = await Axios.post(
+        "/api/client/employer/auth/register",
+        formValues
+      );
       if (response.status === 201) {
         toast.success("Successfully created your account. Welcome");
-        const data = await response.data;
-        Cookies.set("access-token", data.business.token);
-        Cookies.set("refresh-token", data.business.refreshToken, {
-          httOnly: true,
+        const data = await response.data.data.employer;
+        console.log("the data from the backend", data);
+        Cookies.set("accessToken", response.data.data.accessToken);
+        Cookies.set("refreshToken", response.data.data.refreshToken, {
+          // httpOnly: true,
         });
-        toast.success("Signup successful!");
-        console.log(response.data);
+        setIsLoading(false);
+        router.push("/recruiter/dashboard");
       }
     } catch (err: any) {
       toast.error(err.response?.data?.message || "Signup failed");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -134,7 +143,11 @@ export default function RecruiterSignUpForm() {
                   type="submit"
                   className="bg-thrive-blue hover:bg-thrive-blue/90"
                 >
-                  Submit
+                  {isLoading ? (
+                    <TbLoader2 className="animate-spin" />
+                  ) : (
+                    "Submit"
+                  )}
                 </Button>
               )}
             </div>

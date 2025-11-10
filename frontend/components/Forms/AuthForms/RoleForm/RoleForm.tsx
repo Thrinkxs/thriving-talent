@@ -1,3 +1,8 @@
+/**
+ * This Form simply redirects users either to the
+ * employer signup page or the user (intern) signup page
+ **/
+
 "use client";
 
 import { useState } from "react";

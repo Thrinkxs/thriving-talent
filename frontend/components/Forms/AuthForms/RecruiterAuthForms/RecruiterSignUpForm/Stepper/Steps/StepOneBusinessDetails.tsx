@@ -34,7 +34,24 @@ export default function StepOneBusinessDetails({
       <h2 className="text-xl font-semibold text-center">Business Details</h2>
 
       <FormField
-        name="businessName"
+        name="fullName"
+        control={control}
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Full Name</FormLabel>
+            <FormControl>
+              <Input
+                className="rounded text-gray-500"
+                placeholder="Full Name"
+                {...field}
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        name="companyName"
         control={control}
         render={({ field }) => (
           <FormItem>
@@ -51,15 +68,15 @@ export default function StepOneBusinessDetails({
         )}
       />
       <FormField
-        name="businessEmail"
+        name="email"
         control={control}
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Business Email</FormLabel>
+            <FormLabel>Company Email</FormLabel>
             <FormControl>
               <Input
                 className="rounded text-gray-500"
-                placeholder="Business Email"
+                placeholder="Company Email"
                 type="email"
                 {...field}
               />
@@ -69,7 +86,7 @@ export default function StepOneBusinessDetails({
         )}
       />
       <FormField
-        name="businessRegistrationNumber"
+        name="registrationNumber"
         control={control}
         render={({ field }) => (
           <FormItem>
@@ -88,7 +105,7 @@ export default function StepOneBusinessDetails({
 
       <FormField
         control={control}
-        name="businessSector"
+        name="sector"
         render={({ field }) => (
           <FormItem>
             <FormLabel>Business Sector</FormLabel>
@@ -116,7 +133,7 @@ export default function StepOneBusinessDetails({
 
       <FormField
         control={control}
-        name="businessIndustry"
+        name="industry"
         render={({ field }) => (
           <FormItem>
             <FormLabel>Business Industry</FormLabel>

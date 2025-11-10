@@ -29,7 +29,7 @@ export default function StepOneDetails({ nextStep }: { nextStep: () => void }) {
       </h2>
 
       <FormField
-        name="name"
+        name="fullName"
         control={control}
         render={({ field }) => (
           <FormItem>
@@ -101,7 +101,7 @@ export default function StepOneDetails({ nextStep }: { nextStep: () => void }) {
 
       <FormField
         control={control}
-        name="sex"
+        name="gender"
         render={({ field }) => (
           <FormItem>
             <FormLabel>Sex</FormLabel>
@@ -113,13 +113,13 @@ export default function StepOneDetails({ nextStep }: { nextStep: () => void }) {
                 <SelectContent className="z-50 bg-white">
                   <SelectGroup>
                     <SelectLabel>Sex</SelectLabel>
-                    <SelectItem value="male">
+                    <SelectItem value="Male">
                       <div className="flex gap-2">
                         <div> Male</div>{" "}
                       </div>
                     </SelectItem>
 
-                    <SelectItem value="female">
+                    <SelectItem value="Female">
                       <div className="flex gap-2">
                         <div> Female</div>{" "}
                       </div>

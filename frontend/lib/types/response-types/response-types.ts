@@ -1,0 +1,21 @@
+type EmployerResponse = {
+  fullName: string;
+  companyName: string;
+  description: string;
+  images: string[];
+  email: string;
+  isVerified: boolean;
+  status: string;
+  registrationNumber: string;
+  sector: string;
+  industry: string;
+  numberOfEmployees: number;
+  roleInOrganization: string;
+  address: string;
+  isDeleted: boolean;
+  _id: string;
+  createdAt: string;
+  updatedAt: string;
+  accessToken: string;
+  refreshToken: string;
+};

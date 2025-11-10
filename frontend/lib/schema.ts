@@ -9,7 +9,7 @@ export const userSignInSchema = z.object({
 
 export const userSignUpSchema = z
   .object({
-    name: z.string().min(2, "Name is required"),
+    fullName: z.string().min(2, "full name is required"),
     email: z.string().email("Invalid email"),
     phone: z.string().min(7, "Enter a valid phone number"),
     birthday: z.date({ error: "Birthday is required" }).refine(
@@ -29,9 +29,9 @@ export const userSignUpSchema = z
         message: "You must be at least 18 years old",
       }
     ),
-    sex: z.enum(["male", "female"]),
-    cv: z.string().min(1, "CV is required"),
-    video: z.string().min(1, "Introduction video is required"),
+    gender: z.enum(["Male", "Female"]),
+    resume: z.string().min(1, "Resume is required"),
+    introVideo: z.string().min(1, "Introduction video is required"),
     password: z.string().min(6, "Password must be at least 6 characters"),
     confirmPassword: z.string(),
   })
@@ -42,17 +42,19 @@ export const userSignUpSchema = z
 
 export const recruiterSignUpSchema = z
   .object({
-    businessName: z.string().min(2, "Businessn name is required"),
-    businessRegistrationNumber: z
+    fullName: z.string().min(2, "Full name is required"),
+    companyName: z.string().min(2, "Company name is required"),
+    registrationNumber: z
       .string()
       .min(2, "Business Registration Number is required"),
-    businessSector: z.string().min(2, "Business sector is required"),
-    businessIndustry: z.string().min(2, "Business industry is required"),
-    businessRole: z.string().min(2, "Role is required"),
-    businessAddress: z.string().min(2, "Address is required"),
-    employees: z.string().min(1, "Number of employees is required"),
-    businessEmail: z.string().email("Invalid email"),
-    password: z.string().min(6, "Password must be at least 6 characters"),
+    description: z.string().optional(), // didn't use description in the sign up form
+    sector: z.string().min(2, "Business sector is required"),
+    industry: z.string().min(2, "Business industry is required"),
+    roleInOrganization: z.string().min(2, "Role is required"),
+    address: z.string().min(2, "Address is required"),
+    numberOfEmployees: z.number().min(1, "Number of employees is required"),
+    email: z.string().email("Invalid email"),
+    password: z.string().min(8, "Password must be at least 8 characters"),
     confirmPassword: z.string(),
   })
   .refine((data) => data.password === data.confirmPassword, {

@@ -20,33 +20,42 @@ import StepThreeVideoUpload from "./Stepper/Steps/StepThreeVideoUpload";
 import StepFourPassword from "./Stepper/Steps/StepFourPassword";
 import Cookies from "js-cookie";
 import Link from "next/link";
+import { TbLoader2 } from "react-icons/tb";
+import { useRouter } from "next/navigation";
 
 export default function UserSignUpForm() {
+  const [isLoading, setIsLoading] = useState<Boolean>(false);
   const methods = useForm<z.infer<typeof userSignUpSchema>>({
     resolver: zodResolver(userSignUpSchema),
     mode: "onChange",
     defaultValues: {
-      name: "",
+      fullName: "",
       email: "",
       phone: "",
       birthday: undefined,
-      sex: undefined,
-      cv: "",
-      video: "",
+      gender: undefined,
+      resume: "",
+      introVideo: "",
       password: "",
       confirmPassword: "",
     },
   });
 
   const [step, setStep] = useState(0);
-  const steps = ["Personal Details", "Upload CV", "Upload Video", "Password"];
+  const steps = [
+    "Personal Details",
+    "Upload Resume",
+    "Upload Video",
+    "Password",
+  ];
 
   const nextStep = async () => {
     let stepFields: (keyof z.infer<typeof userSignUpSchema>)[] = [];
 
-    if (step === 0) stepFields = ["name", "email", "phone", "birthday", "sex"];
-    if (step === 1) stepFields = ["cv"];
-    if (step === 2) stepFields = ["video"];
+    if (step === 0)
+      stepFields = ["fullName", "email", "phone", "birthday", "gender"];
+    if (step === 1) stepFields = ["resume"];
+    if (step === 2) stepFields = ["introVideo"];
     if (step === 3) stepFields = ["password", "confirmPassword"];
 
     const isValid = await methods.trigger(stepFields, { shouldFocus: true });
@@ -61,27 +70,31 @@ export default function UserSignUpForm() {
 
   const prevStep = () => setStep((prev) => prev - 1);
 
+  const router = useRouter();
+
   const onSubmit = async (formValues: z.infer<typeof userSignUpSchema>) => {
     console.log("Submitting form with values:", formValues);
-    const formData = new FormData();
-    Object.entries(formValues).forEach(([key, value]) => {
-      formData.append(key, value as any);
-    });
-
+    setIsLoading(true);
     try {
-      const response = await Axios.post("/api/intern/signup", formData);
+      const response = await Axios.post(
+        "/api/client/intern/auth/register",
+        formValues
+      );
       if (response.status === 201) {
         toast.success("Successfully created your account. Welcome");
-        const data = await response.data;
-        Cookies.set("access-token", data.business.token);
-        Cookies.set("refresh-token", data.business.refreshToken, {
-          httOnly: true,
+        const data = await response.data.data.intern;
+        Cookies.set("accessToken", response.data.data.accessToken);
+        Cookies.set("refreshToken", response.data.data.refreshToken, {
+          // httpOnly: true,
         });
-        toast.success("Signup successful!");
-        console.log(response.data);
+        setIsLoading(false);
+        router.push("/user/dashboard");
       }
     } catch (err: any) {
+      setIsLoading(false);
       toast.error(err.response?.data?.message || "Signup failed");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -129,7 +142,11 @@ export default function UserSignUpForm() {
                   type="submit"
                   className="bg-thrive-blue hover:bg-thrive-blue/90"
                 >
-                  Submit
+                  {isLoading ? (
+                    <TbLoader2 className="animate-spin" />
+                  ) : (
+                    "Submit"
+                  )}
                 </Button>
               )}
             </div>

@@ -8,21 +8,6 @@ import {
   FormLabel,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { DatePicker } from "@/components/ui/date-picker";
-import {
-  businessIndustries,
-  businessSectors,
-  employeeSizes,
-} from "@/lib/recruiterOnboardingData";
 
 export default function StepTwoBusinessInfo({ nextStep, prevStep }: any) {
   const { control } = useFormContext();
@@ -32,7 +17,7 @@ export default function StepTwoBusinessInfo({ nextStep, prevStep }: any) {
       <h2 className="text-xl font-semibold text-center">Business Info</h2>
 
       <FormField
-        name="businessRole"
+        name="roleInOrganization"
         control={control}
         render={({ field }) => (
           <FormItem>
@@ -51,26 +36,18 @@ export default function StepTwoBusinessInfo({ nextStep, prevStep }: any) {
 
       <FormField
         control={control}
-        name="employees"
+        name="numberOfEmployees"
         render={({ field }) => (
           <FormItem>
             <FormLabel>Number of Employees</FormLabel>
             <FormControl>
-              <Select onValueChange={field.onChange}>
-                <SelectTrigger className="md:h-12 w-full rounded text-gray-500">
-                  <SelectValue placeholder="How many employees do you have?" />
-                </SelectTrigger>
-                <SelectContent className="z-50 bg-white">
-                  <SelectGroup>
-                    <SelectLabel>Business Sector</SelectLabel>
-                    {employeeSizes.map((size) => (
-                      <SelectItem key={size} value={size}>
-                        {size}
-                      </SelectItem>
-                    ))}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
+              <Input
+                className="rounded text-gray-500"
+                placeholder="Number of employees in the organization"
+                type="number"
+                onChange={(e) => field.onChange(Number(e.target.value))}
+                // {...field}
+              />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -78,7 +55,7 @@ export default function StepTwoBusinessInfo({ nextStep, prevStep }: any) {
       />
 
       <FormField
-        name="businessAddress"
+        name="address"
         control={control}
         render={({ field }) => (
           <FormItem>

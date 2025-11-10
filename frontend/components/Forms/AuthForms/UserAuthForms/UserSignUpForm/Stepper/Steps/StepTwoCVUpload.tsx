@@ -18,7 +18,7 @@ export default function StepTwoCVUpload({ nextStep, prevStep }: any) {
     formState: { errors },
   } = useFormContext();
 
-  const cv = watch("cv");
+  const resume = watch("resume");
 
   const onDrop = useCallback(
     async (acceptedFiles: File[]) => {
@@ -30,7 +30,7 @@ export default function StepTwoCVUpload({ nextStep, prevStep }: any) {
         }
 
         setFileName(file.name);
-        await uploadFile(file, setValue, setIsUploading, "cv", "CV");
+        await uploadFile(file, setValue, setIsUploading, "resume", "resume");
       }
     },
     [setValue]
@@ -48,7 +48,7 @@ export default function StepTwoCVUpload({ nextStep, prevStep }: any) {
 
   return (
     <div className="space-y-5 text-center">
-      <h2 className="text-xl font-semibold">Upload CV</h2>
+      <h2 className="text-xl font-semibold">Upload resume</h2>
 
       <div
         {...getRootProps()}
@@ -57,7 +57,7 @@ export default function StepTwoCVUpload({ nextStep, prevStep }: any) {
           isDragActive
             ? "border-thrive-blue bg-thrive-blue/5"
             : "border-gray-300",
-          errors.cv ? "border-red-500" : ""
+          errors.resume ? "border-red-500" : ""
         )}
       >
         <input {...getInputProps()} />
@@ -65,12 +65,12 @@ export default function StepTwoCVUpload({ nextStep, prevStep }: any) {
           <p className="text-thrive-blue">Drop your file here...</p>
         ) : (
           <p className="text-gray-500">
-            Drag and drop your CV here, or click to select (PDF or DOCX)
+            Drag and drop your resume here, or click to select (PDF or DOCX)
           </p>
         )}
       </div>
 
-      {cv && (
+      {resume && (
         <p className="mt-2 text-sm text-gray-700">
           <strong>{fileName}</strong>
         </p>
@@ -82,9 +82,9 @@ export default function StepTwoCVUpload({ nextStep, prevStep }: any) {
         </div>
       )}
 
-      {errors.cv && (
+      {errors.resume && (
         <p className="text-red-500 text-sm mt-2">
-          {errors.cv.message as string}
+          {errors.resume.message as string}
         </p>
       )}
     </div>
