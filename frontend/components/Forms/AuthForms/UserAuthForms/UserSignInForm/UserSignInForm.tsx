@@ -25,13 +25,15 @@ import { useState } from "react";
 import { TbLoader2 } from "react-icons/tb";
 import { MailIcon, Eye } from "lucide-react";
 import { PasswordInput } from "../../../../ui/password-input";
-import { LuLoader } from "react-icons/lu";
 import Cookies from "js-cookie";
+import { useInternStore } from "@/lib/store/intern-store";
 
 const UserSignInForm = () => {
   const [loading, isLoading] = useState<Boolean>(false);
 
   const router = useRouter();
+  const setIntern = useInternStore((state) => state.setIntern);
+
   const form = useForm<z.infer<typeof userSignInSchema>>({
     resolver: zodResolver(userSignInSchema),
     defaultValues: {
@@ -49,10 +51,11 @@ const UserSignInForm = () => {
       );
       if (response.status === 200) {
         toast.success("Successfully signed in. Welcome");
-        const data = await response.data.data.employer;
-        console.log("response data", data);
-        Cookies.set("access-token", response.data.data.accessToken);
-        Cookies.set("refresh-token", response.data.data.refreshToken, {
+        const { intern, accessToken, refreshToken } = response.data.data;
+        setIntern(intern); // updates the zustand intern state
+        console.log("response data", intern);
+        Cookies.set("accessToken", accessToken);
+        Cookies.set("refreshToken", refreshToken, {
           // httpOnly: true,
         });
 

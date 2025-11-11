@@ -13,7 +13,7 @@ export const createJobController = async (
   const payload = req.body;
   try {
     const response = await jobService.createJob(account, payload);
-    return res.status(200).json({
+    return res.status(201).json({
       message: "Job created successfully",
       data: response,
     });

@@ -92,10 +92,10 @@ export const deleteApplicationController = async (
   try {
     const { id } = req.params as any;
     await applicationService.delete(id);
-    return res.status(200).json({ message: "Application deleted successfully" });
+    return res
+      .status(200)
+      .json({ message: "Application deleted successfully" });
   } catch (error: any) {
     next(error);
   }
 };
-
-

@@ -1,4 +1,4 @@
-import UserSideBar from "@/components/ThriveSideBar/UserSideBar";
+import UserSideBar from "@/components/ThriveSideBar/InternSideBar";
 
 export default function UserDashboardRootLayout({
   children,

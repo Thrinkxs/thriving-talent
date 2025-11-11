@@ -16,6 +16,7 @@ import { RecruiterNavList } from "@/components/Navigation/RecruiterNavList";
 import womanAvatar from "@/public/woman1.jpg";
 import { IconBellFilled, IconBriefcaseFilled } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
+import { UserRole } from "@/lib/types/user-types/user-types";
 
 type Props = {
   children: React.ReactNode;
@@ -33,7 +34,7 @@ const RecruiterSideBar = ({ children }: Props) => {
         } as React.CSSProperties
       }
     >
-      <AppSidebar navList={RecruiterNavList} />
+      <AppSidebar logoutUser={UserRole.RECRUITER} navList={RecruiterNavList} />
       <SidebarInset className="min-h-screen bg-thrive-dashboard-background">
         <header className="grid grid-cols-12 px-4 sm:px-6">
           <div className="col-span-1 flex h-16 shrink-0 items-center gap-2 ">

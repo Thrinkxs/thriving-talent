@@ -1,31 +1,32 @@
-import { EmployerSignupPayload } from "@/lib/types/payload-types/payload-types";
+import { RecruiterSignupPayload } from "@/lib/types/payload-types/payload-types";
+import { RecruiterResponse } from "@/lib/types/response-types/response-types";
 import { Axios } from "@/utils/Axios/Axios";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 
-const signupEmployer = async (
-  payload: EmployerSignupPayload
-): Promise<EmployerResponse> => {
+const signupRecruiter = async (
+  payload: RecruiterSignupPayload
+): Promise<RecruiterResponse> => {
   try {
     const response = await Axios.post(
       "/api/client/employer/auth/register",
       payload
     );
     if (response.status !== 201) {
-      throw new Error("Failed to sign up employer");
+      throw new Error("Failed to sign up recruiter");
     }
 
-    const data: EmployerResponse = response.data;
+    const data: RecruiterResponse = response.data;
     return data;
   } catch (error) {
-    console.log("could not sign up employer");
+    console.log("could not sign up recruiter");
     throw error;
   }
 };
 
-export const useEmployerSignup = () => {
+export const useRecruiterSignup = () => {
   return useMutation({
-    mutationFn: (data: EmployerSignupPayload) => signupEmployer(data),
+    mutationFn: (data: RecruiterSignupPayload) => signupRecruiter(data),
     onSuccess: (data) => {
       toast.success("Account created successfully!");
       console.log("Signup success:", data);

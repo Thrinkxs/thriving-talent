@@ -20,6 +20,7 @@ import Cookies from "js-cookie";
 import Link from "next/link";
 import { TbLoader2 } from "react-icons/tb";
 import { useRouter } from "next/navigation";
+import { useRecruiterStore } from "@/lib/store/recruiter-store";
 
 export default function RecruiterSignUpForm() {
   const [isLoading, setIsLoading] = useState<Boolean>(false);
@@ -73,6 +74,7 @@ export default function RecruiterSignUpForm() {
   const prevStep = () => setStep((prev) => prev - 1);
 
   const router = useRouter();
+  const setRecruiter = useRecruiterStore((state) => state.setRecruiter);
 
   const onSubmit = async (
     formValues: z.infer<typeof recruiterSignUpSchema>
@@ -86,10 +88,12 @@ export default function RecruiterSignUpForm() {
       );
       if (response.status === 201) {
         toast.success("Successfully created your account. Welcome");
-        const data = await response.data.data.employer;
-        console.log("the data from the backend", data);
-        Cookies.set("accessToken", response.data.data.accessToken);
-        Cookies.set("refreshToken", response.data.data.refreshToken, {
+        const { employer, accessToken, refreshToken } = response.data.data;
+        console.log("the data from the backend", employer);
+
+        setRecruiter(employer); // update the zustand recruiter state
+        Cookies.set("accessToken", accessToken);
+        Cookies.set("refreshToken", refreshToken, {
           // httpOnly: true,
         });
         setIsLoading(false);

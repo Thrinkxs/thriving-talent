@@ -28,6 +28,8 @@ import { useRouter } from "next/navigation";
 import { Axios } from "@/utils/Axios/Axios";
 import Cookies from "js-cookie";
 import Logo from "@/components/Navigation/Logo";
+import { useInternStore } from "@/lib/store/intern-store";
+import { UserRole } from "@/lib/types/user-types/user-types";
 
 // ✅ Define nav item types
 export interface NavItem {
@@ -46,29 +48,31 @@ export interface NavSection {
 export interface NavList {
   navMain: NavSection[];
 }
-
 interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
   navList: NavList; // ✅ this makes it reusable
+  logoutUser: UserRole;
 }
 
-export function AppSidebar({ navList, ...props }: AppSidebarProps) {
+export function AppSidebar({ navList, logoutUser, ...props }: AppSidebarProps) {
   const router = useRouter();
+  const logoutIntern = useInternStore((state) => state.logout);
+  const logoutRecruiter = useInternStore((state) => state.logout);
 
-  const businessId = "123abc"; // I will make it dynamic later on
+  const accessToken = Cookies.get("accessToken") || "";
+  const refreshToken = Cookies.get("refreshToken") || "";
 
   const logout = async () => {
-    // Clear user data from state
-    localStorage.clear();
-    Cookies.remove("access-token");
-    Cookies.remove("refresh-token");
-    // Make a request to the /logout endpoint
-    const response = await Axios.post(`/api/business/logout/${businessId}`);
-
-    if (response.status === 200) {
-      toast.success("You have successfully logged out");
-      router.push("/signin");
+    // if (logoutUser === UserRole.RECRUITER) {
+    //   await logoutRecruiter(refreshToken, () =>
+    //     router.push("/recruiter/signin")
+    //   );
+    // } else {
+    //   await logoutIntern(refreshToken, () => router.push("/user/signin"));
+    // }
+    if (logoutUser === UserRole.RECRUITER) {
+      await logoutRecruiter(() => router.push("/recruiter/signin"));
     } else {
-      console.error("Failed to log out");
+      await logoutIntern(() => router.push("/user/signin"));
     }
   };
 

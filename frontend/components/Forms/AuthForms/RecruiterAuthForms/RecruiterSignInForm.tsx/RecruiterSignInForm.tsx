@@ -26,11 +26,13 @@ import { TbLoader2 } from "react-icons/tb";
 import { MailIcon } from "lucide-react";
 import { PasswordInput } from "../../../../ui/password-input";
 import Cookies from "js-cookie";
+import { useRecruiterStore } from "@/lib/store/recruiter-store";
 
 const RecruiterSignInForm = () => {
   const [loading, isLoading] = useState<Boolean>(false);
 
   const router = useRouter();
+  const setRecruiter = useRecruiterStore((state) => state.setRecruiter);
   const form = useForm<z.infer<typeof userSignInSchema>>({
     resolver: zodResolver(userSignInSchema),
     defaultValues: {
@@ -48,11 +50,13 @@ const RecruiterSignInForm = () => {
       );
       if (response.status === 200) {
         toast.success("Successfully signed in. Welcome");
-        const data = await response.data.data.employer;
-        console.log("response data", data);
-        Cookies.set("access-token", response.data.data.accessToken);
-        Cookies.set("refresh-token", response.data.data.refreshToken, {
-          httOnly: true,
+        const { employer, accessToken, refreshToken } = response.data.data;
+        console.log("response data", employer);
+
+        setRecruiter(employer); // updates the recruiter state on signin
+        Cookies.set("accessToken", response.data.data.accessToken);
+        Cookies.set("refreshToken", response.data.data.refreshToken, {
+          // httpOnly: true,
         });
 
         router.push("/recruiter/dashboard");

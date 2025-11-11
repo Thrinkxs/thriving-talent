@@ -16,14 +16,22 @@ import { UserNavList } from "@/components/Navigation/UserNavList";
 import womanAvatar from "@/public/woman1.jpg";
 import { IconBellFilled, IconBriefcaseFilled } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
+import { useInternStore } from "@/lib/store/intern-store";
+import { useRouter } from "next/navigation";
+import { UserRole } from "@/lib/types/user-types/user-types";
 
 type Props = {
   children: React.ReactNode;
 };
 
-const UserSideBar = ({ children }: Props) => {
+const InternSideBar = ({ children }: Props) => {
   // const { businessId } = useAuth();
+  const user = useInternStore((state) => state.intern);
+  const logout = useInternStore((state) => state.logout);
+
+  const router = useRouter();
   // const { data, isLoading } = useFetchPersonalAndBusinessInfo(businessId);
+
   const [isLoading, setIsLoading] = useState(false);
   return (
     <SidebarProvider
@@ -33,7 +41,7 @@ const UserSideBar = ({ children }: Props) => {
         } as React.CSSProperties
       }
     >
-      <AppSidebar navList={UserNavList} />
+      <AppSidebar logoutUser={UserRole.INTERN} navList={UserNavList} />
       <SidebarInset className="min-h-screen bg-thrive-dashboard-background">
         <header className="grid grid-cols-12 px-4 sm:px-6">
           <div className="col-span-1 flex h-16 shrink-0 items-center gap-2 ">
@@ -90,4 +98,4 @@ const UserSideBar = ({ children }: Props) => {
   );
 };
 
-export default UserSideBar;
+export default InternSideBar;

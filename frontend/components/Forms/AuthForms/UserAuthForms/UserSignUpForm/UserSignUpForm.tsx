@@ -22,6 +22,7 @@ import Cookies from "js-cookie";
 import Link from "next/link";
 import { TbLoader2 } from "react-icons/tb";
 import { useRouter } from "next/navigation";
+import { useInternStore } from "@/lib/store/intern-store";
 
 export default function UserSignUpForm() {
   const [isLoading, setIsLoading] = useState<Boolean>(false);
@@ -71,6 +72,7 @@ export default function UserSignUpForm() {
   const prevStep = () => setStep((prev) => prev - 1);
 
   const router = useRouter();
+  const setIntern = useInternStore((state) => state.setIntern);
 
   const onSubmit = async (formValues: z.infer<typeof userSignUpSchema>) => {
     console.log("Submitting form with values:", formValues);
@@ -82,9 +84,10 @@ export default function UserSignUpForm() {
       );
       if (response.status === 201) {
         toast.success("Successfully created your account. Welcome");
-        const data = await response.data.data.intern;
-        Cookies.set("accessToken", response.data.data.accessToken);
-        Cookies.set("refreshToken", response.data.data.refreshToken, {
+        const { intern, accessToken, refreshToken } = response.data.data;
+        setIntern(intern); // updates the zustand intern state
+        Cookies.set("accessToken", accessToken);
+        Cookies.set("refreshToken", refreshToken, {
           // httpOnly: true,
         });
         setIsLoading(false);
