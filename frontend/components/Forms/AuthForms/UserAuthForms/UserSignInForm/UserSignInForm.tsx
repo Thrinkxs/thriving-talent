@@ -27,6 +27,7 @@ import { MailIcon, Eye } from "lucide-react";
 import { PasswordInput } from "../../../../ui/password-input";
 import Cookies from "js-cookie";
 import { useInternStore } from "@/lib/store/intern-store";
+import { UserRole } from "@/lib/types/user-types/user-types";
 
 const UserSignInForm = () => {
   const [loading, isLoading] = useState<Boolean>(false);
@@ -54,12 +55,9 @@ const UserSignInForm = () => {
         const { intern, accessToken, refreshToken } = response.data.data;
         setIntern(intern); // updates the zustand intern state
         console.log("response data", intern);
-        Cookies.set("accessToken", accessToken);
-        Cookies.set("refreshToken", refreshToken, {
-          // httpOnly: true,
-        });
+        Cookies.set("role", UserRole.INTERN);
 
-        router.push("/user/dashboard");
+        router.push("/dashboard/user/home");
       }
     } catch (error: any) {
       isLoading(false);

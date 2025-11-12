@@ -23,6 +23,7 @@ import Link from "next/link";
 import { TbLoader2 } from "react-icons/tb";
 import { useRouter } from "next/navigation";
 import { useInternStore } from "@/lib/store/intern-store";
+import { UserRole } from "@/lib/types/user-types/user-types";
 
 export default function UserSignUpForm() {
   const [isLoading, setIsLoading] = useState<Boolean>(false);
@@ -86,12 +87,9 @@ export default function UserSignUpForm() {
         toast.success("Successfully created your account. Welcome");
         const { intern, accessToken, refreshToken } = response.data.data;
         setIntern(intern); // updates the zustand intern state
-        Cookies.set("accessToken", accessToken);
-        Cookies.set("refreshToken", refreshToken, {
-          // httpOnly: true,
-        });
+        Cookies.set("role", UserRole.INTERN);
         setIsLoading(false);
-        router.push("/user/dashboard");
+        router.push("/dashboard/user/home");
       }
     } catch (err: any) {
       setIsLoading(false);

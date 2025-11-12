@@ -27,6 +27,7 @@ import { MailIcon } from "lucide-react";
 import { PasswordInput } from "../../../../ui/password-input";
 import Cookies from "js-cookie";
 import { useRecruiterStore } from "@/lib/store/recruiter-store";
+import { UserRole } from "@/lib/types/user-types/user-types";
 
 const RecruiterSignInForm = () => {
   const [loading, isLoading] = useState<Boolean>(false);
@@ -54,12 +55,8 @@ const RecruiterSignInForm = () => {
         console.log("response data", employer);
 
         setRecruiter(employer); // updates the recruiter state on signin
-        Cookies.set("accessToken", response.data.data.accessToken);
-        Cookies.set("refreshToken", response.data.data.refreshToken, {
-          // httpOnly: true,
-        });
-
-        router.push("/recruiter/dashboard");
+        Cookies.set("role", UserRole.RECRUITER);
+        router.push("/dashboard/recruiter/home");
       }
     } catch (error: any) {
       isLoading(false);

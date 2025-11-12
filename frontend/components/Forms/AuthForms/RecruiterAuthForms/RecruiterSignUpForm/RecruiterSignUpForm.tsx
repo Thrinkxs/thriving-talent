@@ -21,6 +21,7 @@ import Link from "next/link";
 import { TbLoader2 } from "react-icons/tb";
 import { useRouter } from "next/navigation";
 import { useRecruiterStore } from "@/lib/store/recruiter-store";
+import { UserRole } from "@/lib/types/user-types/user-types";
 
 export default function RecruiterSignUpForm() {
   const [isLoading, setIsLoading] = useState<Boolean>(false);
@@ -92,12 +93,9 @@ export default function RecruiterSignUpForm() {
         console.log("the data from the backend", employer);
 
         setRecruiter(employer); // update the zustand recruiter state
-        Cookies.set("accessToken", accessToken);
-        Cookies.set("refreshToken", refreshToken, {
-          // httpOnly: true,
-        });
+        Cookies.set("role", UserRole.RECRUITER);
         setIsLoading(false);
-        router.push("/recruiter/dashboard");
+        router.push("/dashboard/recruiter/home");
       }
     } catch (err: any) {
       toast.error(err.response?.data?.message || "Signup failed");
