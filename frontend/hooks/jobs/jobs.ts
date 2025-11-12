@@ -2,7 +2,10 @@ import {
   FetchJobsParams,
   JobPayload,
 } from "@/lib/types/payload-types/payload-types";
-import { JobResponse } from "@/lib/types/response-types/response-types";
+import {
+  JobResponse,
+  RecuiterDashboardMetricsResponse,
+} from "@/lib/types/response-types/response-types";
 import { Axios } from "@/utils/Axios/Axios";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
@@ -20,7 +23,7 @@ const fetchJobs = async ({ search, page, limit }: FetchJobsParams) => {
       throw new Error("Could not fetch jobs");
     }
 
-    const data: JobResponse[] = response.data.data.data;
+    const data: JobResponse[] = response.data.data.jobsData;
     return data;
   } catch (error) {
     console.log("An error occured", error);
@@ -30,7 +33,7 @@ const fetchJobs = async ({ search, page, limit }: FetchJobsParams) => {
 
 export const useFetchJobs = (options: FetchJobsParams) => {
   return useQuery({
-    queryKey: ["data", options],
+    queryKey: ["jobsData", options],
     queryFn: () => fetchJobs(options),
     retry: 3,
     retryDelay: 500,
@@ -44,7 +47,7 @@ const createJob = async (payload: Partial<JobPayload>) => {
       throw new Error("Could not create job");
     }
 
-    const data: JobResponse = response.data.data;
+    const data: JobResponse = response.data.newJobData;
     return data;
   } catch (error) {
     console.log("An error occured", error);
@@ -60,7 +63,8 @@ export const useCreateJob = () => {
     onSuccess: () => {
       toast.success("Job created successfully!");
       // ✅ Invalidate and refetch job list to show the new one
-      queryClient.invalidateQueries({ queryKey: ["data"] });
+      queryClient.invalidateQueries({ queryKey: ["jobsData"] });
+      queryClient.invalidateQueries({ queryKey: ["newJobData"] });
     },
     onError: () => {
       toast.error("Failed to create job. Please try again.");
@@ -75,7 +79,7 @@ const updateJob = async (payload: Partial<JobPayload>) => {
       throw new Error("Could not update job");
     }
 
-    const data: JobResponse = response.data.data;
+    const data: JobResponse = response.data.updatedJobData;
     return data;
   } catch (error) {
     console.log("An error occured", error);
@@ -91,7 +95,8 @@ export const useUpdateJob = () => {
     onSuccess: () => {
       toast.success("Job updated successfully!");
       // ✅ Invalidate and refetch job list to show the new one
-      queryClient.invalidateQueries({ queryKey: ["data"] });
+      queryClient.invalidateQueries({ queryKey: ["jobsData"] });
+      queryClient.invalidateQueries({ queryKey: ["updatedJobData"] });
     },
     onError: () => {
       toast.error("Failed to update job. Please try again.");
@@ -126,10 +131,37 @@ export const useDeleteJob = () => {
     onSuccess: () => {
       toast.success("Job deleted successfully!");
       // ✅ Invalidate and refetch job list to show the new one
-      queryClient.invalidateQueries({ queryKey: ["data"] });
+      queryClient.invalidateQueries({ queryKey: ["jobsData"] });
     },
     onError: () => {
       toast.error("Failed to delete job. Please try again.");
     },
+  });
+};
+
+const fetchRecruiterDashboardMetrics = async () => {
+  try {
+    const response = await Axios.get(
+      "/api/client/job/employer-dashboard-metrics"
+    );
+    if (response.status !== 200) {
+      throw new Error("Could not recruiter dashboard metrics.");
+    }
+
+    const data: RecuiterDashboardMetricsResponse =
+      response.data.employerJobMetricsData;
+    return data;
+  } catch (error) {
+    console.log("An error occured", error);
+    throw error;
+  }
+};
+
+export const useFetchRecruiterDashboardMetrics = () => {
+  return useQuery({
+    queryKey: ["employerJobMetricsData"],
+    queryFn: () => fetchRecruiterDashboardMetrics(),
+    retry: 3,
+    retryDelay: 500,
   });
 };

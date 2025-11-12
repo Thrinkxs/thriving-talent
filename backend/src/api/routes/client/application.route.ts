@@ -3,6 +3,8 @@ import {
   createApplicationController,
   deleteApplicationController,
   getApplicationByIdController,
+  getApplicationTrendsController,
+  getEmployerApplicantsDetailsController,
   listApplicationsController,
   updateApplicationController,
 } from "../../controller/client/application.controller";
@@ -16,6 +18,16 @@ const router = Router();
 // The order of the routes matter
 
 router.get("/personal", internVerification, listApplicationsController);
+router.get(
+  "/statistic-trends",
+  employerVerification,
+  getApplicationTrendsController
+);
+router.get(
+  "/get-employer-applicants",
+  employerVerification,
+  getEmployerApplicantsDetailsController
+);
 
 // Public listing, supports filters via query
 router.get("", listApplicationsController);

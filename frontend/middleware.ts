@@ -37,17 +37,17 @@ export default async function middleware(req: NextRequest) {
 
   // 5. Redirect to /login if the user is not authenticated
   if (isProtectedRoute && !cookie) {
-    return NextResponse.redirect(new URL("/signin", baseURL));
+    return NextResponse.redirect(new URL("/user/signin", baseURL));
   }
 
   // 6. Redirect to /dashboard if the user is authenticated
-  if (cookieUserRole?.value === UserRole.RECRUITER) {
+  if (cookieUserRole?.value === UserRole.RECRUITER && cookie) {
     if (!path.startsWith("/dashboard/recruiter")) {
       return NextResponse.redirect(
         new URL("/dashboard/recruiter/home", baseURL)
       );
     }
-  } else if (cookieUserRole?.value === UserRole.INTERN) {
+  } else if (cookieUserRole?.value === UserRole.INTERN && cookie) {
     if (!path.startsWith("/dashboard/user")) {
       return NextResponse.redirect(new URL("/dashboard/user/home", baseURL));
     }

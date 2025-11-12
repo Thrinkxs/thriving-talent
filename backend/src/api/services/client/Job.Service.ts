@@ -4,8 +4,10 @@ import {
   paginateModel,
   paginateModelWithPopulate,
 } from "../../../utils/Pagination.Helper";
+import { Application } from "../../models/Application";
 import { IEmployer } from "../../models/Employer";
 import { Job } from "../../models/Job";
+import { startOfMonth, endOfMonth, subMonths } from "date-fns";
 
 export class JobService {
   public async createJob(
@@ -131,5 +133,110 @@ export class JobService {
     );
 
     return jobs;
+  }
+
+  public async getEmployerJobMetrics(employer: IEmployer) {
+    const now = new Date();
+
+    // Define date ranges
+    const currentMonthStart = startOfMonth(now);
+    const currentMonthEnd = endOfMonth(now);
+    const prevMonthStart = startOfMonth(subMonths(now, 1));
+    const prevMonthEnd = endOfMonth(subMonths(now, 1));
+
+    // 1️⃣ Get jobs for this employer
+    const jobIds = await Job.find({ company: employer._id }).distinct("_id");
+
+    // 2️⃣ Current totals
+    const [currentJobs, currentApplications] = await Promise.all([
+      Job.countDocuments({
+        company: employer._id,
+        createdAt: { $gte: currentMonthStart, $lte: currentMonthEnd },
+      }),
+      jobIds.length
+        ? Application.countDocuments({
+            job: { $in: jobIds },
+            createdAt: { $gte: currentMonthStart, $lte: currentMonthEnd },
+          })
+        : 0,
+    ]);
+
+    // 3️⃣ Previous totals
+    const [previousJobs, previousApplications] = await Promise.all([
+      Job.countDocuments({
+        company: employer._id,
+        createdAt: { $gte: prevMonthStart, $lte: prevMonthEnd },
+      }),
+      jobIds.length
+        ? Application.countDocuments({
+            job: { $in: jobIds },
+            createdAt: { $gte: prevMonthStart, $lte: prevMonthEnd },
+          })
+        : 0,
+    ]);
+
+    // 4️⃣ Percentage change helper
+    const calcChange = (current: number, prev: number) => {
+      if (prev === 0) return current > 0 ? 100 : 0;
+      return Number((((current - prev) / prev) * 100).toFixed(2));
+    };
+
+    // 5️⃣ Job type breakdown for current month
+    const typeCounts = await Job.aggregate([
+      {
+        $match: {
+          company: employer._id,
+          createdAt: { $gte: currentMonthStart, $lte: currentMonthEnd },
+        },
+      },
+      {
+        $group: {
+          _id: "$type",
+          count: { $sum: 1 },
+        },
+      },
+    ]);
+
+    const prevTypeCounts = await Job.aggregate([
+      {
+        $match: {
+          company: employer._id,
+          createdAt: { $gte: prevMonthStart, $lte: prevMonthEnd },
+        },
+      },
+      {
+        $group: {
+          _id: "$type",
+          count: { $sum: 1 },
+        },
+      },
+    ]);
+
+    // Helper to extract and compute percentage
+    const getTypeStats = (type: string) => {
+      const current = typeCounts.find((t) => t._id === type)?.count || 0;
+      const previous = prevTypeCounts.find((t) => t._id === type)?.count || 0;
+      return {
+        count: current,
+        change: calcChange(current, previous),
+      };
+    };
+
+    // 6️⃣ Construct full response
+    return {
+      totalJobs: {
+        count: currentJobs,
+        change: calcChange(currentJobs, previousJobs),
+      },
+      totalApplicants: {
+        count: currentApplications,
+        change: calcChange(currentApplications, previousApplications),
+      },
+      jobTypeStats: {
+        fullTime: getTypeStats("full-time"),
+        partTime: getTypeStats("part-time"),
+        negotiable: getTypeStats("negotiable"),
+      },
+    };
   }
 }

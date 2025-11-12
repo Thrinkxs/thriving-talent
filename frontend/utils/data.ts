@@ -170,3 +170,36 @@ export const FAKE_JOBS = [
     salary: "$85k - $125k",
   },
 ];
+
+export const dummyData = {
+  daily: [
+    { date: "2025-11-01", count: 3 },
+    { date: "2025-11-02", count: 5 },
+    { date: "2025-11-03", count: 2 },
+    { date: "2025-11-04", count: 8 },
+    { date: "2025-11-05", count: 6 },
+    { date: "2025-11-06", count: 9 },
+    { date: "2025-11-07", count: 4 },
+  ],
+  weekly: [
+    { week: "2025-W42", count: 32 },
+    { week: "2025-W43", count: 45 },
+    { week: "2025-W44", count: 51 },
+    { week: "2025-W45", count: 38 },
+  ],
+  monthly: [
+    { month: "2025-07", count: 120 },
+    { month: "2025-08", count: 145 },
+    { month: "2025-09", count: 98 },
+    { month: "2025-10", count: 180 },
+    { month: "2025-11", count: 132 },
+  ],
+};
+
+export const chartData = [
+  { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
+  { browser: "safari", visitors: 200, fill: "var(--color-safari)" },
+  { browser: "firefox", visitors: 187, fill: "var(--color-firefox)" },
+  { browser: "edge", visitors: 173, fill: "var(--color-edge)" },
+  { browser: "other", visitors: 90, fill: "var(--color-other)" },
+];

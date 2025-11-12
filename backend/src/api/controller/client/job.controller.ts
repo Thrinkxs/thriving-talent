@@ -15,7 +15,7 @@ export const createJobController = async (
     const response = await jobService.createJob(account, payload);
     return res.status(201).json({
       message: "Job created successfully",
-      data: response,
+      newJobData: response,
     });
   } catch (error: any) {
     next(error);
@@ -51,7 +51,7 @@ export const updateJobController = async (
     const response = await jobService.updateJob(account, payload);
     return res.status(200).json({
       message: "Job updated successfully",
-      data: response,
+      updatedJobData: response,
     });
   } catch (error: any) {
     next(error);
@@ -85,9 +85,29 @@ export const getJobsController = async (
     const response = await jobService.getJobs(filter);
     return res.status(200).json({
       message: "Jobs retrieved successfully",
-      data: response,
+      jobsData: response,
     });
   } catch (error: any) {
     next(error);
+  }
+};
+
+export const getEmployerJobMetrics = async (
+  req: ExtendedRequest,
+  res: Response
+) => {
+  try {
+    const employer = req.employer!;
+    const metrics = await jobService.getEmployerJobMetrics(employer);
+
+    res.status(200).json({
+      message: "Jobs metrics retrieved successfully",
+      employerJobMetricsData: metrics,
+    });
+  } catch (error: any) {
+    res.status(error.statusCode || 500).json({
+      success: false,
+      message: error.message || "Internal Server Error",
+    });
   }
 };

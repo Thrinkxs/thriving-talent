@@ -3,7 +3,11 @@ import {
   ApplicationPayload,
   UpdateApplicationParams,
 } from "@/lib/types/payload-types/payload-types";
-import { ApplicationResponse } from "@/lib/types/response-types/response-types";
+import {
+  ApplicationResponse,
+  ApplicationStatisticsResponse,
+  EmployerApplicantResponse,
+} from "@/lib/types/response-types/response-types";
 import { Axios } from "@/utils/Axios/Axios";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
@@ -31,7 +35,7 @@ const fetchApplications = async ({
       throw new Error("Could not fetch applications");
     }
 
-    const data: ApplicationResponse[] = response.data.data.data;
+    const data: ApplicationResponse[] = response.data.data.applicationData;
     return data;
   } catch (error) {
     console.log("An error occured", error);
@@ -41,7 +45,7 @@ const fetchApplications = async ({
 
 export const useFetchApplications = (options: ApplicationParams) => {
   return useQuery({
-    queryKey: ["data", options],
+    queryKey: ["applicationData", options],
     queryFn: () => fetchApplications(options),
     retry: 3,
     retryDelay: 500,
@@ -55,7 +59,7 @@ const fetchApplicationById = async (id: string) => {
       throw new Error("Could not fetch application by id");
     }
 
-    const data: ApplicationResponse = response.data.data;
+    const data: ApplicationResponse = response.data.applicantData;
     return data;
   } catch (error) {
     console.log("An error occured", error);
@@ -65,7 +69,7 @@ const fetchApplicationById = async (id: string) => {
 
 export const useFetchApplicationById = (id: string) => {
   return useQuery({
-    queryKey: ["data", id],
+    queryKey: ["applicantData", id],
     queryFn: () => fetchApplicationById(id),
     enabled: !!id, // only run if id exists
     retry: 3,
@@ -96,7 +100,7 @@ const fetchApplicationsPersonal = async ({
       throw new Error("Could not fetch applications");
     }
 
-    const data: ApplicationResponse[] = response.data.data.data;
+    const data: ApplicationResponse[] = response.data.data.applicationData;
     return data;
   } catch (error) {
     console.log("An error occured", error);
@@ -106,7 +110,7 @@ const fetchApplicationsPersonal = async ({
 
 export const useFetchApplicationsPersonal = (options: ApplicationParams) => {
   return useQuery({
-    queryKey: ["data", options],
+    queryKey: ["applicationData", options],
     queryFn: () => fetchApplicationsPersonal(options),
     retry: 3,
     retryDelay: 500,
@@ -136,7 +140,7 @@ export const useCreateApplication = () => {
     onSuccess: () => {
       toast.success("Application created successfully!");
       // Invalidate and refetch application list to show the new one
-      queryClient.invalidateQueries({ queryKey: ["data"] });
+      queryClient.invalidateQueries({ queryKey: ["applicationData"] });
     },
     onError: () => {
       toast.error("Failed to create application. Please try again.");
@@ -157,7 +161,7 @@ const updateApplication = async ({
       throw new Error("Could not update job");
     }
 
-    const data: ApplicationResponse = response.data.data;
+    const data: ApplicationResponse = response.data.updatedApplicantData;
     return data;
   } catch (error) {
     console.log("An error occured", error);
@@ -173,7 +177,8 @@ export const useUpdateApplication = () => {
     onSuccess: () => {
       toast.success("application updated successfully!");
       // Invalidate and refetch application list to show the new one
-      queryClient.invalidateQueries({ queryKey: ["data"] });
+      queryClient.invalidateQueries({ queryKey: ["applicationData"] });
+      queryClient.invalidateQueries({ queryKey: ["updatedApplicantData"] });
     },
     onError: () => {
       toast.error("Failed to update application. Please try again.");
@@ -206,10 +211,64 @@ export const useDeleteApplication = () => {
     onSuccess: () => {
       toast.success("Application deleted successfully!");
       // ✅ Invalidate and refetch job list to show the new one
-      queryClient.invalidateQueries({ queryKey: ["data"] });
+      queryClient.invalidateQueries({ queryKey: ["applicationData"] });
     },
     onError: () => {
       toast.error("Failed to delete application. Please try again.");
     },
+  });
+};
+
+const fetchApplicationStatistics = async () => {
+  try {
+    const response = await Axios.get(
+      "/api/client/application/statistic-trends"
+    );
+    if (response.status !== 200) {
+      throw new Error("Could not fetch applications statistics");
+    }
+
+    const data: ApplicationStatisticsResponse =
+      response.data.applicantionStatisticsData;
+    return data;
+  } catch (error) {
+    console.log("An error occured", error);
+    throw error;
+  }
+};
+
+export const useFetchApplicationStatistics = () => {
+  return useQuery({
+    queryKey: ["data"],
+    queryFn: () => fetchApplicationStatistics(),
+    retry: 3,
+    retryDelay: 500,
+  });
+};
+
+const fetchEmployerApplicants = async () => {
+  try {
+    const response = await Axios.get(
+      "/api/client/application/get-employer-applicants"
+    );
+    if (response.status !== 200) {
+      throw new Error("Could not fetch applicants for employers");
+    }
+
+    const data: EmployerApplicantResponse[] =
+      response.data.employerApplicantData;
+    return data;
+  } catch (error) {
+    console.log("An error occured", error);
+    throw error;
+  }
+};
+
+export const useFetchEmployerApplicants = () => {
+  return useQuery({
+    queryKey: ["employerApplicantData"],
+    queryFn: () => fetchEmployerApplicants(),
+    retry: 3,
+    retryDelay: 500,
   });
 };

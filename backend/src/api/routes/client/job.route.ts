@@ -6,11 +6,18 @@ import {
   getPersonalJobs,
   updateJobController,
   deleteJobController,
+  getEmployerJobMetrics,
 } from "../../controller/client/job.controller";
 
 const router = Router();
 
 router.get("", getJobsController);
+
+router.get(
+  "/employer-dashboard-metrics",
+  employerVerification,
+  getEmployerJobMetrics
+);
 
 router.use(employerVerification);
 router

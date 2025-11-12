@@ -61,3 +61,62 @@ export type ApplicationResponse = {
   createdAt: string;
   updatedAt: string;
 };
+
+type DailyData = {
+  count: number;
+  date: string; // ISO date string
+};
+
+type WeeklyData = {
+  count: number;
+  week: string; // Format: "YYYY-WWW"
+};
+
+type MonthlyData = {
+  count: number;
+  month: string; // Format: "YYYY-MM"
+};
+
+export type ApplicationStatisticsResponse = {
+  daily: DailyData[];
+  weekly: WeeklyData[];
+  monthly: MonthlyData[];
+};
+
+type CountChange = {
+  count: number;
+  change: number;
+};
+
+export type JobTypeStats = {
+  fullTime: CountChange;
+  partTime: CountChange;
+  negotiable: CountChange;
+};
+
+export type RecuiterDashboardMetricsResponse = {
+  totalJobs: CountChange;
+  totalApplicants: CountChange;
+  jobTypeStats: JobTypeStats;
+};
+
+/**
+ * The EmployerApplicantResponse refers to the applicants
+ * who applied for a job post by employer.
+ **/
+export type EmployerApplicantResponse = {
+  applicantId: string;
+  applicantName: string;
+  applicantEmail: string;
+  applicantPhone: string;
+  applicantGender: string;
+  applicantResume: string;
+  applicantProfileImage: string;
+  applicantIntroVideo: string;
+  jobTitle: string;
+  jobLocation: string;
+  jobType: string;
+  jobDescription: string;
+  status: string;
+  appliedAt: string;
+};

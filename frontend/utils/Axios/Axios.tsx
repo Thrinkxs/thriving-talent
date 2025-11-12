@@ -45,11 +45,22 @@ Axios.interceptors.response.use(
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       try {
-        console.log(error);
-        // return Axios(originalRequest);
+        // If the access token has expired, refresh it
+        const res = await Axios.patch("/api/client/employer/auth/access-token");
+
+        console.log("the response from axios when token expired", res);
+        // Update the access token in the Axios headers
+        Axios.defaults.headers.common["Authorization"] =
+          "Bearer " + res.data.accessToken;
+        // Retry the original request
+        return Axios(originalRequest);
       } catch (err) {
+        // Handle the error (e.g., redirect to login page)
+        // Make a request to the /logout endpoint
+        await Axios.delete(`/api/client/employer/auth/logout`);
+
         console.log("an error occured", err);
-        window.location.replace("/signin");
+        window.location.replace("/user/signin");
       }
     }
     return Promise.reject(error);
