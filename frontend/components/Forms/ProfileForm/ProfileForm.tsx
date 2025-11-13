@@ -19,10 +19,10 @@ import { useCallback, useState } from "react";
 import { Axios } from "@/utils/Axios/Axios";
 import { useQueryClient } from "@tanstack/react-query";
 import { Textarea } from "@/components/ui/textarea";
-import { uploadFile } from "@/utils/AppWrite/AppWrite";
 import { useDropzone } from "react-dropzone";
 import { cn } from "@/lib/utils";
 import { IconPhotoFilled } from "@tabler/icons-react";
+import { uploadFileToSupabase } from "@/utils/Supabase/Supabase";
 
 const ProfileForm = () => {
   const [isUploading, setIsUploading] = useState<boolean>(false);
@@ -56,7 +56,7 @@ const ProfileForm = () => {
         }
 
         setFileName(file.name);
-        await uploadFile(file, setValue, setIsUploading, "cv", "CV");
+        await uploadFileToSupabase(file, setValue, setIsUploading, "cv", "CV");
       }
     },
     [setValue]

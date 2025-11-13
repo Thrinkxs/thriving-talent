@@ -89,3 +89,15 @@ export const resetPasswordFormSchema = z
     message: "Passwords do not match",
     path: ["confirmPassword"],
   });
+
+export const createJobSchema = z.object({
+  title: z.string().min(2, "Title is required"),
+  description: z.string().min(10, "Description is required"),
+  location: z.string().min(2, "Location is required"),
+  type: z.enum(
+    ["full-time", "part-time", "negotiable"],
+    "job type is required"
+  ),
+});
+
+export type CreateJobType = z.infer<typeof createJobSchema>;

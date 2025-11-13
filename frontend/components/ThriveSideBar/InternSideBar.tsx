@@ -7,17 +7,13 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-// import { useAuth } from "@/context/LoginContext";
-// import { useFetchPersonalAndBusinessInfo } from "@/hooks/settings/settings";
 import Image from "next/image";
 import { useState } from "react";
 import { TbLoader2 } from "react-icons/tb";
 import { UserNavList } from "@/components/Navigation/UserNavList";
-import womanAvatar from "@/public/woman1.jpg";
 import { IconBellFilled, IconBriefcaseFilled } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import { useInternStore } from "@/lib/store/intern-store";
-import { useRouter } from "next/navigation";
 import { UserRole } from "@/lib/types/user-types/user-types";
 
 type Props = {
@@ -25,12 +21,7 @@ type Props = {
 };
 
 const InternSideBar = ({ children }: Props) => {
-  // const { businessId } = useAuth();
-  const user = useInternStore((state) => state.intern);
-  const logout = useInternStore((state) => state.logout);
-
-  const router = useRouter();
-  // const { data, isLoading } = useFetchPersonalAndBusinessInfo(businessId);
+  const internUser = useInternStore((state) => state.intern);
 
   const [isLoading, setIsLoading] = useState(false);
   return (
@@ -50,16 +41,16 @@ const InternSideBar = ({ children }: Props) => {
           </div>
           <div className="col-start-4 col-end-5 md:col-start-7 md:col-end-8">
             <div className="flex justify-between gap-5">
-              {/* Notification will be done in the next sprint */}
-              {/* <div className="mt-5 hidden md:block">
+              <div className="mt-5 hidden md:block">
                 <Button className="bg-black hover:bg-black/80">
                   <IconBriefcaseFilled size={20} color="white" stroke={2} />
                   Upload Resume
                 </Button>
-              </div> */}
-              <div className="rounded-full bg-white p-3 mt-4">
-                <IconBellFilled size={20} color="black" stroke={2} />
               </div>
+              {/* Notification will be done in the next sprint */}
+              {/* <div className="rounded-full bg-white p-3 mt-4">
+                <IconBellFilled size={20} color="black" stroke={2} />
+              </div> */}
             </div>
           </div>
           <div className="col-start-8 col-end-11 md:col-start-11 md:col-end-13 flex items-center">
@@ -70,8 +61,7 @@ const InternSideBar = ({ children }: Props) => {
             ) : (
               <div className="col-start-9 col-span-4 flex justify-end items-center gap-3">
                 <Image
-                  // src={data?.avatar || ""} // Use a placeholder image for avatar
-                  src={womanAvatar} // Use a placeholder image for avatar
+                  src={internUser?.profileImage || "https://profileimage.com"} // Use a placeholder image for avatar
                   width={50}
                   height={50}
                   alt="avatar"
@@ -79,11 +69,10 @@ const InternSideBar = ({ children }: Props) => {
                 />
                 <div>
                   <p className="mt-4 text-sm block font-bold">
-                    {/* Hi {data?.firstName} */}
-                    Joey Jones
+                    {internUser?.fullName}
                   </p>
                   <p className="mt-0 text-xs block font-medium">
-                    joey@gmail.com
+                    {internUser?.email}
                   </p>
                 </div>
               </div>

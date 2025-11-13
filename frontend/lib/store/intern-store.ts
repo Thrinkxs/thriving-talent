@@ -1,13 +1,13 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { InternResponse } from "@/lib/types/response-types/response-types";
 import { Axios } from "@/utils/Axios/Axios";
 import Cookies from "js-cookie";
 import { toast } from "sonner";
+import { StateInternTypes } from "./store-types/intern-store-types";
 
 interface InternState {
-  intern: InternResponse | null;
-  setIntern: (intern: InternResponse) => void;
+  intern: StateInternTypes | null;
+  setIntern: (intern: StateInternTypes) => void;
   logout: (onSuccess?: () => void) => void;
 }
 

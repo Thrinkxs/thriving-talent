@@ -1,13 +1,13 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { RecruiterResponse } from "@/lib/types/response-types/response-types";
 import { Axios } from "@/utils/Axios/Axios";
 import Cookies from "js-cookie";
 import { toast } from "sonner";
+import { StateRecruiterTypes } from "./store-types/recruiter-store-types";
 
 interface RecruiterState {
-  recruiter: RecruiterResponse | null;
-  setRecruiter: (recruiter: RecruiterResponse) => void;
+  recruiter: StateRecruiterTypes | null;
+  setRecruiter: (recruiter: StateRecruiterTypes) => void;
   logout: (onSuccess?: () => void) => void;
 }
 
