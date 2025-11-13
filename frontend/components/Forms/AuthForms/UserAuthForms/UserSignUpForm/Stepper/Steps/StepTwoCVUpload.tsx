@@ -4,9 +4,9 @@ import { useFormContext } from "react-hook-form";
 import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { cn } from "@/lib/utils";
-import { uploadFile } from "@/utils/AppWrite/AppWrite";
 import { toast } from "sonner";
 import { TbLoader2 } from "react-icons/tb";
+import { uploadFileToSupabase } from "@/utils/Supabase/Supabase";
 
 export default function StepTwoCVUpload({ nextStep, prevStep }: any) {
   const [isUploading, setIsUploading] = useState<boolean>(false);
@@ -30,7 +30,13 @@ export default function StepTwoCVUpload({ nextStep, prevStep }: any) {
         }
 
         setFileName(file.name);
-        await uploadFile(file, setValue, setIsUploading, "resume", "resume");
+        await uploadFileToSupabase(
+          file,
+          setValue, // form setter
+          setIsUploading, // upload state
+          "resume", // field name
+          "resume" // success message
+        );
       }
     },
     [setValue]

@@ -15,7 +15,7 @@ const storage = new Storage(client);
  * @param updateField The name of the field to update in your form
  * @param message Optional success message (e.g., "CV", "Profile Picture")
  */
-export const uploadFile = async (
+export const uploadFileToAppwrite = async (
   file: File,
   setFieldValue: any,
   setIsUploading: (val: boolean) => void,

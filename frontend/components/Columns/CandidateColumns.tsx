@@ -15,9 +15,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { JobTypes } from "@/lib/types/job-types/job-types";
+import Link from "next/link";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
+
 export const candidateColumns: ColumnDef<EmployerApplicantResponse>[] = [
   {
     accessorKey: "applicantName",
@@ -57,12 +60,31 @@ export const candidateColumns: ColumnDef<EmployerApplicantResponse>[] = [
   {
     accessorKey: "jobType",
     header: "Availability",
+    cell: ({ row }) => {
+      const jobTypeStatus = row.original;
+      let statusColor = ""; // Initialize an empty string for the color class
+
+      // Set the color class based on jobTypeStatus status
+      if (jobTypeStatus.jobType === JobTypes.FULL_TIME) {
+        statusColor = "bg-green-100 text-green-700";
+      } else if (jobTypeStatus.jobType === JobTypes.PART_TIME) {
+        statusColor = "bg-indigo-100 text-indigo-700";
+      } else if (jobTypeStatus.jobType === JobTypes.NEGOTIABLE) {
+        statusColor = "bg-orange-100 text-oranger-700";
+      }
+
+      return (
+        <div className={`rounded-md p-2 ${statusColor}`}>
+          {jobTypeStatus.jobType}
+        </div>
+      );
+    },
   },
 
   {
     id: "actions",
     cell: ({ row }) => {
-      const payment = row.original;
+      const candidate = row.original;
       /**
        * TODO: make it such that they will go to the applicant detail page
        */
@@ -76,14 +98,12 @@ export const candidateColumns: ColumnDef<EmployerApplicantResponse>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.applicantId)}
+            <Link
+              href={`/dashboard/recruiter/candidate/${candidate.applicantId}`}
             >
-              Copy payment ID
-            </DropdownMenuItem>
+              <DropdownMenuItem>View Applicant Profile</DropdownMenuItem>
+            </Link>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );

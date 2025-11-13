@@ -21,17 +21,17 @@ export const RecruiterNavList = {
             <IconLayoutDashboardFilled size={20} color="white" stroke={2} />
           ),
           title: "Home",
-          url: "/recruiter/dashboard",
+          url: "/dashboard/recruiter/home",
         },
         {
           icons: <IconBriefcaseFilled size={20} color="white" stroke={2} />,
           title: "Jobs",
-          url: "/recruiter/jobs",
+          url: "/dashboard/recruiter/jobs",
         },
         {
           icons: <IconSettingsFilled size={20} color="white" stroke={2} />,
           title: "Settings",
-          url: "/recruiter/settings",
+          url: "/dashboard/recruiter/settings",
         },
 
         {

@@ -35,6 +35,7 @@ const config = {
         "thrive-green": "#8EE69E",
         "thrive-dark-red": "#E6A98E",
         "thrive-dashboard-background": "#DFE2E9",
+        "thrive-badge-background": "#CAEBFF",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -125,6 +126,7 @@ const config = {
       backgroundColor: {
         "thrive-blue": "#2020d0",
         "thrive-dashboard-background": "#DFE2E9",
+        "thrive-badge-background": "#CAEBFF",
         "thrive-red": "#fe2728",
         "thrive-light-blue": "#E7EEFB",
         "thrive-green": "#8EE69E",
@@ -135,6 +137,7 @@ const config = {
       textColor: {
         "thrive-blue": "#2020d0",
         "thrive-dashboard-background": "#DFE2E9",
+        "thrive-badge-background": "#CAEBFF",
         "thrive-red": "#fe2728",
         "thrive-light-blue": "#E7EEFB",
         "thrive-green": "#8EE69E",

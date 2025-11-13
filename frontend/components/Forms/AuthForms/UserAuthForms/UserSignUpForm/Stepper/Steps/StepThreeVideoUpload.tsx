@@ -4,9 +4,9 @@ import { useFormContext } from "react-hook-form";
 import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { cn } from "@/lib/utils";
-import { uploadFile } from "@/utils/AppWrite/AppWrite";
 import { toast } from "sonner";
 import { TbLoader2 } from "react-icons/tb";
+import { uploadFileToSupabase } from "@/utils/Supabase/Supabase";
 
 export default function StepThreeVideoUpload({ nextStep, prevStep }: any) {
   const [isUploading, setIsUploading] = useState<boolean>(false);
@@ -20,16 +20,6 @@ export default function StepThreeVideoUpload({ nextStep, prevStep }: any) {
 
   const introVideo = watch("introVideo");
 
-  // const onDrop = useCallback(
-  //   (acceptedFiles: File[]) => {
-  //     if (acceptedFiles.length > 0) {
-  //       const file = acceptedFiles[0];
-  //       setValue("video", file, { shouldValidate: true }); // ✅ update RHF state
-  //     }
-  //   },
-  //   [setValue]
-  // );
-
   const onDrop = useCallback(
     async (acceptedFiles: File[]) => {
       if (acceptedFiles.length > 0) {
@@ -40,12 +30,12 @@ export default function StepThreeVideoUpload({ nextStep, prevStep }: any) {
         }
 
         setFileName(file.name);
-        await uploadFile(
+        await uploadFileToSupabase(
           file,
-          setValue,
-          setIsUploading,
-          "introVideo",
-          "introVideo"
+          setValue, // form setter
+          setIsUploading, // upload state
+          "introVideo", // field name
+          "introVideo" // success message
         );
       }
     },

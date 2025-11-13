@@ -95,3 +95,27 @@ export const useUpdateInternPassword = () => {
     },
   });
 };
+
+const fetchInternById = async (internId: string) => {
+  try {
+    const response = await Axios.get(`/api/client/intern/${internId}`);
+
+    if (response.status !== 200) {
+      throw new Error("Could not fetch intern");
+    }
+    const data: InternResponse = response.data.internData;
+    return data;
+  } catch (error) {
+    console.log("An error occured");
+    throw error;
+  }
+};
+
+export const useFetchInternById = (internId: string) => {
+  return useQuery({
+    queryKey: ["internData", internId],
+    queryFn: () => fetchInternById(internId),
+    retry: 3,
+    retryDelay: 500,
+  });
+};

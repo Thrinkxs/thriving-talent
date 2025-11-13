@@ -1,6 +1,6 @@
 import AppError from "../../../utils/AppError";
 import { Hasher } from "../../../utils/HashPassword";
-import { IIntern } from "../../models/Intern";
+import { IIntern, Intern } from "../../models/Intern";
 
 export class InternService {
   private hasher: Hasher;
@@ -44,5 +44,17 @@ export class InternService {
     intern.isDeleted = true;
     await intern.save();
     return;
+  }
+
+  public async getInternById(businessId: string) {
+    try {
+      const business = await Intern.findById(businessId);
+      if (!business) {
+        throw new Error("Intern does not exist");
+      }
+      return business;
+    } catch (error: any) {
+      throw new Error("Error getting intern");
+    }
   }
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import InfoCards from "@/components/Cards/InfoCards";
+import InfoCards from "@/components/Cards/InfoCard/InfoCards";
 import BarChartInfo from "@/components/Charts/Barchart/BarChartInfo";
 import PieChartInfo from "@/components/Charts/PieChart/PieChartInfo";
 import { candidateColumns } from "@/components/Columns/CandidateColumns";

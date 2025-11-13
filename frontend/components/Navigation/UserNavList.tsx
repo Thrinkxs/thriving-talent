@@ -21,17 +21,17 @@ export const UserNavList = {
             <IconLayoutDashboardFilled size={20} color="white" stroke={2} />
           ),
           title: "Home",
-          url: "/user/dashboard",
+          url: "/dashboard/user/home",
         },
         {
           icons: <IconBriefcaseFilled size={20} color="white" stroke={2} />,
           title: "Jobs",
-          url: "/user/jobs",
+          url: "/dashboard/user/jobs",
         },
         {
           icons: <IconSettingsFilled size={20} color="white" stroke={2} />,
           title: "Settings",
-          url: "/user/settings",
+          url: "/dashboard/user/settings",
         },
 
         {

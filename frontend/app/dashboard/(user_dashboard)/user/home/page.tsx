@@ -1,5 +1,5 @@
-import InfoCards from "@/components/Cards/InfoCards";
-import JobCard from "@/components/Cards/JobCard";
+import InfoCards from "@/components/Cards/InfoCard/InfoCards";
+import JobCard from "@/components/Cards/JobCard/JobCard";
 import { FAKE_JOBS } from "@/utils/data";
 import { IconBriefcaseFilled } from "@tabler/icons-react";
 
