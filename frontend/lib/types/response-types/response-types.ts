@@ -48,6 +48,7 @@ export type JobResponse = {
   description: string;
   company: string;
   type: string;
+  location: string;
   status: string;
   createdAt: string;
   updatedAt: string;
@@ -119,4 +120,21 @@ export type EmployerApplicantResponse = {
   jobDescription: string;
   status: string;
   appliedAt: string;
+};
+
+export type InternByIdResponse = {
+  fullName: string;
+  email: string;
+  bio: string;
+  isVerified: boolean;
+  phone: string;
+  password: string;
+  status: string; // or just string if other statuses are possible
+  gender: string;
+  profileImage: string;
+  introVideo: string;
+  resume: string;
+  isDeleted: boolean;
+  _id: string;
+  __v: number;
 };

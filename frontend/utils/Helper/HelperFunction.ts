@@ -1,5 +1,5 @@
 //  Helper functions for readable date formatting,
-// formats dates from backend
+// formats dates from backend for the barchart on the recruiter home dashboard page
 export function formatDailyDate(dateStr: string): string {
   const date = new Date(dateStr);
   return date.toLocaleDateString("en-US", { month: "short", day: "numeric" });

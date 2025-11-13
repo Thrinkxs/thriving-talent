@@ -2,7 +2,10 @@ import {
   InternSignupPayload,
   ResetUserPasswordPayload,
 } from "@/lib/types/payload-types/payload-types";
-import { InternResponse } from "@/lib/types/response-types/response-types";
+import {
+  InternByIdResponse,
+  InternResponse,
+} from "@/lib/types/response-types/response-types";
 import { Axios } from "@/utils/Axios/Axios";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
@@ -103,7 +106,7 @@ const fetchInternById = async (internId: string) => {
     if (response.status !== 200) {
       throw new Error("Could not fetch intern");
     }
-    const data: InternResponse = response.data.internData;
+    const data: InternByIdResponse = response.data.internData;
     return data;
   } catch (error) {
     console.log("An error occured");

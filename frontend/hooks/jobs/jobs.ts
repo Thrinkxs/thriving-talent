@@ -10,9 +10,50 @@ import { Axios } from "@/utils/Axios/Axios";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
-const fetchJobs = async ({ search, page, limit }: FetchJobsParams) => {
+const fetchPersonalJobs = async ({
+  search,
+  page,
+  limit,
+}: FetchJobsParams = {}) => {
   try {
+    /**
+     * Gets only Jobs related to what the employer posted only.
+     **/
     const response = await Axios.get("/api/client/job/personal", {
+      params: {
+        ...(search && { search }),
+        ...(page && { page }),
+        ...(limit && { limit }),
+      },
+    });
+    if (response.status !== 200) {
+      throw new Error("Could not fetch jobs");
+    }
+
+    const data: JobResponse[] = response.data.personalJobsData.data;
+    return data;
+  } catch (error) {
+    console.log("An error occured", error);
+    throw error;
+  }
+};
+
+export const useFetchPersonalJobs = (options?: FetchJobsParams) => {
+  return useQuery({
+    queryKey: ["data", options],
+    queryFn: () => fetchPersonalJobs(options),
+    retry: 3,
+    retryDelay: 500,
+  });
+};
+
+const fetchJobs = async ({ search, page, limit }: FetchJobsParams = {}) => {
+  /**
+   * Gets every single job under the sun regardless
+   * of whether it is an intern or an employer
+   **/
+  try {
+    const response = await Axios.get("/api/client/job", {
       params: {
         ...(search && { search }),
         ...(page && { page }),
@@ -31,7 +72,7 @@ const fetchJobs = async ({ search, page, limit }: FetchJobsParams) => {
   }
 };
 
-export const useFetchJobs = (options: FetchJobsParams) => {
+export const useFetchJobs = (options?: FetchJobsParams) => {
   return useQuery({
     queryKey: ["jobsData", options],
     queryFn: () => fetchJobs(options),
@@ -65,6 +106,8 @@ export const useCreateJob = () => {
       // ✅ Invalidate and refetch job list to show the new one
       queryClient.invalidateQueries({ queryKey: ["jobsData"] });
       queryClient.invalidateQueries({ queryKey: ["newJobData"] });
+      queryClient.invalidateQueries({ queryKey: ["data"] });
+      queryClient.invalidateQueries({ queryKey: ["personalJobsData"] });
     },
     onError: () => {
       toast.error("Failed to create job. Please try again.");
@@ -132,6 +175,8 @@ export const useDeleteJob = () => {
       toast.success("Job deleted successfully!");
       // ✅ Invalidate and refetch job list to show the new one
       queryClient.invalidateQueries({ queryKey: ["jobsData"] });
+      queryClient.invalidateQueries({ queryKey: ["data"] });
+      queryClient.invalidateQueries({ queryKey: ["personalJobsData"] });
     },
     onError: () => {
       toast.error("Failed to delete job. Please try again.");

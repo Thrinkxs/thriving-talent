@@ -46,12 +46,13 @@ const RecruiterSideBar = ({ children }: Props) => {
               <div className="mt-5 hidden md:block">
                 <Button className="bg-black hover:bg-black/80">
                   <IconBriefcaseFilled size={20} color="white" stroke={2} />
-                  Upload Resume
+                  Post a Job
                 </Button>
               </div>
-              <div className="rounded-full bg-white p-3 mt-4">
+              {/* Notification will be done in the next sprint */}
+              {/* <div className="rounded-full bg-white p-3 mt-4">
                 <IconBellFilled size={20} color="black" stroke={2} />
-              </div>
+              </div> */}
             </div>
           </div>
           <div className="col-start-8 col-end-11 md:col-start-11 md:col-end-13 flex items-center">

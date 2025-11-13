@@ -33,7 +33,7 @@ export const getPersonalJobs = async (
     const response = await jobService.getPersonalJobs(account, filter);
     return res.status(200).json({
       message: "Personal jobs retrieved successfully",
-      data: response,
+      personalJobsData: response,
     });
   } catch (error: any) {
     next(error);

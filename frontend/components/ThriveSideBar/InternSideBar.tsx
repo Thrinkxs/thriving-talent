@@ -50,12 +50,13 @@ const InternSideBar = ({ children }: Props) => {
           </div>
           <div className="col-start-4 col-end-5 md:col-start-7 md:col-end-8">
             <div className="flex justify-between gap-5">
-              <div className="mt-5 hidden md:block">
+              {/* Notification will be done in the next sprint */}
+              {/* <div className="mt-5 hidden md:block">
                 <Button className="bg-black hover:bg-black/80">
                   <IconBriefcaseFilled size={20} color="white" stroke={2} />
                   Upload Resume
                 </Button>
-              </div>
+              </div> */}
               <div className="rounded-full bg-white p-3 mt-4">
                 <IconBellFilled size={20} color="black" stroke={2} />
               </div>
