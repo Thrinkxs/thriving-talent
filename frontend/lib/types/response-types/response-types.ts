@@ -42,7 +42,7 @@ export type InternResponse = {
   refreshToken: string;
 };
 
-export type JobResponse = {
+export type PersonalJobResponse = {
   _id: string;
   title: string;
   description: string;
@@ -54,9 +54,27 @@ export type JobResponse = {
   updatedAt: string;
 };
 
+export type JobResponse = {
+  _id: string;
+  title: string;
+  description: string;
+  company: {
+    _id: string;
+    fullName: string;
+    companyName: string;
+    images: string[];
+    email: string;
+  };
+  location: string;
+  type: string;
+  status: string;
+  createdAt: string; // ISO date string
+  updatedAt: string;
+};
+
 export type ApplicationResponse = {
   _id: string;
-  job: JobResponse;
+  job: PersonalJobResponse;
   intern: InternResponse;
   status: string;
   createdAt: string;
@@ -101,6 +119,18 @@ export type RecuiterDashboardMetricsResponse = {
   jobTypeStats: JobTypeStats;
 };
 
+export type InternJobTypeStats = {
+  fulltime: CountChange; // Note: lowercase to match your API
+  parttime: CountChange; // Note: lowercase to match your API
+  negotiable: CountChange;
+};
+
+export type InternDashboardMetricsResponse = {
+  totalApplicationsSent: CountChange;
+  activeApplications: CountChange;
+  jobTypeStats: InternJobTypeStats;
+};
+
 /**
  * The EmployerApplicantResponse refers to the applicants
  * who applied for a job post by employer.
@@ -120,6 +150,22 @@ export type EmployerApplicantResponse = {
   jobDescription: string;
   status: string;
   appliedAt: string;
+};
+
+export type InternApplicationResponse = {
+  applicationId: string;
+  appliedAt: string;
+  status: string;
+  jobId: string | null;
+  jobTitle: string;
+  jobLocation: string;
+  jobType: string;
+  jobDescription: string;
+  companyId: string | null;
+  employerName: string;
+  companyName: string;
+  companyEmail: string;
+  companyImages: string[];
 };
 
 export type InternByIdResponse = {

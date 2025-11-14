@@ -111,3 +111,23 @@ export const getEmployerJobMetrics = async (
     });
   }
 };
+
+export const getInternJobMetrics = async (
+  req: ExtendedRequest,
+  res: Response
+) => {
+  try {
+    const intern = req.intern!;
+    const metrics = await jobService.getInternJobMetrics(intern);
+
+    res.status(200).json({
+      message: "Jobs metrics for intern retrieved successfully",
+      internJobMetricsData: metrics,
+    });
+  } catch (error: any) {
+    res.status(error.statusCode || 500).json({
+      success: false,
+      message: error.message || "Internal Server Error",
+    });
+  }
+};

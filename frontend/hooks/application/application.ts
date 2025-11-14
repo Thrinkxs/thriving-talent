@@ -7,6 +7,7 @@ import {
   ApplicationResponse,
   ApplicationStatisticsResponse,
   EmployerApplicantResponse,
+  InternApplicationResponse,
 } from "@/lib/types/response-types/response-types";
 import { Axios } from "@/utils/Axios/Axios";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
@@ -126,8 +127,16 @@ const createApplication = async (payload: Partial<ApplicationPayload>) => {
 
     const data: ApplicationResponse = response.data.data;
     return data;
-  } catch (error) {
+  } catch (error: any) {
     console.log("An error occured", error);
+    // Check if it's a 409 Conflict error
+    if (error.response?.status === 409) {
+      // You can use the backend message or a custom one
+      const errorMessage =
+        error.response?.data?.message || "You have already applied to this job";
+      throw new Error(errorMessage);
+    }
+
     throw error;
   }
 };
@@ -141,9 +150,16 @@ export const useCreateApplication = () => {
       toast.success("Application created successfully!");
       // Invalidate and refetch application list to show the new one
       queryClient.invalidateQueries({ queryKey: ["applicationData"] });
+      queryClient.invalidateQueries({ queryKey: ["data"] });
+      queryClient.invalidateQueries({ queryKey: ["jobsData"] });
     },
-    onError: () => {
-      toast.error("Failed to create application. Please try again.");
+    onError: (error: Error) => {
+      // Check if it's our custom 409 error message
+      if (error.message.includes("already applied")) {
+        toast.error(error.message);
+      } else {
+        toast.error("Failed to create application. Please try again.");
+      }
     },
   });
 };
@@ -268,6 +284,33 @@ export const useFetchEmployerApplicants = () => {
   return useQuery({
     queryKey: ["employerApplicantData"],
     queryFn: () => fetchEmployerApplicants(),
+    retry: 3,
+    retryDelay: 500,
+  });
+};
+
+const fetchInternApplications = async () => {
+  try {
+    const response = await Axios.get(
+      "/api/client/application/get-intern-applications"
+    );
+    if (response.status !== 200) {
+      throw new Error("Could not fetch applications for interns");
+    }
+
+    const data: InternApplicationResponse[] =
+      response.data.internApplicationData;
+    return data;
+  } catch (error) {
+    console.log("An error occured", error);
+    throw error;
+  }
+};
+
+export const useFetchInternApplications = () => {
+  return useQuery({
+    queryKey: ["internApplicationData"],
+    queryFn: () => fetchInternApplications(),
     retry: 3,
     retryDelay: 500,
   });

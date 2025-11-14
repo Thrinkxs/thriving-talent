@@ -5,7 +5,7 @@ import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 
-import { JobResponse } from "@/lib/types/response-types/response-types";
+import { PersonalJobResponse } from "@/lib/types/response-types/response-types";
 
 import {
   DropdownMenu,
@@ -21,7 +21,7 @@ import Link from "next/link";
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 
-export const recruiterJobColumns: ColumnDef<JobResponse>[] = [
+export const recruiterJobColumns: ColumnDef<PersonalJobResponse>[] = [
   {
     accessorKey: "title",
     header: ({ column }) => {

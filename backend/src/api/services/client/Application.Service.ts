@@ -287,4 +287,46 @@ export class ApplicationService {
       };
     });
   }
+
+  /**
+   * Gets information about the jobs that the applicants applied to
+   **/
+
+  public async getInternApplicationDetails(internId: string) {
+    const applications = await Application.find({ intern: internId })
+      .populate({
+        path: "job",
+        select: "_id title location type description company",
+        populate: {
+          path: "company",
+          model: "Employer",
+          select: "_id fullName companyName email images",
+        },
+      })
+      .sort({ createdAt: -1 })
+      .lean();
+
+    return applications.map((app: any) => {
+      const job = app.job as any;
+      const company = job?.company as any;
+
+      return {
+        applicationId: app._id,
+        appliedAt: app.createdAt,
+        status: app.status,
+
+        jobId: job?._id ?? null,
+        jobTitle: job?.title ?? "N/A",
+        jobLocation: job?.location ?? "N/A",
+        jobType: job?.type ?? "N/A",
+        jobDescription: job?.description ?? "N/A",
+
+        companyId: company?._id ?? null,
+        employerName: company?.fullName ?? "N/A",
+        companyName: company?.companyName ?? "N/A",
+        companyEmail: company?.email ?? "N/A",
+        companyImages: company?.images ?? [],
+      };
+    });
+  }
 }

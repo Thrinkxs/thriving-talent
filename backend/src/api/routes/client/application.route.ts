@@ -5,6 +5,7 @@ import {
   getApplicationByIdController,
   getApplicationTrendsController,
   getEmployerApplicantsDetailsController,
+  getInternApplicationsDetailsController,
   listApplicationsController,
   updateApplicationController,
 } from "../../controller/client/application.controller";
@@ -27,6 +28,11 @@ router.get(
   "/get-employer-applicants",
   employerVerification,
   getEmployerApplicantsDetailsController
+);
+router.get(
+  "/get-intern-applications",
+  internVerification,
+  getInternApplicationsDetailsController
 );
 
 // Public listing, supports filters via query

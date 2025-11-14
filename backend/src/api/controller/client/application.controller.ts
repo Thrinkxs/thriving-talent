@@ -141,3 +141,21 @@ export const getEmployerApplicantsDetailsController = async (
     next(err);
   }
 };
+
+export const getInternApplicationsDetailsController = async (
+  req: ExtendedRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const internId = req.intern?.id; // from auth middleware
+    const data = await applicationService.getInternApplicationDetails(internId);
+    res.status(200).json({
+      message: "Fetched Intern Applications successfully",
+      total: data.length,
+      internApplicationData: data,
+    });
+  } catch (err) {
+    next(err);
+  }
+};

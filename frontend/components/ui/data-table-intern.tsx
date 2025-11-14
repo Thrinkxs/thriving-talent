@@ -50,7 +50,7 @@ interface DataTableProps<TData, TValue> {
   noDataMessage: string;
 }
 
-export function InternDataTable<TData, TValue>({
+export function InternApplicationDataTable<TData, TValue>({
   columns,
   data,
   showNameFilter = false,

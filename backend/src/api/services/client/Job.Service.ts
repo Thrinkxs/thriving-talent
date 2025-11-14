@@ -6,6 +6,7 @@ import {
 } from "../../../utils/Pagination.Helper";
 import { Application } from "../../models/Application";
 import { IEmployer } from "../../models/Employer";
+import { IIntern } from "../../models/Intern";
 import { Job } from "../../models/Job";
 import { startOfMonth, endOfMonth, subMonths } from "date-fns";
 
@@ -237,6 +238,73 @@ export class JobService {
         partTime: getTypeStats("part-time"),
         negotiable: getTypeStats("negotiable"),
       },
+    };
+  }
+
+  /**
+   * GetInternJobMetrics below
+   * metrics for intern
+   **/
+
+  public async getInternJobMetrics(intern: IIntern) {
+    const now = new Date();
+
+    const currentMonthStart = startOfMonth(now);
+    const currentMonthEnd = endOfMonth(now);
+    const prevMonthStart = startOfMonth(subMonths(now, 1));
+    const prevMonthEnd = endOfMonth(subMonths(now, 1));
+
+    const allApplications = await Application.find({
+      intern: intern._id,
+    }).populate("job");
+
+    const currentApps = allApplications.filter((app) => {
+      const createdAt = (app as any).createdAt as Date;
+      return createdAt >= currentMonthStart && createdAt <= currentMonthEnd;
+    });
+
+    const prevApps = allApplications.filter((app) => {
+      const createdAt = (app as any).createdAt as Date;
+      return createdAt >= prevMonthStart && createdAt <= prevMonthEnd;
+    });
+
+    // Active apps (pending)
+    const currentActive = currentApps.filter((app) => app.status === "pending");
+    const previousActive = prevApps.filter((app) => app.status === "pending");
+
+    // Job type breakdown
+    const jobTypes = ["full-time", "part-time", "negotiable"];
+    const jobTypeStats: any = {};
+
+    jobTypes.forEach((type) => {
+      const currentCount = currentApps.filter(
+        (app) => (app.job as any)?.type === type
+      ).length;
+      const previousCount = prevApps.filter(
+        (app) => (app.job as any)?.type === type
+      ).length;
+
+      jobTypeStats[type.replace("-", "")] = {
+        count: currentCount,
+        change: calcChange(currentCount, previousCount),
+      };
+    });
+
+    function calcChange(current: number, prev: number) {
+      if (prev === 0) return current > 0 ? 100 : 0;
+      return Number((((current - prev) / prev) * 100).toFixed(2));
+    }
+
+    return {
+      totalApplicationsSent: {
+        count: currentApps.length,
+        change: calcChange(currentApps.length, prevApps.length),
+      },
+      activeApplications: {
+        count: currentActive.length,
+        change: calcChange(currentActive.length, previousActive.length),
+      },
+      jobTypeStats,
     };
   }
 }

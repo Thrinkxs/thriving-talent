@@ -56,7 +56,13 @@ const ProfileForm = () => {
         }
 
         setFileName(file.name);
-        await uploadFileToSupabase(file, setValue, setIsUploading, "cv", "CV");
+        await uploadFileToSupabase(
+          file,
+          setValue,
+          setIsUploading,
+          "companyPhoto",
+          "companyPhoto"
+        );
       }
     },
     [setValue]

@@ -70,7 +70,7 @@ export const candidateColumns: ColumnDef<EmployerApplicantResponse>[] = [
       } else if (jobTypeStatus.jobType === JobTypes.PART_TIME) {
         statusColor = "bg-indigo-100 text-indigo-700";
       } else if (jobTypeStatus.jobType === JobTypes.NEGOTIABLE) {
-        statusColor = "bg-orange-100 text-oranger-700";
+        statusColor = "bg-orange-100 text-orange-700";
       }
 
       return (
