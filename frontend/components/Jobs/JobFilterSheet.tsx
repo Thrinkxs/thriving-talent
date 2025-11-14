@@ -54,37 +54,8 @@ export default function JobFilterSheet({
                 <SelectItem value="all">All</SelectItem>
                 <SelectItem value="full-time">Full Time</SelectItem>
                 <SelectItem value="part-time">Part Time</SelectItem>
-                <SelectItem value="remote">Remote</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div className="space-y-2">
-            <Label>Category</Label>
-            <Select value={category} onValueChange={setCategory}>
-              <SelectTrigger>
-                <SelectValue placeholder="Select category" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All</SelectItem>
-                <SelectItem value="tech">Tech</SelectItem>
-                <SelectItem value="design">Design</SelectItem>
-                <SelectItem value="marketing">Marketing</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div className="space-y-2">
-            <Label>Location</Label>
-            <Select value={location} onValueChange={setLocation}>
-              <SelectTrigger>
-                <SelectValue placeholder="Select location" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All</SelectItem>
-                <SelectItem value="lagos">Lagos</SelectItem>
-                <SelectItem value="abuja">Abuja</SelectItem>
-                <SelectItem value="remote">Remote</SelectItem>
+                <SelectItem value="negotiable">Negotiable</SelectItem>
+                {/* <SelectItem value="remote">Remote</SelectItem> */}
               </SelectContent>
             </Select>
           </div>

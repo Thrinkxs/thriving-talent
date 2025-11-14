@@ -1,4 +1,5 @@
 // "use"
+import { UserRole } from "@/lib/types/user-types/user-types";
 import axios from "axios";
 import Cookies from "js-cookie";
 
@@ -15,25 +16,6 @@ export const Axios = axios.create({
   withCredentials: true,
 });
 
-Axios.interceptors.request.use(
-  /**
-   * just because I am setting the token in the frontend, later in the future I will get rid of this
-   * because iOS devices can get the cookies
-   */
-  (config) => {
-    const accessToken = Cookies.get("access-Token"); // Get token from Zustand or cookies
-
-    if (accessToken) {
-      config.headers.Authorization = `Bearer ${accessToken}`;
-    }
-
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
-
 // Add a response interceptor
 Axios.interceptors.response.use(
   (response) => {
@@ -44,23 +26,36 @@ Axios.interceptors.response.use(
     const originalRequest = error.config;
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
+
+      const userCookieRole = Cookies.get("role");
+      let refreshAccessTokenEndpoint = "";
+      if (userCookieRole === UserRole.INTERN) {
+        refreshAccessTokenEndpoint = "/api/client/intern/auth/access-token";
+      } else if (userCookieRole === UserRole.RECRUITER) {
+        refreshAccessTokenEndpoint = "/api/client/employer/auth/access-token";
+      }
+
       try {
         // If the access token has expired, refresh it
-        const res = await Axios.patch("/api/client/employer/auth/access-token");
+        const res = await Axios.patch(refreshAccessTokenEndpoint);
 
-        console.log("the response from axios when token expired", res);
         // Update the access token in the Axios headers
         Axios.defaults.headers.common["Authorization"] =
           "Bearer " + res.data.accessToken;
         // Retry the original request
         return Axios(originalRequest);
       } catch (err) {
-        // Handle the error (e.g., redirect to login page)
-        // Make a request to the /logout endpoint
-        await Axios.delete(`/api/client/employer/auth/logout`);
+        // if it's a recruiter or an intern log them out to their sign pages
+
+        if (userCookieRole === UserRole.RECRUITER) {
+          await Axios.delete(`/api/client/employer/auth/logout`);
+          window.location.replace("/recruiter/signin");
+        } else if (userCookieRole === UserRole.INTERN) {
+          await Axios.delete("/api/client/intern/auth/logout/");
+          window.location.replace("/user/signin");
+        }
 
         console.log("an error occured", err);
-        window.location.replace("/user/signin");
       }
     }
     return Promise.reject(error);

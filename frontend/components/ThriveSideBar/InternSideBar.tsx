@@ -15,6 +15,7 @@ import { IconBellFilled, IconBriefcaseFilled } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import { useInternStore } from "@/lib/store/intern-store";
 import { UserRole } from "@/lib/types/user-types/user-types";
+import ThriveTalentDefaultImage from "@/public/default-image/TT_default_Image_2.jpg";
 
 type Props = {
   children: React.ReactNode;
@@ -61,7 +62,7 @@ const InternSideBar = ({ children }: Props) => {
             ) : (
               <div className="col-start-9 col-span-4 flex justify-end items-center gap-3">
                 <Image
-                  src={internUser?.profileImage || "https://profileimage.com"} // Use a placeholder image for avatar
+                  src={internUser?.profileImage || ThriveTalentDefaultImage} // Use a placeholder image for avatar
                   width={50}
                   height={50}
                   alt="avatar"

@@ -8,6 +8,7 @@ import {
   IconBriefcaseFilled,
   IconSettingsFilled,
   IconLogout,
+  IconHistory,
 } from "@tabler/icons-react";
 
 export const UserNavList = {
@@ -27,6 +28,11 @@ export const UserNavList = {
           icons: <IconBriefcaseFilled size={20} color="white" stroke={2} />,
           title: "Jobs",
           url: "/dashboard/user/jobs",
+        },
+        {
+          icons: <IconHistory size={20} color="white" stroke={2} />,
+          title: "History",
+          url: "/dashboard/user/history",
         },
         {
           icons: <IconSettingsFilled size={20} color="white" stroke={2} />,

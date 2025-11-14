@@ -2,20 +2,34 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { MapPin } from "lucide-react";
-import { JobType } from "@/utils/data";
 import { AsanaLogoTwo } from "@/components/thriving-talent-ui/company-logos";
 import {
   IconBriefcaseFilled,
   IconClockFilled,
   IconUserFilled,
 } from "@tabler/icons-react";
+import { JobResponse } from "@/lib/types/response-types/response-types";
+import { useCreateApplication } from "@/hooks/application/application";
+import { TbLoader2 } from "react-icons/tb";
+import { useInternStore } from "@/lib/store/intern-store";
 
 interface JobCardGridProps {
-  job: JobType;
+  job: JobResponse;
   onSelect: () => void;
 }
 
 export default function JobCardGrid({ job, onSelect }: JobCardGridProps) {
+  const { mutate: createApplication, isPending } = useCreateApplication();
+
+  const internUser = useInternStore((state) => state.intern);
+
+  const handleApply = () => {
+    createApplication({
+      jobId: job._id,
+      internId: internUser?._id,
+    });
+  };
+
   return (
     <Card
       onClick={onSelect}
@@ -33,29 +47,29 @@ export default function JobCardGrid({ job, onSelect }: JobCardGridProps) {
                 <IconBriefcaseFilled size={16} color="black" stroke={2} />
                 {job.type}
               </Badge>
-              <Badge className="bg-thrive-light-blue p-1 rounded text-black flex items-center gap-2 text-xs">
+              {/* <Badge className="bg-thrive-light-blue p-1 rounded text-black flex items-center gap-2 text-xs">
                 <IconUserFilled size={16} color="black" stroke={2} />
                 {job.applied} Applied
               </Badge>
               <Badge className="bg-thrive-light-blue p-1 rounded text-black flex items-center gap-2 text-xs">
                 <IconClockFilled size={16} color="black" stroke={2} />
                 {job.daysLeft} days left
-              </Badge>
+              </Badge> */}
             </div>
           </div>
 
           {/* Middle Section */}
           <div className="mt-4 space-y-2">
-            <h3 className="text-lg font-semibold">{job.title}</h3>
-            <p className="text-gray-600">{job.company}</p>
+            <h3 className="text-lg font-semibold">{job?.title}</h3>
+            <p className="text-gray-600">
+              {job?.company?.companyName || "no name"}
+            </p>
             <div className="flex items-center gap-2 text-sm text-gray-500">
               <MapPin className="h-4 w-4" />
-              {job.location}
+              {job?.location}
             </div>
             <p className="text-sm text-gray-500 leading-relaxed">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis
-              vero modi ducimus fuga culpa eligendi saepe sunt aliquid, sapiente
-              iusto eius natus magnam quae maxime.
+              {job?.description}
             </p>
           </div>
 
@@ -63,9 +77,15 @@ export default function JobCardGrid({ job, onSelect }: JobCardGridProps) {
           <div className="mt-5">
             <Button
               variant="outline"
-              className="rounded-xl w-full bg-black hover:bg-black/85 text-white px-5"
+              className="rounded-xl w-full bg-black hover:bg-black/85 text-white hover:text-white px-5"
+              onClick={handleApply}
+              disabled={isPending}
             >
-              Apply
+              {isPending ? (
+                <TbLoader2 className="animate-spin text-thrive-blue" />
+              ) : (
+                "Apply"
+              )}
             </Button>
           </div>
         </div>

@@ -27,7 +27,7 @@ export default function UserDashboardPage() {
 
   return (
     <section>
-      <div className="hidden lg:flex flex-wrap md:flex-nowrap justify-center gap-6">
+      <div className="hidden lg:flex flex-wrap md:flex-nowrap gap-6">
         {/* Jobs Posted */}
         <InfoCards
           backgroundColor="bg-rose-200"
@@ -54,7 +54,7 @@ export default function UserDashboardPage() {
 
       <div className="mt-6">
         <h3 className="font-bold text-xl sm:text-2xl">Latest Job Posts</h3>
-        <div className="mt-10 flex flex-wrap lg:flex-nowrap gap-6 justify-center">
+        <div className="mt-10 flex flex-wrap lg:flex-nowrap gap-6">
           {(jobsData || []).slice(0, 3).map((job) => (
             <JobCard
               key={job._id}

@@ -24,8 +24,6 @@ const CandidateDetailPage = () => {
   const candidateId = params.candidateId as string;
   const { data, isLoading } = useFetchInternById(candidateId);
 
-  console.log("the fetched intern id", data);
-
   return (
     <div>
       {isLoading ? (

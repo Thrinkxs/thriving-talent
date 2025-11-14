@@ -10,8 +10,6 @@ import { JobTypeStats } from "@/lib/types/response-types/response-types";
 export default function PieChartInfo() {
   const { data, isLoading } = useFetchRecruiterDashboardMetrics();
 
-  console.log("data for pie chart", data);
-
   // Provide fallback data
   const fallbackJobTypeStats: JobTypeStats = useMemo(
     () => ({

@@ -1,12 +1,12 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { JobType } from "@/utils/data";
 import JobCardList from "@/components/Jobs/JobCardList";
 import JobCardGrid from "@/components/Jobs/JobCardGrid";
+import { JobResponse } from "@/lib/types/response-types/response-types";
 
 interface JobListProps {
-  jobs: JobType[];
+  jobs: JobResponse[];
   viewMode: "list" | "grid";
-  onSelectJob: (job: JobType) => void;
+  onSelectJob: (job: JobResponse) => void;
 }
 
 export default function JobList({ jobs, viewMode, onSelectJob }: JobListProps) {
@@ -24,7 +24,7 @@ export default function JobList({ jobs, viewMode, onSelectJob }: JobListProps) {
       <div className="space-y-4">
         {jobs.map((job) => (
           <JobCardList
-            key={job.id}
+            key={job._id}
             job={job}
             onSelect={() => onSelectJob(job)}
           />
@@ -36,7 +36,11 @@ export default function JobList({ jobs, viewMode, onSelectJob }: JobListProps) {
   return (
     <div className="grid sm:grid-cols-2 gap-4">
       {jobs.map((job) => (
-        <JobCardGrid key={job.id} job={job} onSelect={() => onSelectJob(job)} />
+        <JobCardGrid
+          key={job._id}
+          job={job}
+          onSelect={() => onSelectJob(job)}
+        />
       ))}
     </div>
   );

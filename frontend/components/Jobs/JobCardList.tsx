@@ -1,6 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { JobType } from "@/utils/data";
 import { AsanaLogoTwo } from "@/components/thriving-talent-ui/company-logos";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -8,13 +7,28 @@ import {
   IconClockFilled,
   IconUserFilled,
 } from "@tabler/icons-react";
+import { JobResponse } from "@/lib/types/response-types/response-types";
+import { useInternStore } from "@/lib/store/intern-store";
+import { useCreateApplication } from "@/hooks/application/application";
+import { TbLoader2 } from "react-icons/tb";
 
 interface JobCardListProps {
-  job: JobType;
+  job: JobResponse;
   onSelect: () => void;
 }
 
 export default function JobCardList({ job, onSelect }: JobCardListProps) {
+  const { mutate: createApplication, isPending } = useCreateApplication();
+
+  const internUser = useInternStore((state) => state.intern);
+
+  const handleApply = () => {
+    createApplication({
+      jobId: job._id,
+      internId: internUser?._id,
+    });
+  };
+
   return (
     <Card
       onClick={onSelect}
@@ -31,34 +45,36 @@ export default function JobCardList({ job, onSelect }: JobCardListProps) {
                 <IconBriefcaseFilled size={16} color="black" stroke={2} />
                 {job.type}
               </Badge>
-              <Badge className="bg-thrive-light-blue p-1 sm:p-2 rounded text-black flex items-center gap-2 text-xs sm:text-sm 2xl:text-base">
+              {/* <Badge className="bg-thrive-light-blue p-1 sm:p-2 rounded text-black flex items-center gap-2 text-xs sm:text-sm 2xl:text-base">
                 <IconUserFilled size={16} color="black" stroke={2} />
                 {job.applied} Applied
               </Badge>
               <Badge className="bg-thrive-light-blue p-1 sm:p-2 rounded text-black flex items-center gap-2 text-xs sm:text-sm 2xl:text-base">
                 <IconClockFilled size={16} color="black" stroke={2} />
                 {job.daysLeft} days left
-              </Badge>
+              </Badge> */}
             </div>
           </div>
           <h3 className="text-lg font-semibold mt-4">{job.title}</h3>
-          <p className="text-gray-600">{job.company}</p>
+          <p className="text-gray-600">
+            {job?.company?.companyName || "no name"}
+          </p>
           <div className="flex items-center gap-3 mt-2 text-sm text-gray-500">
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis
-              vero modi ducimus fuga culpa eligendi saepe sunt aliquid, sapiente
-              iusto eius natus magnam quae maxime, repellat neque ullam sed
-              corrupti! Numquam error, quibusdam unde explicabo qui recusandae
-              temporibus sapiente enim!
-            </p>
+            <p>{job.description}</p>
           </div>
         </div>
         <div className="mt-5">
           <Button
             variant="outline"
-            className="rounded-xl w-full bg-black hover:bg-black/85 text-white px-5"
+            className="rounded-xl w-full bg-black hover:bg-black/85 text-white hover:text-white px-5"
+            onClick={handleApply}
+            disabled={isPending}
           >
-            Apply
+            {isPending ? (
+              <TbLoader2 className="animate-spin text-thrive-blue" />
+            ) : (
+              "Apply"
+            )}
           </Button>
         </div>
       </CardContent>

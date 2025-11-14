@@ -5,7 +5,6 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { JobType } from "@/utils/data";
 import { MapPin, Clock } from "lucide-react";
 import { AsanaLogoTwo } from "../thriving-talent-ui/company-logos";
 import { Badge } from "@/components/ui/badge";
@@ -14,9 +13,13 @@ import {
   IconClockFilled,
   IconUserFilled,
 } from "@tabler/icons-react";
+import { JobResponse } from "@/lib/types/response-types/response-types";
+import { useInternStore } from "@/lib/store/intern-store";
+import { useCreateApplication } from "@/hooks/application/application";
+import { TbLoader2 } from "react-icons/tb";
 
 interface JobDetailsSheetProps {
-  job: JobType;
+  job: JobResponse;
   open: boolean;
   onOpenChange: (v: boolean) => void;
   expandDescription: boolean;
@@ -30,6 +33,17 @@ export default function JobDetailsSheet({
   expandDescription,
   setExpandDescription,
 }: JobDetailsSheetProps) {
+  const { mutate: createApplication, isPending } = useCreateApplication();
+
+  const internUser = useInternStore((state) => state.intern);
+
+  const handleApply = () => {
+    createApplication({
+      jobId: job._id,
+      internId: internUser?._id,
+    });
+  };
+
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent side="bottom" className="h-[80vh] overflow-y-auto p-4">
@@ -38,21 +52,21 @@ export default function JobDetailsSheet({
             <AsanaLogoTwo />
           </div>
           <SheetTitle>{job.title}</SheetTitle>
-          <p className="text-gray-500">{job.company}</p>
+          <p className="text-gray-500">{job.company.companyName}</p>
 
           <div className="mt-5 flex flex-wrap gap-3">
             <Badge className="bg-thrive-light-blue p-1 sm:p-2 rounded text-black flex items-center gap-2 text-xs sm:text-sm 2xl:text-base">
               <IconBriefcaseFilled size={16} color="black" stroke={2} />
               {job.type}
             </Badge>
-            <Badge className="bg-thrive-light-blue p-1 sm:p-2 rounded text-black flex items-center gap-2 text-xs sm:text-sm 2xl:text-base">
+            {/* <Badge className="bg-thrive-light-blue p-1 sm:p-2 rounded text-black flex items-center gap-2 text-xs sm:text-sm 2xl:text-base">
               <IconUserFilled size={16} color="black" stroke={2} />
               {job.applied} Applied
             </Badge>
             <Badge className="bg-thrive-light-blue p-1 sm:p-2 rounded text-black flex items-center gap-2 text-xs sm:text-sm 2xl:text-base">
               <IconClockFilled size={16} color="black" stroke={2} />
               {job.daysLeft} days left
-            </Badge>
+            </Badge> */}
           </div>
         </SheetHeader>
 
@@ -84,8 +98,16 @@ export default function JobDetailsSheet({
           </div>
 
           <div className="">
-            <Button className="rounded-xl w-full bg-black hover:bg-black/85 px-6">
-              Apply
+            <Button
+              className="rounded-xl w-full bg-black hover:bg-black/85 px-6"
+              onClick={handleApply}
+              disabled={isPending}
+            >
+              {isPending ? (
+                <TbLoader2 className="animate-spin text-thrive-blue" />
+              ) : (
+                "Apply"
+              )}
             </Button>
           </div>
         </div>

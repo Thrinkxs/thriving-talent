@@ -51,8 +51,7 @@ const RecruiterSignInForm = () => {
       );
       if (response.status === 200) {
         toast.success("Successfully signed in. Welcome");
-        const { employer, accessToken, refreshToken } = response.data.data;
-        console.log("response data", employer);
+        const { employer } = response.data.data;
 
         setRecruiter(employer); // updates the recruiter state on signin
         Cookies.set("role", UserRole.RECRUITER);

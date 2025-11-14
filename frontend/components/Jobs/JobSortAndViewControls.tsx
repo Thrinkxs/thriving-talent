@@ -9,7 +9,8 @@ import {
 
 interface JobSortAndViewControlsProps {
   sortBy: string;
-  setSortBy: (v: string) => void;
+  // setSortBy: (v: string) => void;
+  setSortBy: (v: "newest" | "popular") => void;
   viewMode: "list" | "grid";
   setViewMode: (v: "list" | "grid") => void;
 }
@@ -51,8 +52,8 @@ export default function JobSortAndViewControls({
           </button>
         </div>
 
-        <Select value={sortBy} onValueChange={setSortBy}>
-          <SelectTrigger className="w-32 bg-black text-white border-0 h-10 rounded-full">
+        {/* <Select value={sortBy} onValueChange={setSortBy}>
+          <SelectTrigger className="w-32 bg-black text-white border-0 h-10 rounded-md">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
@@ -60,7 +61,7 @@ export default function JobSortAndViewControls({
             <SelectItem value="popular">Popular</SelectItem>
             <SelectItem value="closing">Closing Soon</SelectItem>
           </SelectContent>
-        </Select>
+        </Select> */}
       </div>
     </div>
   );

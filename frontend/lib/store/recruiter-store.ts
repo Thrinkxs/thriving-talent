@@ -19,20 +19,16 @@ export const useRecruiterStore = create<RecruiterState>()(
       logout: async (onSuccess?: () => void) => {
         // Optional: Make a request to the server to invalidate refresh token
         try {
-          // const response = await Axios.delete(
-          //   "/api/client/employer/auth/logout/"
-          // );
+          const response = await Axios.delete(
+            "/api/client/employer/auth/logout/"
+          );
 
-          // if (response.status === 200) {
-          //   localStorage.clear();
-          //   Cookies.remove("accessToken"); // only removes the token I set in the frontend
-          //   Cookies.remove("refreshToken");
-          //   set({ recruiter: null }); // resets the recruiter user to null
-          //   toast.success("You have successfully logged out");
-          // }
-          Cookies.remove("access-token"); // only removes the token I set in the frontend
-          Cookies.remove("refresh-token");
-          set({ recruiter: null }); // resets the recruiter user to null
+          if (response.status === 200) {
+            localStorage.clear();
+            set({ recruiter: null }); // resets the recruiter user to null
+            toast.success("You have successfully logged out");
+          }
+
           if (onSuccess) {
             onSuccess();
           }

@@ -21,8 +21,8 @@ export default function BarChartInfo() {
   >("monthly");
 
   const chartData = useMemo(() => {
-    if (!dummyData) return [];
-    const { daily, weekly, monthly } = dummyData;
+    if (!data) return [];
+    const { daily, weekly, monthly } = data;
     if (currentView === "daily")
       return daily?.map((d) => ({
         label: formatDailyDate(d.date),
@@ -39,7 +39,7 @@ export default function BarChartInfo() {
         count: d.count,
       }));
     return [];
-  }, [dummyData, currentView]);
+  }, [data, currentView]);
 
   if (isLoading) {
     return (

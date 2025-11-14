@@ -52,9 +52,8 @@ const UserSignInForm = () => {
       );
       if (response.status === 200) {
         toast.success("Successfully signed in. Welcome");
-        const { intern, accessToken, refreshToken } = response.data.data;
+        const { intern } = response.data.data;
         setIntern(intern); // updates the zustand intern state
-        console.log("response data", intern);
         Cookies.set("role", UserRole.INTERN);
 
         router.push("/dashboard/user/home");

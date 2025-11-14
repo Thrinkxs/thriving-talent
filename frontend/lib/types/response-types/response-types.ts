@@ -184,3 +184,30 @@ export type InternByIdResponse = {
   _id: string;
   __v: number;
 };
+
+/**Infinite scroll jobs */
+
+export type InfiniteJobsResponse = {
+  jobsData: {
+    data: {
+      _id: string;
+      title: string;
+      description: string;
+      company: {
+        _id: string;
+        fullName: string;
+        companyName: string;
+        images: string[];
+        email: string;
+      } | null; // Company can be null as shown in the last item
+      location: string;
+      type: string;
+      status: string;
+      createdAt: string; // ISO date string
+      updatedAt: string; // ISO date string
+    }[];
+    currentPage: number;
+    totalPages: number;
+    totalDocuments: number;
+  };
+};

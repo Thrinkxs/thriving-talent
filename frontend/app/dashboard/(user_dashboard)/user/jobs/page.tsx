@@ -1,119 +1,141 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { FAKE_JOBS, JobType } from "@/utils/data";
 import JobSearchBar from "@/components/Jobs/JobSearchBar";
 import JobSortAndViewControls from "@/components/Jobs/JobSortAndViewControls";
 import JobList from "@/components/Jobs/JobList";
 import JobDetailsPanel from "@/components/Jobs/JobDetailsPanel";
 import JobFilterSheet from "@/components/Jobs/JobFilterSheet";
 import JobDetailsSheet from "@/components/Jobs/JobDetailsSheet";
+import { useJobsStore } from "@/lib/store/job-store";
+import { useFetchJobs } from "@/hooks/jobs/jobs";
+import { JobResponse } from "@/lib/types/response-types/response-types";
+import { TbLoader2 } from "react-icons/tb";
+import { useInfiniteJobs } from "@/hooks/infinte-jobs/infinite-jobs";
+import InfiniteScrollTrigger from "@/components/InfiniteScrollTrigger/InfiniteScrollTrigger";
 
 export default function JobsPage() {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedJob, setSelectedJob] = useState<JobType | null>(null);
-  const [viewMode, setViewMode] = useState<"list" | "grid">("list");
-  const [sortBy, setSortBy] = useState("newest");
-  const [showFilters, setShowFilters] = useState(false);
-  const [showDetails, setShowDetails] = useState(false);
-  const [expandDescription, setExpandDescription] = useState(false);
+  const {
+    searchQuery,
+    setSearchQuery,
+    selectedJob,
+    setSelectedJob,
+    viewMode,
+    setViewMode,
+    sortBy,
+    setSortBy,
+    showFilters,
+    setShowFilters,
+    showDetails,
+    setShowDetails,
+    expandDescription,
+    setExpandDescription,
+    jobType,
+    setJobType,
+    category,
+    setCategory,
+    location,
+    setLocation,
+  } = useJobsStore();
 
-  // filter states
-  const [jobType, setJobType] = useState("all");
-  const [category, setCategory] = useState("all");
-  const [location, setLocation] = useState("all");
+  // const { data: jobsData = [], isLoading } = useFetchJobs();
 
-  const filteredJobs = useMemo(() => {
-    let filtered = FAKE_JOBS;
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
+    useInfiniteJobs();
 
-    if (searchQuery) {
-      filtered = filtered.filter(
-        (job) =>
-          job.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          job.company.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-    }
+  const jobs = data?.pages.flatMap((page) => page.data) ?? [];
 
-    if (jobType !== "all")
-      filtered = filtered.filter((j) => j.type === jobType);
-    if (category !== "all")
-      filtered = filtered.filter((j) => j.category === category);
-    if (location !== "all") {
-      filtered = filtered.filter((j) =>
-        j.location.toLowerCase().includes(location.toLowerCase())
-      );
-    }
+  const filteredJobs = jobs.filter((job) => {
+    let matches = true;
 
-    if (sortBy === "newest")
-      filtered = [...filtered].sort((a, b) => a.daysLeft - b.daysLeft);
-    if (sortBy === "popular")
-      filtered = [...filtered].sort((a, b) => b.applied - a.applied);
+    if (jobType !== "all") matches = matches && job.type === jobType;
+    // if (category !== "all") matches = matches && job.category === category;
+    if (location !== "all")
+      matches =
+        matches && job.location.toLowerCase().includes(location.toLowerCase());
 
-    return filtered;
-  }, [searchQuery, jobType, category, location, sortBy]);
+    return matches;
+  });
 
-  const handleJobClick = (job: JobType) => {
+  const handleJobClick = (job: JobResponse) => {
     setSelectedJob(job);
     if (window.innerWidth < 1024) setShowDetails(true);
     setExpandDescription(false);
   };
 
   return (
-    <div className="space-y-6">
-      <div className="grid lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 space-y-4">
-          <JobSearchBar
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-            onOpenFilters={() => setShowFilters(true)}
-          />
-          <JobSortAndViewControls
-            sortBy={sortBy}
-            setSortBy={setSortBy}
-            viewMode={viewMode}
-            setViewMode={setViewMode}
+    <>
+      {isLoading ? (
+        <div className="flex justify-center">
+          <TbLoader2 className="text-thrive-blue animate-spin w-10 h-10" />
+        </div>
+      ) : (
+        <div className="space-y-6">
+          <div className="grid lg:grid-cols-3 gap-6">
+            <div className="lg:col-span-2 space-y-4">
+              <JobSearchBar
+                searchQuery={searchQuery}
+                setSearchQuery={setSearchQuery}
+                onOpenFilters={() => setShowFilters(true)}
+              />
+              <JobSortAndViewControls
+                sortBy={sortBy}
+                setSortBy={setSortBy}
+                viewMode={viewMode}
+                setViewMode={setViewMode}
+              />
+            </div>
+          </div>
+
+          <div className="grid lg:grid-cols-3 gap-6">
+            <div className="lg:col-span-2 space-y-4">
+              <JobList
+                jobs={filteredJobs}
+                viewMode={viewMode}
+                onSelectJob={handleJobClick}
+              />
+
+              {hasNextPage && (
+                <InfiniteScrollTrigger onLoadMore={() => fetchNextPage()} />
+              )}
+
+              {isFetchingNextPage && (
+                <div className="flex justify-center py-4">
+                  <TbLoader2 className="animate-spin text-thrive-blue w-7 h-7" />
+                </div>
+              )}
+            </div>
+
+            {selectedJob && (
+              <JobDetailsPanel
+                job={selectedJob}
+                expandDescription={expandDescription}
+                setExpandDescription={setExpandDescription}
+              />
+            )}
+          </div>
+
+          {selectedJob && (
+            <JobDetailsSheet
+              job={selectedJob}
+              open={showDetails}
+              onOpenChange={setShowDetails}
+              expandDescription={expandDescription}
+              setExpandDescription={setExpandDescription}
+            />
+          )}
+
+          <JobFilterSheet
+            open={showFilters}
+            onOpenChange={setShowFilters}
+            jobType={jobType}
+            setJobType={setJobType}
+            category={category}
+            setCategory={setCategory}
+            location={location}
+            setLocation={setLocation}
           />
         </div>
-      </div>
-
-      <div className="grid lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 space-y-4">
-          <JobList
-            jobs={filteredJobs}
-            viewMode={viewMode}
-            onSelectJob={handleJobClick}
-          />
-        </div>
-
-        {selectedJob && (
-          <JobDetailsPanel
-            job={selectedJob}
-            expandDescription={expandDescription}
-            setExpandDescription={setExpandDescription}
-          />
-        )}
-      </div>
-
-      {selectedJob && (
-        <JobDetailsSheet
-          job={selectedJob}
-          open={showDetails}
-          onOpenChange={setShowDetails}
-          expandDescription={expandDescription}
-          setExpandDescription={setExpandDescription}
-        />
       )}
-
-      <JobFilterSheet
-        open={showFilters}
-        onOpenChange={setShowFilters}
-        jobType={jobType}
-        setJobType={setJobType}
-        category={category}
-        setCategory={setCategory}
-        location={location}
-        setLocation={setLocation}
-      />
-    </div>
+    </>
   );
 }

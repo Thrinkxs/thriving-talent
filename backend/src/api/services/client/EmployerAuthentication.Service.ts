@@ -171,8 +171,7 @@ export class AuthenticationService {
     return account;
   }
 
-  public async getAccessToken(filter: any) {
-    const { refreshToken } = filter;
+  public async getAccessToken(refreshToken) {
     const cachedAccountID = await this.cacheService.getAuthorizationToken(
       refreshToken
     );

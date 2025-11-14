@@ -81,7 +81,6 @@ export default function RecruiterSignUpForm() {
     formValues: z.infer<typeof recruiterSignUpSchema>
   ) => {
     setIsLoading(true);
-    console.log("Submitting form with values recruiter:", formValues);
     try {
       const response = await Axios.post(
         "/api/client/employer/auth/register",
@@ -89,8 +88,7 @@ export default function RecruiterSignUpForm() {
       );
       if (response.status === 201) {
         toast.success("Successfully created your account. Welcome");
-        const { employer, accessToken, refreshToken } = response.data.data;
-        console.log("the data from the backend", employer);
+        const { employer } = response.data.data;
 
         setRecruiter(employer); // update the zustand recruiter state
         Cookies.set("role", UserRole.RECRUITER);

@@ -18,22 +18,17 @@ export const useInternStore = create<InternState>()(
       setIntern: (intern) => set({ intern }),
       logout: async (onSuccess?: () => void) => {
         try {
-          // const response = await Axios.delete(
-          //   "/api/client/intern/auth/logout/", {
+          const response = await Axios.delete(
+            "/api/client/intern/auth/logout/"
+          );
 
-          //   }
-          // );
+          if (response.status === 200) {
+            localStorage.clear();
+            set({ intern: null }); // resets the intern user back to null
+            toast.success("You have successfully logged out");
+          }
 
-          // if (response.status === 200) {
-          //   localStorage.clear();
-          //   Cookies.remove("accessToken"); // only removes the token I set in the frontend
-          //   Cookies.remove("refreshToken");
-          //   set({ intern: null }); // resets the intern user back to null
-          //   toast.success("You have successfully logged out");
-          // }
-          Cookies.remove("accessToken"); // only removes the token I set in the frontend
-          Cookies.remove("refreshToken");
-          set({ intern: null }); // resets the intern user back to null
+          // set({ intern: null }); // resets the intern user back to null
           if (onSuccess) {
             onSuccess();
           }

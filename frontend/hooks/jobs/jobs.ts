@@ -1,3 +1,4 @@
+import { useJobsStore } from "@/lib/store/job-store";
 import {
   FetchJobsParams,
   JobPayload,
@@ -11,6 +12,7 @@ import {
 import { Axios } from "@/utils/Axios/Axios";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { useDebounce } from "@/hooks/use-debounce/use-debounce";
 
 const fetchPersonalJobs = async ({
   search,
@@ -57,9 +59,9 @@ const fetchJobs = async ({ search, page, limit }: FetchJobsParams = {}) => {
   try {
     const response = await Axios.get("/api/client/job", {
       params: {
-        ...(search && { search }),
-        ...(page && { page }),
-        ...(limit && { limit }),
+        search: search ?? "",
+        page,
+        limit,
       },
     });
     if (response.status !== 200) {
@@ -74,10 +76,20 @@ const fetchJobs = async ({ search, page, limit }: FetchJobsParams = {}) => {
   }
 };
 
-export const useFetchJobs = (options?: FetchJobsParams) => {
+export const useFetchJobs = () => {
+  // so it fetches new data based on the state of the app
+  const { searchQuery, page } = useJobsStore();
+
+  // Debounce the search query
+  const debouncedSearch = useDebounce(searchQuery, 500);
   return useQuery({
-    queryKey: ["data", options],
-    queryFn: () => fetchJobs(options),
+    queryKey: ["data", { debouncedSearch, page }],
+    queryFn: () =>
+      fetchJobs({
+        search: debouncedSearch,
+        page: page,
+        limit: 20,
+      }),
     retry: 3,
     retryDelay: 500,
   });

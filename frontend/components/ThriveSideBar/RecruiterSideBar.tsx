@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import { UserRole } from "@/lib/types/user-types/user-types";
 import { useRecruiterStore } from "@/lib/store/recruiter-store";
 import CreateJobDialogButton from "@/components/Button/CreateJobDialogButton";
+import ThriveTalentDefaultImage from "@/public/default-image/TT_default_Image_2.jpg";
 
 type Props = {
   children: React.ReactNode;
@@ -62,7 +63,7 @@ const RecruiterSideBar = ({ children }: Props) => {
             ) : (
               <div className="col-start-9 col-span-4 flex justify-end items-center gap-3">
                 <Image
-                  src={recruiterUser?.images[0] || "https://profileimage.com"}
+                  src={recruiterUser?.images[0] || ThriveTalentDefaultImage}
                   width={50}
                   height={50}
                   alt="avatar"
