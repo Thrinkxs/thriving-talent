@@ -86,6 +86,7 @@ export class AuthenticationService {
   public async sendVerificationEmail(filter: any) {
     const { email } = filter;
     const otp = this.authenticationTokenGenerator.generateOTP(6);
+    console.log("otp is", otp);
     await this.cacheService.cacheVerificationOTP(email, otp);
 
     await this.emailService.sendVerificationEmail({ email, otp });
@@ -96,6 +97,7 @@ export class AuthenticationService {
     const { email, verificationCode } = payload;
     const cachedVeificaitonCode =
       await this.cacheService.getCachedVerificationOTP(email);
+    console.log("cached verification code", cachedVeificaitonCode);
     if (cachedVeificaitonCode !== verificationCode) {
       throw new AppError(401, "Invalid verification code");
     }
@@ -120,6 +122,8 @@ export class AuthenticationService {
 
     const otp = await this.getPasswordResetOTP(email);
 
+    console.log("the otp boy:", otp);
+
     await this.emailService.sendPasswordResetOTP({ email, otp });
     return;
   }
@@ -130,9 +134,9 @@ export class AuthenticationService {
     if (!employer) {
       throw new AppError(404, "Employer not found");
     }
-    let cachedResponse = await this.cacheService.getCachedPasswordResetOTP(
+    let cachedResponse = (await this.cacheService.getCachedPasswordResetOTP(
       employer.email
-    );
+    )) as string;
 
     let cachedResponseJSON = JSON.parse(cachedResponse);
 
@@ -155,7 +159,7 @@ export class AuthenticationService {
     }
 
     const cachedResponseJSON =
-      await this.cacheService.getCachedPasswordResetOTP(email);
+      (await this.cacheService.getCachedPasswordResetOTP(email)) as string;
 
     if (JSON.parse(cachedResponseJSON).isOTPValid === false) {
       throw new AppError(401, "Invalid OTP");
@@ -167,8 +171,7 @@ export class AuthenticationService {
     return account;
   }
 
-  public async getAccessToken(filter: any) {
-    const { refreshToken } = filter;
+  public async getAccessToken(refreshToken) {
     const cachedAccountID = await this.cacheService.getAuthorizationToken(
       refreshToken
     );

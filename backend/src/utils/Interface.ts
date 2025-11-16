@@ -19,8 +19,10 @@ export interface ExtendedResponse extends Response {
 
 export interface IJobFilter {
   jobID?: string;
+  companyID?: string;
   search?: string;
   status?: string;
+  type?: string;
   page?: string;
   limit?: string;
 }

@@ -1,12 +1,9 @@
 import type React from "react";
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
-import { AuthProvider } from "@/contexts/auth-context";
-
-const _geist = Geist({ subsets: ["latin"] });
-const _geistMono = Geist_Mono({ subsets: ["latin"] });
+import { Toaster } from "@/components/ui/sonner";
+import TanstackProvider from "@/utils/Tanstack/TanstackProvider";
 
 export const metadata: Metadata = {
   title: "Thriving Talent",
@@ -20,8 +17,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${_geist.className} antialiased`}>
-        <AuthProvider>{children}</AuthProvider>
+      <body>
+        <TanstackProvider>{children}</TanstackProvider>
+        <Toaster
+          position="top-right"
+          toastOptions={{
+            style: { background: "#2020d0", color: "white" },
+          }}
+        />
         <Analytics />
       </body>
     </html>

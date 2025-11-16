@@ -34,9 +34,10 @@ export const getApplicationByIdController = async (
   try {
     const { id } = req.params as any;
     const response = await applicationService.getById(id);
-    return res
-      .status(200)
-      .json({ message: "Application retrieved successfully", data: response });
+    return res.status(200).json({
+      message: "Application retrieved successfully",
+      applicantData: response,
+    });
   } catch (error: any) {
     next(error);
   }
@@ -59,9 +60,10 @@ export const listApplicationsController = async (
       limit: limit ? Number(limit) : undefined,
     });
 
-    return res
-      .status(200)
-      .json({ message: "Applications retrieved successfully", data: response });
+    return res.status(200).json({
+      message: "Applications retrieved successfully",
+      applicationData: response,
+    });
   } catch (error: any) {
     next(error);
   }
@@ -76,9 +78,10 @@ export const updateApplicationController = async (
     const { id } = req.params as any;
     const payload = req.body;
     const response = await applicationService.update(id, payload);
-    return res
-      .status(200)
-      .json({ message: "Application updated successfully", data: response });
+    return res.status(200).json({
+      message: "Application updated successfully",
+      updatedApplicantData: response,
+    });
   } catch (error: any) {
     next(error);
   }
@@ -92,10 +95,67 @@ export const deleteApplicationController = async (
   try {
     const { id } = req.params as any;
     await applicationService.delete(id);
-    return res.status(200).json({ message: "Application deleted successfully" });
+    return res
+      .status(200)
+      .json({ message: "Application deleted successfully" });
   } catch (error: any) {
     next(error);
   }
 };
 
+export const getApplicationTrendsController = async (
+  req: ExtendedRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const employerId = req.employer?.id;
 
+    const trends = await applicationService.getApplicationTrends(employerId);
+
+    return res.status(200).json({
+      message: "Application trends retrieved successfully",
+      applicantionStatisticsData: trends,
+    });
+  } catch (error: any) {
+    next(error);
+  }
+};
+
+export const getEmployerApplicantsDetailsController = async (
+  req: ExtendedRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const employerId = req.employer?.id; // from auth middleware
+    const data = await applicationService.getEmployerApplicantDetails(
+      employerId
+    );
+    res.status(200).json({
+      message: "Applicants for employers fetched successfully",
+      total: data.length,
+      employerApplicantData: data,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const getInternApplicationsDetailsController = async (
+  req: ExtendedRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const internId = req.intern?.id; // from auth middleware
+    const data = await applicationService.getInternApplicationDetails(internId);
+    res.status(200).json({
+      message: "Fetched Intern Applications successfully",
+      total: data.length,
+      internApplicationData: data,
+    });
+  } catch (err) {
+    next(err);
+  }
+};

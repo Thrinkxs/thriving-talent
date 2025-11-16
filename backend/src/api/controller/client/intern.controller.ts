@@ -68,3 +68,16 @@ export const deleteProfileController = async (
     next(error);
   }
 };
+
+export const getInternByIdController = async (req: Request, res: Response) => {
+  const businessId = req.params.internId;
+  try {
+    const intern = await internService.getInternById(businessId);
+    res.status(200).json({
+      message: "intern fetched successfully",
+      internData: intern,
+    });
+  } catch (error: any) {
+    res.status(400).json({ message: error.message });
+  }
+};

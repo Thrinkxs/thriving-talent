@@ -27,7 +27,7 @@ export class EmployerService {
     payload: { currentPassword: string; password: string }
   ) {
     const { currentPassword, password } = payload;
-    const isValid = this.hasher.verifyPassword(
+    const isValid = await this.hasher.verifyPassword(
       currentPassword,
       employer.password!
     );

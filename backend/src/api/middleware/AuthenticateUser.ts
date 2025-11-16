@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import { NextFunction, Request, Response, RequestHandler } from "express";
-import cookie from "cookie";
+// import cookie from "cookie";
+import * as cookie from "cookie";
 import { AuthenticationTokenGenerator } from "../services/Unique.Service";
 import { Employer } from "../models/Employer";
 import { ExtendedRequest } from "../../utils/Interface";
@@ -34,7 +35,8 @@ export const tokenAuthentication = (
     const authorizationInfo = new AuthenticationTokenGenerator().verifyToken(
       token
     );
-    req.account = authorizationInfo;
+    req.employer = authorizationInfo;
+    req.intern = authorizationInfo;
     return next();
   } catch (error: any) {
     return res.status(401).json({ message: "Unauthenticated: Invalid token" });

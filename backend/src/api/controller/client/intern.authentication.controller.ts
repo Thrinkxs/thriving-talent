@@ -3,7 +3,7 @@ import { CacheService } from "../../services/Cache.Service";
 import { EmailService } from "../../services/Email.Service";
 import { AuthenticationTokenGenerator } from "../../services/Unique.Service";
 import { Hasher } from "../../../utils/HashPassword";
-import { AuthenticationService } from "../../services/client/EmployerAuthentication.Service";
+import { AuthenticationService } from "../../services/client/InternAuthentication.Service";
 
 const hasher = new Hasher();
 const cacheService = new CacheService();
@@ -162,12 +162,25 @@ export const getAccessTokenController = async (
   res: Response,
   next: NextFunction
 ) => {
-  const payload = req.body;
+  const refreshToken = req.cookies["refresh-token"];
+
+  if (!refreshToken) {
+    return res.status(400).json({ message: "No refresh token found" });
+  }
+
   try {
-    const response = await authenticationService.getAccessToken(payload);
-    return res
-      .status(200)
-      .json({ message: "Access token fetched successfully", data: response });
+    const response = await authenticationService.getAccessToken(refreshToken);
+    const { accessToken } = response;
+    res.cookie("access-token", accessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 15 * 60 * 1000, // 15 minutes
+    });
+    return res.status(200).json({
+      message: "Access token fetched successfully",
+      data: accessToken,
+    });
   } catch (error: any) {
     next(error);
   }
@@ -178,9 +191,19 @@ export const logoutAccountController = async (
   res: Response,
   next: NextFunction
 ) => {
-  const payload = req.body;
   try {
-    await authenticationService.logoutAccount(payload);
+    // Get refresh token from cookies instead of request body
+    const refreshToken = req.cookies["refresh-token"];
+
+    if (!refreshToken) {
+      return res.status(400).json({ message: "No refresh token found" });
+    }
+
+    await authenticationService.logoutAccount(refreshToken);
+    // Clear the cookies
+    res.clearCookie("access-token");
+    res.clearCookie("refresh-token");
+
     return res.status(200).json({ message: "Logged out successfully" });
   } catch (error: any) {
     next(error);

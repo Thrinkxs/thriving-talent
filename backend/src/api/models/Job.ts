@@ -6,6 +6,7 @@ export interface IJob extends Document {
   company: Schema.Types.ObjectId;
   status: string;
   location: string;
+  type: string;
   __v?: number;
 }
 
@@ -18,7 +19,12 @@ const JobSchema = new Schema<IJob>(
       ref: "Employer",
       required: true,
     },
-    location: { type: String, required: true },
+    location: { type: String },
+    type: {
+      type: String,
+      enum: ["full-time", "part-time", "negotiable"],
+      required: true,
+    },
     status: { type: String, enum: ["active", "inactive"], default: "active" },
   },
   {
