@@ -7,11 +7,10 @@ import JobDetailsPanel from "@/components/Jobs/JobDetailsPanel";
 import JobFilterSheet from "@/components/Jobs/JobFilterSheet";
 import JobDetailsSheet from "@/components/Jobs/JobDetailsSheet";
 import { useJobsStore } from "@/lib/store/job-store";
-import { useFetchJobs } from "@/hooks/jobs/jobs";
 import { JobResponse } from "@/lib/types/response-types/response-types";
-import { TbLoader2 } from "react-icons/tb";
 import { useInfiniteJobs } from "@/hooks/infinte-jobs/infinite-jobs";
 import InfiniteScrollTrigger from "@/components/InfiniteScrollTrigger/InfiniteScrollTrigger";
+import { Loader2 } from "lucide-react";
 
 export default function JobsPage() {
   const {
@@ -61,12 +60,19 @@ export default function JobsPage() {
     if (window.innerWidth < 1024) setShowDetails(true);
     setExpandDescription(false);
   };
-
+  
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-[300px]">
+        <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
+      </div>
+    );
+  }
   return (
     <>
       {isLoading ? (
         <div className="flex justify-center">
-          <TbLoader2 className="text-thrive-blue animate-spin w-10 h-10" />
+          <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
         </div>
       ) : (
         <div className="space-y-6">
@@ -100,7 +106,7 @@ export default function JobsPage() {
 
               {isFetchingNextPage && (
                 <div className="flex justify-center py-4">
-                  <TbLoader2 className="animate-spin text-thrive-blue w-7 h-7" />
+                  <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
                 </div>
               )}
             </div>

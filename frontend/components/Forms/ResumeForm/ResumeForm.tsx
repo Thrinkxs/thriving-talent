@@ -11,15 +11,15 @@ import { toast } from "sonner";
 import { useCallback, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { cn } from "@/lib/utils";
-import { TbLoader2 } from "react-icons/tb";
 import { IconFileText, IconUpload } from "@tabler/icons-react";
 import { uploadFileToSupabase } from "@/utils/Supabase/Supabase";
 import { useUpdateInternProfile } from "@/hooks/intern/intern";
 import { useInternStore } from "@/lib/store/intern-store";
+import { Loader2 } from "lucide-react";
 
 const UserProfileResumeForm = () => {
   const [isUploading, setIsUploading] = useState(false);
-  const [uploadedName, setUploadedName] = useState("");
+  const [uploadedName, setUploadedName] = useState<string>("");
 
   const { mutate: submitInternProfile, isPending } = useUpdateInternProfile();
   const internUser = useInternStore((s) => s.intern);
@@ -77,7 +77,7 @@ const UserProfileResumeForm = () => {
         resume: internUser.resume || "",
       });
     }
-  }, [internUser]);
+  }, [internUser, form]);
 
   const resumeURL = form.watch("resume") || internUser?.resume;
   const resumeName =
@@ -129,7 +129,7 @@ const UserProfileResumeForm = () => {
             <Input {...getInputProps()} />
 
             {isUploading ? (
-              <TbLoader2 className="w-10 h-10 animate-spin text-thrive-blue" />
+              <Loader2 className="w-6 h-6 animate-spin text-thrive-blue" />
             ) : (
               <div className="flex flex-col items-center gap-2">
                 <IconUpload size={70} stroke={1.5} className="text-gray-700" />
@@ -144,7 +144,7 @@ const UserProfileResumeForm = () => {
           <hr className="text-gray-300" />
 
           <Button className="px-20 bg-black hover:bg-black/85" type="submit">
-            {isPending ? <TbLoader2 className="text-thrive-blue" /> : "Update"}
+            {isPending ? <Loader2 className="w-6 h-6 animate-spin text-white" /> : "Update"}
           </Button>
         </form>
       </Form>

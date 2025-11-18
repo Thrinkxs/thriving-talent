@@ -7,7 +7,7 @@ import phoneFrame from "@/public/phone.png";
 import { Button } from "@/components/ui/button";
 
 export function InternsSection() {
-  const [isHovered, setIsHovered] = useState(false);
+  const [, setIsHovered] = useState<boolean>(false);
 
   return (
     <section className="w-full bg-white flex justify-center items-center">

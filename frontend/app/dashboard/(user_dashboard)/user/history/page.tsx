@@ -3,11 +3,19 @@
 import { internApplicationColumns } from "@/components/Columns/InternApplicationColumns";
 import { InternApplicationDataTable } from "@/components/ui/data-table-intern";
 import { useFetchInternApplications } from "@/hooks/application/application";
+import { Loader2 } from "lucide-react";
 
 export default function UserDashboardPage() {
-  const { data: internApplicationsData, isLoading: isLoadingApplications } =
+  const { data: internApplicationsData, isLoading } =
     useFetchInternApplications();
 
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-[300px]">
+        <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
+      </div>
+    );
+  }
   return (
     <section>
       <h1 className="text-3xl">Application History</h1>
@@ -15,7 +23,7 @@ export default function UserDashboardPage() {
         <div className="mt-4">
           <h3 className="text-xl font-bold">Your Job Applications</h3>
           <p className="text-sm text-gray-500 mt-2">
-            Track the status of all positions you've applied to
+            Track the status of all positions you&apos;ve applied to
           </p>
         </div>
         <InternApplicationDataTable

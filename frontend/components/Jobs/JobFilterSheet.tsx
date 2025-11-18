@@ -31,10 +31,8 @@ export default function JobFilterSheet({
   onOpenChange,
   jobType,
   setJobType,
-  category,
-  setCategory,
-  location,
-  setLocation,
+
+
 }: JobFilterSheetProps) {
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>

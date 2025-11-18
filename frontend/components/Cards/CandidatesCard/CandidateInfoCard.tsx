@@ -1,11 +1,12 @@
 import Image from "next/image";
 import React from "react";
 import { Button } from "@/components/ui/button";
+import { IconProps } from "@tabler/icons-react";
 
 interface PersonalInfo {
   label: string;
   value: string;
-  icon: React.ComponentType<any>;
+  icon: React.ComponentType<IconProps>;
 }
 
 interface CandidateInfoCardProps {

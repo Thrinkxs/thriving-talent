@@ -9,14 +9,12 @@ import {
 } from "@/components/ui/sidebar";
 import Image from "next/image";
 import { useState } from "react";
-import { TbLoader2 } from "react-icons/tb";
 import { RecruiterNavList } from "@/components/Navigation/RecruiterNavList";
-import { IconBellFilled, IconBriefcaseFilled } from "@tabler/icons-react";
-import { Button } from "@/components/ui/button";
 import { UserRole } from "@/lib/types/user-types/user-types";
 import { useRecruiterStore } from "@/lib/store/recruiter-store";
 import CreateJobDialogButton from "@/components/Button/CreateJobDialogButton";
 import ThriveTalentDefaultImage from "@/public/default-image/TT_default_Image_2.jpg";
+import { Loader2 } from "lucide-react";
 
 type Props = {
   children: React.ReactNode;
@@ -24,7 +22,7 @@ type Props = {
 
 const RecruiterSideBar = ({ children }: Props) => {
   const recruiterUser = useRecruiterStore((state) => state.recruiter);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading] = useState(false);
   return (
     <SidebarProvider
       style={
@@ -58,7 +56,7 @@ const RecruiterSideBar = ({ children }: Props) => {
           <div className="col-start-8 col-end-11 md:col-start-11 md:col-end-13 flex items-center">
             {isLoading ? (
               <div className="col-start-12 col-span-2 flex justify-center">
-                <TbLoader2 className="animate-spin text-btn" />
+                <Loader2 className="w-6 h-6 animate-spin text-btn" />
               </div>
             ) : (
               <div className="col-start-9 col-span-4 flex justify-end items-center gap-3">

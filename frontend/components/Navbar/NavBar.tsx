@@ -10,7 +10,6 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import thrivingTalentLogo from "@/public/thrivingTalentLogo.png";
 import HamburgerNav from "./HamburgerNav/HamburgerNav";
-import NavMenu from "./NavMenu/NavMenu";
 import { Button } from "@/components/ui/button";
 
 const NavBar = () => {

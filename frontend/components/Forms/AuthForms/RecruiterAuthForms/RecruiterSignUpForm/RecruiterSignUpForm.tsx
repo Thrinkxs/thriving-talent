@@ -18,13 +18,13 @@ import StepTwoBusinessInfo from "./Stepper/Steps/StepTwoBusinessInfo";
 import StepFourPassword from "./Stepper/Steps/StepThreePassword";
 import Cookies from "js-cookie";
 import Link from "next/link";
-import { TbLoader2 } from "react-icons/tb";
 import { useRouter } from "next/navigation";
 import { useRecruiterStore } from "@/lib/store/recruiter-store";
 import { UserRole } from "@/lib/types/user-types/user-types";
+import { Loader2 } from "lucide-react";
 
 export default function RecruiterSignUpForm() {
-  const [isLoading, setIsLoading] = useState<Boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const methods = useForm<z.infer<typeof recruiterSignUpSchema>>({
     resolver: zodResolver(recruiterSignUpSchema),
     mode: "onChange",
@@ -80,7 +80,7 @@ export default function RecruiterSignUpForm() {
   const onSubmit = async (
     formValues: z.infer<typeof recruiterSignUpSchema>
   ) => {
-    setIsLoading(true);
+    setLoading(true);
     try {
       const response = await Axios.post(
         "/api/client/employer/auth/register",
@@ -90,15 +90,14 @@ export default function RecruiterSignUpForm() {
         toast.success("Successfully created your account. Welcome");
         const { employer } = response.data.data;
 
-        setRecruiter(employer); // update the zustand recruiter state
+        setRecruiter(employer);
         Cookies.set("role", UserRole.RECRUITER);
-        setIsLoading(false);
         router.push("/dashboard/recruiter/home");
       }
-    } catch (err: any) {
-      toast.error(err.response?.data?.message || "Signup failed");
+    } catch (error) {
+      toast.error((error as Error)?.message || "Signup failed");
     } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
   };
 
@@ -143,8 +142,8 @@ export default function RecruiterSignUpForm() {
                   type="submit"
                   className="bg-thrive-blue hover:bg-thrive-blue/90"
                 >
-                  {isLoading ? (
-                    <TbLoader2 className="animate-spin" />
+                  {loading ? (
+                    <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
                   ) : (
                     "Submit"
                   )}

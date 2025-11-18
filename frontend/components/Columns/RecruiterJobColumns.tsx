@@ -1,25 +1,10 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
-
+import { ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
 import { PersonalJobResponse } from "@/lib/types/response-types/response-types";
-
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { JobTypes } from "@/lib/types/job-types/job-types";
-import Link from "next/link";
-
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
 
 export const recruiterJobColumns: ColumnDef<PersonalJobResponse>[] = [
   {
@@ -57,9 +42,8 @@ export const recruiterJobColumns: ColumnDef<PersonalJobResponse>[] = [
     header: "Availability",
     cell: ({ row }) => {
       const jobTypeStatus = row.original;
-      let statusColor = ""; // Initialize an empty string for the color class
+      let statusColor = "";
 
-      // Set the color class based on jobTypeStatus status
       if (jobTypeStatus.type === JobTypes.FULL_TIME) {
         statusColor = "bg-green-100 text-green-700";
       } else if (jobTypeStatus.type === JobTypes.PART_TIME) {

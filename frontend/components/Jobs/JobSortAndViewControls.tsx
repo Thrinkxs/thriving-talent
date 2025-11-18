@@ -1,11 +1,4 @@
 import { List, Grid3x3 } from "lucide-react";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 
 interface JobSortAndViewControlsProps {
   sortBy: string;
@@ -17,7 +10,7 @@ interface JobSortAndViewControlsProps {
 
 export default function JobSortAndViewControls({
   sortBy,
-  setSortBy,
+
   viewMode,
   setViewMode,
 }: JobSortAndViewControlsProps) {

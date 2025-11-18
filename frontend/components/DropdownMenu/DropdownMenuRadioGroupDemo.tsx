@@ -17,7 +17,7 @@ type FilterDates = {
   filterDaily: () => void;
   filterWeekly: () => void;
   filterMonthly: () => void;
-  currentSelection: String;
+  currentSelection: string;
 };
 
 export function DropdownMenuRadioGroupDemo({

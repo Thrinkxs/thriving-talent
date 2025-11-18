@@ -12,7 +12,7 @@ import { Loader2 } from "lucide-react";
 
 export default function DashboardPage() {
   const { data, isLoading } = useFetchRecruiterDashboardMetrics();
-  const { data: ApplicantsData, isLoading: isApplicantsLoading } =
+  const { data: ApplicantsData } =
     useFetchEmployerApplicants();
 
   if (isLoading) {

@@ -7,20 +7,16 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { resetPasswordFormSchema } from "@/lib/schema";
-import { toast } from "sonner";
-import { useEffect, useState } from "react";
-import { TbLoader2 } from "react-icons/tb";
 import { PasswordInput } from "@/components/ui/password-input";
 import { UserRole } from "@/lib/types/user-types/user-types";
 import { useUpdateInternPassword } from "@/hooks/intern/intern";
 import { useUpdateRecruiterPassword } from "@/hooks/recruiter/recruiter";
+import { Loader2 } from "lucide-react";
 
 interface ResetPasswordFormProps {
   userType: UserRole.INTERN | UserRole.RECRUITER;
@@ -124,7 +120,7 @@ const ResetPasswordForm = ({ userType }: ResetPasswordFormProps) => {
               className="rounded-xl px-20 bg-black hover:bg-black/85"
             >
               {isInternPending || isRecruiterPending ? (
-                <TbLoader2 className="ml-2 h-5 w-5 animate-spin" />
+                <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
               ) : (
                 "Update Password"
               )}

@@ -9,13 +9,11 @@ import {
 } from "@/components/ui/sidebar";
 import Image from "next/image";
 import { useState } from "react";
-import { TbLoader2 } from "react-icons/tb";
 import { UserNavList } from "@/components/Navigation/UserNavList";
-import { IconBellFilled, IconBriefcaseFilled } from "@tabler/icons-react";
-import { Button } from "@/components/ui/button";
 import { useInternStore } from "@/lib/store/intern-store";
 import { UserRole } from "@/lib/types/user-types/user-types";
 import ThriveTalentDefaultImage from "@/public/default-image/TT_default_Image_2.jpg";
+import { Loader2 } from "lucide-react";
 
 type Props = {
   children: React.ReactNode;
@@ -24,7 +22,7 @@ type Props = {
 const InternSideBar = ({ children }: Props) => {
   const internUser = useInternStore((state) => state.intern);
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading] = useState(false);
   return (
     <SidebarProvider
       style={
@@ -51,7 +49,7 @@ const InternSideBar = ({ children }: Props) => {
           <div className="col-start-8 col-end-11 md:col-start-11 md:col-end-13 flex items-center">
             {isLoading ? (
               <div className="col-start-12 col-span-2 flex justify-center">
-                <TbLoader2 className="animate-spin text-btn" />
+                <Loader2 className="w-6 h-6 animate-spin text-btn" />
               </div>
             ) : (
               <div className="col-start-9 col-span-4 flex justify-end items-center gap-3">

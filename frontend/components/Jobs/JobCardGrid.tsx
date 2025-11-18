@@ -5,13 +5,11 @@ import { MapPin } from "lucide-react";
 import { AsanaLogoTwo } from "@/components/thriving-talent-ui/company-logos";
 import {
   IconBriefcaseFilled,
-  IconClockFilled,
-  IconUserFilled,
 } from "@tabler/icons-react";
 import { JobResponse } from "@/lib/types/response-types/response-types";
 import { useCreateApplication } from "@/hooks/application/application";
-import { TbLoader2 } from "react-icons/tb";
 import { useInternStore } from "@/lib/store/intern-store";
+import { Loader2 } from "lucide-react";
 
 interface JobCardGridProps {
   job: JobResponse;
@@ -82,7 +80,7 @@ export default function JobCardGrid({ job, onSelect }: JobCardGridProps) {
               disabled={isPending}
             >
               {isPending ? (
-                <TbLoader2 className="animate-spin text-thrive-blue" />
+                <Loader2 className="w-6 h-6 animate-spin text-thrive-blue" />
               ) : (
                 "Apply"
               )}

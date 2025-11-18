@@ -43,7 +43,7 @@ export const useInternStore = create<InternState>()(
           if (onSuccess) {
             onSuccess();
           }
-        } catch (error: any) {
+        } catch (error) {
           console.error("Failed to logout user:", error);
           toast.error("Failed to logout");
         }

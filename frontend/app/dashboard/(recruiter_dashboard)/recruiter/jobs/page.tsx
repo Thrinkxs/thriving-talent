@@ -4,9 +4,18 @@ import { recruiterJobColumns } from "@/components/Columns/RecruiterJobColumns";
 import { JobsDataTable } from "@/components/ui/data-table-jobs";
 import { useFetchPersonalJobs } from "@/hooks/jobs/jobs";
 import React from "react";
+import { Loader2 } from "lucide-react";
 
 const RecruiterJobPage = () => {
   const { data: recruiterJobData, isLoading } = useFetchPersonalJobs();
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-[300px]">
+        <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
+      </div>
+    );
+  }
   return (
     <div>
       <section className="bg-white rounded-3xl p-4">

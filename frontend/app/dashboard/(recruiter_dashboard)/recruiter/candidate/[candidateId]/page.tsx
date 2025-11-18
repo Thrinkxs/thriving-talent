@@ -8,10 +8,8 @@ import CandidateInfoCard from "@/components/Cards/CandidatesCard/CandidateInfoCa
 import CandidateOverViewCard from "@/components/Cards/CandidatesCard/CandidateOverViewCard";
 import CandidateVideoCard from "@/components/Cards/CandidatesCard/CandidateVideoCard";
 import {
-  IconCake,
   IconGenderAndrogyne,
-  IconMapPins,
-  IconPhoneFilled,
+  IconPhoneFilled
 } from "@tabler/icons-react";
 
 import { useFetchInternById } from "@/hooks/intern/intern";

@@ -8,7 +8,6 @@ import {
   AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
-  AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
@@ -18,7 +17,7 @@ import { IconLogout } from "@tabler/icons-react";
 
 type LogoutAlertDialogProp = {
   logout: () => void;
-  open: Boolean;
+  open: boolean;
 };
 
 export function LogoutAlertDialog({ logout, open }: LogoutAlertDialogProp) {

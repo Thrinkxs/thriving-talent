@@ -1,12 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import {   useState } from "react";
 import { IconBriefcaseFilled } from "@tabler/icons-react";
-import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -14,7 +12,7 @@ import {
 import CreateJobForm from "@/components/Forms/JobForm/CreateJobForm";
 
 const CreateJobDialogButton = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   return (
     <div>
       <Dialog

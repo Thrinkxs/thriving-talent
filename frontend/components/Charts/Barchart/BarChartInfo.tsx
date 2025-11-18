@@ -11,7 +11,6 @@ import {
   formatMonthlyDate,
   formatWeeklyDate,
 } from "@/utils/Helper/HelperFunction";
-import { dummyData } from "@/utils/data";
 
 export default function BarChartInfo() {
   const { data, isLoading } = useFetchApplicationStatistics();

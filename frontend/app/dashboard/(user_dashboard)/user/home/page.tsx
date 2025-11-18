@@ -15,6 +15,7 @@ import {
   IconBriefcaseFilled,
   IconUser,
 } from "@tabler/icons-react";
+import { Loader2 } from "lucide-react";
 
 export default function UserDashboardPage() {
   const { data: jobsData, isLoading } = useFetchJobs();
@@ -24,6 +25,13 @@ export default function UserDashboardPage() {
     useFetchInternApplications();
 
   const internUser = useInternStore((state) => state.intern);
+  if (isLoading || isLoadingMetrics || isLoadingApplications) {
+    return (
+      <div className="flex items-center justify-center min-h-[300px]">
+        <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
+      </div>
+    );
+  }
 
   return (
     <section>

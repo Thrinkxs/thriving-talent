@@ -8,25 +8,19 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarMenuSub,
-  SidebarMenuSubButton,
-  SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
 import {
   AlertDialog,
   AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
-  AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { Axios } from "@/utils/Axios/Axios";
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
 import Logo from "@/components/Navigation/Logo";
 import { useInternStore } from "@/lib/store/intern-store";
 import { UserRole } from "@/lib/types/user-types/user-types";
@@ -58,8 +52,8 @@ export function AppSidebar({ navList, logoutUser, ...props }: AppSidebarProps) {
   const logoutIntern = useInternStore((state) => state.logout);
   const logoutRecruiter = useInternStore((state) => state.logout);
 
-  const accessToken = Cookies.get("accessToken") || "";
-  const refreshToken = Cookies.get("refreshToken") || "";
+  // const accessToken = Cookies.get("accessToken") || "";
+  // const refreshToken = Cookies.get("refreshToken") || "";
 
   const logout = async () => {
     // if (logoutUser === UserRole.RECRUITER) {

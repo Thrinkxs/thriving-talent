@@ -30,7 +30,7 @@ import { useRecruiterStore } from "@/lib/store/recruiter-store";
 import { UserRole } from "@/lib/types/user-types/user-types";
 
 const RecruiterSignInForm = () => {
-  const [loading, isLoading] = useState<Boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const router = useRouter();
   const setRecruiter = useRecruiterStore((state) => state.setRecruiter);
@@ -43,7 +43,7 @@ const RecruiterSignInForm = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof userSignInSchema>) => {
-    isLoading(true);
+    setLoading(true);
     try {
       const response = await Axios.post(
         "/api/client/employer/auth/login",
@@ -53,15 +53,15 @@ const RecruiterSignInForm = () => {
         toast.success("Successfully signed in. Welcome");
         const { employer } = response.data.data;
 
-        setRecruiter(employer); // updates the recruiter state on signin
+        setRecruiter(employer);
         Cookies.set("role", UserRole.RECRUITER);
         router.push("/dashboard/recruiter/home");
       }
-    } catch (error: any) {
-      isLoading(false);
-      toast.error(error.response?.data?.message || "Error logging in");
+    } catch (error) {
+      setLoading(false);
+      toast.error((error as Error).message || "Error logging in");
     } finally {
-      isLoading(false);
+      setLoading(false);
     }
   };
 

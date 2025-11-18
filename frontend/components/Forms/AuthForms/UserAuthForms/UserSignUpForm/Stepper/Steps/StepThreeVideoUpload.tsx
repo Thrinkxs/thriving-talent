@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useFormContext } from "react-hook-form";
@@ -5,8 +6,8 @@ import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
-import { TbLoader2 } from "react-icons/tb";
 import { uploadFileToSupabase } from "@/utils/Supabase/Supabase";
+import { Loader2 } from "lucide-react";
 
 export default function StepThreeVideoUpload({ nextStep, prevStep }: any) {
   const [isUploading, setIsUploading] = useState<boolean>(false);
@@ -86,7 +87,7 @@ export default function StepThreeVideoUpload({ nextStep, prevStep }: any) {
 
       {isUploading && (
         <div className="flex justify-center">
-          <TbLoader2 className="text-thrive-blue w-10 h-10 animate-spin text-center" />
+          <Loader2 className="w-6 h-6 animate-spin text-thrive-blue" />
         </div>
       )}
 

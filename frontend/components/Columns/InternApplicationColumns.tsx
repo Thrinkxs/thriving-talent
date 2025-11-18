@@ -1,26 +1,11 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
-
+import { ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
 import { InternApplicationResponse } from "@/lib/types/response-types/response-types";
-
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-
-import Link from "next/link";
 import { ApplicationTypes } from "@/lib/types/application-types/application-types";
 
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
 
 export const internApplicationColumns: ColumnDef<InternApplicationResponse>[] =
   [
@@ -73,9 +58,8 @@ export const internApplicationColumns: ColumnDef<InternApplicationResponse>[] =
       header: "Status",
       cell: ({ row }) => {
         const applicationTypeStatus = row.original;
-        let statusColor = ""; // Initialize an empty string for the color class
+        let statusColor = "";
 
-        // Set the color class based on applicationTypeStatus status
         if (applicationTypeStatus.status === ApplicationTypes.HIRED) {
           statusColor = "bg-green-100 text-green-700";
         } else if (applicationTypeStatus.status === ApplicationTypes.ACCEPTED) {

@@ -26,7 +26,7 @@ import { useInternStore } from "@/lib/store/intern-store";
 import { UserRole } from "@/lib/types/user-types/user-types";
 
 export default function UserSignUpForm() {
-  const [isLoading, setIsLoading] = useState<Boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const methods = useForm<z.infer<typeof userSignUpSchema>>({
     resolver: zodResolver(userSignUpSchema),
     mode: "onChange",
@@ -84,16 +84,16 @@ export default function UserSignUpForm() {
         formValues
       );
       if (response.status === 201) {
-        toast.success("Successfully created your account. Welcome");
-        const { intern, accessToken, refreshToken } = response.data.data;
-        setIntern(intern); // updates the zustand intern state
-        Cookies.set("role", UserRole.INTERN);
         setIsLoading(false);
+        toast.success("Successfully created your account. Welcome");
+        const { intern } = response.data.data;
+        setIntern(intern);
+        Cookies.set("role", UserRole.INTERN);
         router.push("/dashboard/user/home");
       }
-    } catch (err: any) {
+    } catch (err) {
       setIsLoading(false);
-      toast.error(err.response?.data?.message || "Signup failed");
+      toast.error((err as Error).message || "Signup failed");
     } finally {
       setIsLoading(false);
     }

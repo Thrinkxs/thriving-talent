@@ -22,15 +22,15 @@ import { Axios } from "@/utils/Axios/Axios";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useState } from "react";
-import { TbLoader2 } from "react-icons/tb";
-import { MailIcon, Eye } from "lucide-react";
+import { Loader2 } from "lucide-react";
+import { MailIcon } from "lucide-react";
 import { PasswordInput } from "../../../../ui/password-input";
 import Cookies from "js-cookie";
 import { useInternStore } from "@/lib/store/intern-store";
 import { UserRole } from "@/lib/types/user-types/user-types";
 
 const UserSignInForm = () => {
-  const [loading, isLoading] = useState<Boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const router = useRouter();
   const setIntern = useInternStore((state) => state.setIntern);
@@ -44,7 +44,7 @@ const UserSignInForm = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof userSignInSchema>) => {
-    isLoading(true);
+    setLoading(true);
     try {
       const response = await Axios.post(
         "/api/client/intern/auth/login",
@@ -53,16 +53,16 @@ const UserSignInForm = () => {
       if (response.status === 200) {
         toast.success("Successfully signed in. Welcome");
         const { intern } = response.data.data;
-        setIntern(intern); // updates the zustand intern state
+        setIntern(intern);
         Cookies.set("role", UserRole.INTERN);
 
         router.push("/dashboard/user/home");
       }
-    } catch (error: any) {
-      isLoading(false);
-      toast.error(error.response?.data?.message || "Error logging in");
+    } catch (error) {
+      setLoading(false);
+      toast.error((error as Error).message || "Error logging in");
     } finally {
-      isLoading(false);
+      setLoading(false);
     }
   };
 
@@ -124,7 +124,7 @@ const UserSignInForm = () => {
                     className="rounded w-full px-10 bg-thrive-blue hover:bg-thrive-blue/90"
                   >
                     {loading ? (
-                      <TbLoader2 className="animate-spin" />
+                      <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
                     ) : (
                       "Sign In"
                     )}

@@ -4,13 +4,11 @@ import { AsanaLogoTwo } from "@/components/thriving-talent-ui/company-logos";
 import { Badge } from "@/components/ui/badge";
 import {
   IconBriefcaseFilled,
-  IconClockFilled,
-  IconUserFilled,
 } from "@tabler/icons-react";
 import { JobResponse } from "@/lib/types/response-types/response-types";
 import { useInternStore } from "@/lib/store/intern-store";
 import { useCreateApplication } from "@/hooks/application/application";
-import { TbLoader2 } from "react-icons/tb";
+import { Loader2 } from "lucide-react";
 
 interface JobCardListProps {
   job: JobResponse;
@@ -71,7 +69,7 @@ export default function JobCardList({ job, onSelect }: JobCardListProps) {
             disabled={isPending}
           >
             {isPending ? (
-              <TbLoader2 className="animate-spin text-thrive-blue" />
+              <Loader2 className="w-6 h-6 animate-spin text-white" />
             ) : (
               "Apply"
             )}

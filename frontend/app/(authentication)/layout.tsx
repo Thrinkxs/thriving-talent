@@ -1,7 +1,6 @@
 import type React from "react";
 import { Analytics } from "@vercel/analytics/next";
 import { Footer } from "@/components/Footer/Footer";
-import NavBar from "@/components/Navbar/NavBar";
 import { Geist } from "next/font/google";
 import Logo from "@/components/Navigation/Logo";
 

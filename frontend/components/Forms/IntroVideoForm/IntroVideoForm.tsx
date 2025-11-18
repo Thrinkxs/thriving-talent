@@ -14,8 +14,8 @@ import { cn } from "@/lib/utils";
 import { IconUpload, IconVideo } from "@tabler/icons-react";
 import { uploadFileToSupabase } from "@/utils/Supabase/Supabase";
 import { useUpdateInternProfile } from "@/hooks/intern/intern";
-import { TbLoader2 } from "react-icons/tb";
 import { useInternStore } from "@/lib/store/intern-store";
+import { Loader2 } from "lucide-react";
 
 const UserProfileIntroVideoForm = () => {
   const [isUploading, setIsUploading] = useState(false);
@@ -81,7 +81,7 @@ const UserProfileIntroVideoForm = () => {
         introVideo: internUser?.introVideo || "",
       });
     }
-  }, [internUser]);
+  }, [internUser, form]);
 
   const videoURL = form.watch("introVideo") || internUser?.introVideo;
   const videoName =
@@ -111,7 +111,7 @@ const UserProfileIntroVideoForm = () => {
 
             {/* Upload Loader */}
             {isUploading ? (
-              <TbLoader2 className="w-10 h-10 animate-spin text-thrive-blue" />
+              <Loader2 className="w-10 h-10 animate-spin text-thrive-blue" />
             ) : videoURL ? (
               // ---- Video Preview ----
               <div className="flex flex-col items-center gap-2">
@@ -163,7 +163,7 @@ const UserProfileIntroVideoForm = () => {
           <div className="flex justify-start">
             <Button className="px-20 bg-black hover:bg-black/85" type="submit">
               {isPending ? (
-                <TbLoader2 className="animate-spin text-white" />
+                <Loader2 className="w-6 h-6 animate-spin text-white" />
               ) : (
                 "Update"
               )}

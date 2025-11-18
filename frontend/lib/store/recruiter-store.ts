@@ -43,7 +43,7 @@ export const useRecruiterStore = create<RecruiterState>()(
           if (onSuccess) {
             onSuccess();
           }
-        } catch (error: any) {
+        } catch (error) {
           console.error("Failed to logout user:", error);
           toast.error("Failed to logout");
         }

@@ -24,11 +24,12 @@ import { IconPhotoFilled } from "@tabler/icons-react";
 import { uploadFileToSupabase } from "@/utils/Supabase/Supabase";
 import { useUpdateRecruiterProfile } from "@/hooks/recruiter/recruiter";
 import { useRecruiterStore } from "@/lib/store/recruiter-store";
-import { TbLoader2 } from "react-icons/tb";
+import { Loader2 } from "lucide-react";
+import Image from "next/image";
 
 const RecruiterProfileForm = () => {
   const [isUploading, setIsUploading] = useState<boolean>(false);
-  const [fileName, setFileName] = useState("");
+  const [, setFileName] = useState<string>("");
 
   const { mutate: submitRecruiterProfile, isPending } =
     useUpdateRecruiterProfile();
@@ -100,7 +101,7 @@ const RecruiterProfileForm = () => {
         description: recruiterUser?.description || "",
       });
     }
-  }, [recruiterUser]);
+  }, [recruiterUser, form]);
 
   return (
     <div className="w-full">
@@ -125,8 +126,10 @@ const RecruiterProfileForm = () => {
             {/* Image Preview OR Default Upload UI */}
             {!isUploading &&
             (form.watch("companyPhoto") || recruiterUser?.companyPhoto) ? (
-              <img
-                src={form.watch("companyPhoto") || recruiterUser?.companyPhoto}
+              <Image
+                src={(form.watch("companyPhoto") || recruiterUser?.companyPhoto) || ""}
+                width={128}
+                height={128}
                 alt="Profile"
                 className="w-32 h-32 object-cover rounded-full"
               />
@@ -148,9 +151,7 @@ const RecruiterProfileForm = () => {
 
             {/* Uploading Loader */}
             {isUploading && (
-              <div className="flex justify-center">
-                <TbLoader2 className="text-thrive-blue w-10 h-10 animate-spin text-center" />
-              </div>
+              <Loader2 className="w-6 h-6 animate-spin text-thrive-blue" />
             )}
           </div>
           <hr className="text-gray-400" />
@@ -246,7 +247,7 @@ const RecruiterProfileForm = () => {
           <div className="flex justify-start">
             <Button className="px-20 bg-black hover:bg-black/85" type="submit">
               {isPending ? (
-                <TbLoader2 className="text-thrive-blue" />
+                <Loader2 className="w-6 h-6 animate-spin text-white" />
               ) : (
                 "Update"
               )}

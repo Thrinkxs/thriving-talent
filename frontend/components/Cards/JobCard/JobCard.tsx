@@ -2,18 +2,16 @@ import React from "react";
 import { Badge } from "@/components/ui/badge";
 import {
   IconBriefcaseFilled,
-  IconClockFilled,
-  IconUserFilled,
 } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { useCreateApplication } from "@/hooks/application/application";
-import { TbLoader2 } from "react-icons/tb";
+import { Loader2 } from "lucide-react";
 
 interface JobCardProps {
-  jobId: string;
-  internId: string;
-  logo: string;
+  jobId?: string;
+  internId?: string;
+  logo?: string;
   title: string;
   description: string;
   type: string;
@@ -22,21 +20,19 @@ interface JobCardProps {
 }
 
 const JobCard = ({
-  jobId,
-  internId,
+  jobId = "",
+  internId = "",
   logo,
   title,
   description,
   type,
-  applied,
-  daysLeft,
 }: JobCardProps) => {
   const { mutate: createApplication, isPending } = useCreateApplication();
 
   const handleApply = () => {
     const payload = {
-      jobId,
-      internId,
+      jobId: jobId || "",
+      internId: internId || "",
     };
 
     createApplication(payload);
@@ -47,24 +43,24 @@ const JobCard = ({
       <div className="flex justify-between items-center">
         <div className="flex-shrink-0 flex items-center justify-center h-8 sm:h-10 bg-thrive-light-blue px-2 py-10 rounded-2xl">
           <Image
-            src={logo}
+            src={logo || ""}
             width={200}
             height={200}
             alt="company logo"
             className="h-10 w-10 object-cover"
           />
         </div>
-        <p className="text-base font-semibold">{title}</p>
+        <p className="text-base font-semibold">{title || ""}</p>
       </div>
 
       <div className="mt-4">
-        <p className="text-sm text-gray-600 line-clamp-3">{description}</p>
+        <p className="text-sm text-gray-600 line-clamp-3">{description || ""}</p>
       </div>
 
       <div className="mt-5 flex flex-wrap gap-3">
         <Badge className="bg-thrive-light-blue p-2 rounded text-black flex items-center gap-2">
           <IconBriefcaseFilled size={16} color="black" stroke={2} />
-          {type}
+          {type || ""}
         </Badge>
         {/* <Badge className="bg-thrive-light-blue p-2 rounded text-black flex items-center gap-2">
           <IconUserFilled size={16} color="black" stroke={2} />
@@ -83,7 +79,7 @@ const JobCard = ({
           disabled={isPending}
         >
           {isPending ? (
-            <TbLoader2 className="animate-spin text-thrive-blue" />
+            <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
           ) : (
             "Apply"
           )}
