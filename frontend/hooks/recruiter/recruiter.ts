@@ -5,6 +5,7 @@ import {
 import { RecruiterResponse } from "@/lib/types/response-types/response-types";
 import { Axios } from "@/utils/Axios/Axios";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 const fetchRecruiterProfile = async () => {
   try {
@@ -56,9 +57,11 @@ export const useUpdateRecruiterProfile = () => {
     onSuccess: (data) => {
       // Invalidate and refetch the recruiter profile after update
       queryClient.invalidateQueries({ queryKey: ["data"] });
+      toast.success("Profile updated successfully");
     },
     onError: (error: any) => {
       console.error("Update failed:", error);
+      toast.error("Failed to update profile");
     },
   });
 };
@@ -92,9 +95,11 @@ export const useUpdateRecruiterPassword = () => {
     onSuccess: (data) => {
       // Invalidate and refetch the recruiter profile after update
       queryClient.invalidateQueries({ queryKey: ["data"] });
+      toast.success("Password updated successfully");
     },
     onError: (error: any) => {
       console.error("Update failed:", error);
+      toast.error("Failed to update password");
     },
   });
 };

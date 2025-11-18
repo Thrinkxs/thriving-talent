@@ -62,8 +62,9 @@ export const recruiterSignUpSchema = z
     path: ["confirmPassword"],
   });
 
-export const profileFormSchema = z.object({
+export const recruiterProfileFormSchema = z.object({
   companyPhoto: z.string().optional(),
+  // images: z.array(z.string()).optional(),
   fullName: z
     .string()
     .min(3, { message: "Full name is required" })
@@ -73,17 +74,42 @@ export const profileFormSchema = z.object({
     .min(3, { message: "Company name is required" })
     .max(255, { message: "Company name is required" }),
   email: z.string().email({ message: "A valid email is required" }),
-  phoneNumber: z.string().min(1, { message: "A valid email is required" }),
   description: z
     .string()
     .min(3, { message: "Description is too short" })
     .max(255, { message: "Description is too long" }),
 });
 
+export const userProfileFormSchema = z.object({
+  profileImage: z.string().optional(),
+  fullName: z
+    .string()
+    .min(3, { message: "Full name is required" })
+    .max(255, { message: "Full name is required" }),
+
+  email: z.string().email({ message: "A valid email is required" }).optional(),
+  phoneNumber: z.string().min(1, { message: "A valid email is required" }),
+  bio: z
+    .string()
+    .min(3, { message: "Description is too short" })
+    .max(255, { message: "Description is too long" }),
+  resume: z.string().optional(),
+  introVideo: z.string().optional(),
+});
+
+export const userProfileFormResumeSchema = z.object({
+  resume: z.string().optional(),
+});
+
+export const userProfileFormIntroVideoSchema = z.object({
+  introVideo: z.string().optional(),
+});
+
 export const resetPasswordFormSchema = z
   .object({
-    password: z.string().min(6, "Password must be at least 6 characters"),
-    confirmPassword: z.string(),
+    oldPassword: z.string().min(6, "Password must be at least 6 characters"),
+    password: z.string().min(6, "Password must be at least 6 characters"), // new password
+    confirmPassword: z.string(), // confirm new password
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords do not match",

@@ -4,6 +4,7 @@ export interface IEmployer extends Document {
   fullName: string;
   companyName: string;
   description?: string;
+  companyPhoto?: string;
   images?: string[];
   email: string;
   phone?: string;
@@ -25,6 +26,7 @@ const EmployerSchema = new Schema<IEmployer>(
   {
     fullName: { type: String, index: true, trim: true, required: true },
     companyName: { type: String, index: true, trim: true, required: true },
+    companyPhoto: { type: String, trim: true },
     description: { type: String, trim: true },
     images: { type: [String], default: [] },
     email: { type: String, index: true, trim: true, required: true },

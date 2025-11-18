@@ -1,21 +1,32 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { Axios } from "@/utils/Axios/Axios";
-import Cookies from "js-cookie";
 import { toast } from "sonner";
 import { StateRecruiterTypes } from "./store-types/recruiter-store-types";
 
 interface RecruiterState {
   recruiter: StateRecruiterTypes | null;
   setRecruiter: (recruiter: StateRecruiterTypes) => void;
+  updateRecruiter: (updates: Partial<StateRecruiterTypes>) => void;
   logout: (onSuccess?: () => void) => void;
 }
 
 export const useRecruiterStore = create<RecruiterState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       recruiter: null,
       setRecruiter: (recruiter) => set({ recruiter }),
+      updateRecruiter: (updates) => {
+        const currentRecruiter = get().recruiter;
+        if (currentRecruiter) {
+          set({
+            recruiter: {
+              ...currentRecruiter,
+              ...updates,
+            },
+          });
+        }
+      },
       logout: async (onSuccess?: () => void) => {
         // Optional: Make a request to the server to invalidate refresh token
         try {

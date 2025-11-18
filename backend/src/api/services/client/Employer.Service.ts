@@ -1,6 +1,6 @@
 import AppError from "../../../utils/AppError";
 import { Hasher } from "../../../utils/HashPassword";
-import { IEmployer } from "../../models/Employer";
+import { Employer, IEmployer } from "../../models/Employer";
 
 export class EmployerService {
   private hasher: Hasher;
@@ -12,14 +12,32 @@ export class EmployerService {
     return employer;
   }
 
-  public async updateProfile(employer: IEmployer, payload: Partial<IEmployer>) {
-    Object.keys(payload).forEach((key) => {
-      if (payload[key] !== undefined) {
-        (employer as any)[key] = payload[key];
-      }
-    });
+  // public async updateProfile(employer: IEmployer, payload: Partial<IEmployer>) {
+  //   Object.keys(payload).forEach((key) => {
+  //     if (payload[key] !== undefined) {
+  //       (employer as any)[key] = payload[key];
+  //     }
+  //   });
 
-    return await employer.save();
+  //   return await employer.save();
+  // }
+
+  public async updateProfile(employer: IEmployer, payload: Partial<IEmployer>) {
+    try {
+      const updatedEmployer = await Employer.findByIdAndUpdate(
+        employer._id,
+        payload,
+        {
+          new: true,
+        }
+      );
+      if (!updatedEmployer) {
+        throw new Error("employer does not exist");
+      }
+      return updatedEmployer;
+    } catch (error: any) {
+      throw new Error("Error updating employer profile");
+    }
   }
 
   public async updatePassword(

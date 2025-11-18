@@ -46,6 +46,7 @@ export const updatePasswordController = async (
   const intern = req.intern!;
   const payload = req.body;
   try {
+    console.log("Payload received in controller joe joe:", payload);
     const response = await internService.updatePassword(intern, payload);
     return res
       .status(200)

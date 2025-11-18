@@ -23,6 +23,12 @@ Axios.interceptors.response.use(
     return response;
   },
   async (error) => {
+    /**
+     * TODO: when users try to sign in we get a 401. But also when the access token has expired.
+     * We need to differentiate between these two cases so that we don't try to refresh the access token
+     * when the user is actually not signed in.
+     * Because right now we get a toast saying no access token found.
+     **/
     const originalRequest = error.config;
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;

@@ -63,7 +63,7 @@ const RecruiterSideBar = ({ children }: Props) => {
             ) : (
               <div className="col-start-9 col-span-4 flex justify-end items-center gap-3">
                 <Image
-                  src={recruiterUser?.images[0] || ThriveTalentDefaultImage}
+                  src={recruiterUser?.companyPhoto || ThriveTalentDefaultImage}
                   width={50}
                   height={50}
                   alt="avatar"

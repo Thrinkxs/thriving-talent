@@ -8,6 +8,7 @@ import {
 } from "@/lib/types/response-types/response-types";
 import { Axios } from "@/utils/Axios/Axios";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 const fetchInternProfile = async () => {
   try {
@@ -59,9 +60,11 @@ export const useUpdateInternProfile = () => {
     onSuccess: (data) => {
       // Invalidate and refetch the intern profile after update
       queryClient.invalidateQueries({ queryKey: ["data"] });
+      toast.success("Profile updated successfully");
     },
     onError: (error: any) => {
       console.error("Update failed:", error);
+      toast.error("Failed to update profile");
     },
   });
 };
@@ -92,9 +95,11 @@ export const useUpdateInternPassword = () => {
     onSuccess: (data) => {
       // Invalidate and refetch the intern profile after update
       queryClient.invalidateQueries({ queryKey: ["data"] });
+      toast.success("Password updated successfully");
     },
     onError: (error: any) => {
       console.error("Update failed:", error);
+      toast.error("Failed to update password");
     },
   });
 };

@@ -1,9 +1,10 @@
+import { RecruiterSettingsTab } from "@/components/Tabs/RecruiterSettingsTab/RecruiterSettingsTab";
 import React from "react";
 
 const SettingsPage = () => {
   return (
     <div>
-      <p>Settings Page</p>
+      <RecruiterSettingsTab />
     </div>
   );
 };

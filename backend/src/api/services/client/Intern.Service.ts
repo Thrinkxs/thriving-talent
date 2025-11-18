@@ -1,3 +1,4 @@
+import { console } from "inspector";
 import AppError from "../../../utils/AppError";
 import { Hasher } from "../../../utils/HashPassword";
 import { IIntern, Intern } from "../../models/Intern";
@@ -12,14 +13,32 @@ export class InternService {
     return intern;
   }
 
-  public async updateProfile(intern: IIntern, payload: Partial<IIntern>) {
-    Object.keys(payload).forEach((key) => {
-      if (payload[key] !== undefined) {
-        (intern as any)[key] = payload[key];
-      }
-    });
+  // public async updateProfile(intern: IIntern, payload: Partial<IIntern>) {
+  //   Object.keys(payload).forEach((key) => {
+  //     if (payload[key] !== undefined) {
+  //       (intern as any)[key] = payload[key];
+  //     }
+  //   });
 
-    return await intern.save();
+  //   return await intern.save();
+  // }
+
+  public async updateProfile(intern: IIntern, payload: Partial<IIntern>) {
+    try {
+      const updatedIntern = await Intern.findByIdAndUpdate(
+        intern._id,
+        payload,
+        {
+          new: true,
+        }
+      );
+      if (!updatedIntern) {
+        throw new Error("Intern does not exist");
+      }
+      return updatedIntern;
+    } catch (error: any) {
+      throw new Error("Error updating intern profile");
+    }
   }
 
   public async updatePassword(
@@ -31,6 +50,8 @@ export class InternService {
       currentPassword,
       intern.password!
     );
+
+    console.log("Is valid password:", isValid);
 
     if (!isValid) {
       throw new AppError(401, "Invalid password");

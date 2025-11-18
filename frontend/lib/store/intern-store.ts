@@ -1,21 +1,32 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { Axios } from "@/utils/Axios/Axios";
-import Cookies from "js-cookie";
 import { toast } from "sonner";
 import { StateInternTypes } from "./store-types/intern-store-types";
 
 interface InternState {
   intern: StateInternTypes | null;
   setIntern: (intern: StateInternTypes) => void;
+  updateIntern: (updates: Partial<StateInternTypes>) => void;
   logout: (onSuccess?: () => void) => void;
 }
 
 export const useInternStore = create<InternState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       intern: null,
       setIntern: (intern) => set({ intern }),
+      updateIntern: (updates) => {
+        const currentIntern = get().intern;
+        if (currentIntern) {
+          set({
+            intern: {
+              ...currentIntern,
+              ...updates,
+            },
+          });
+        }
+      },
       logout: async (onSuccess?: () => void) => {
         try {
           const response = await Axios.delete(

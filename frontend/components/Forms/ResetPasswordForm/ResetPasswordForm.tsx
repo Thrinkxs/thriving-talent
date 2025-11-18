@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -14,40 +13,45 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { resetPasswordFormSchema } from "@/lib/schema";
-import { Axios } from "@/utils/Axios/Axios";
-import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 import { useEffect, useState } from "react";
 import { TbLoader2 } from "react-icons/tb";
-import { ArrowLeftSquareIcon } from "lucide-react";
 import { PasswordInput } from "@/components/ui/password-input";
+import { UserRole } from "@/lib/types/user-types/user-types";
+import { useUpdateInternPassword } from "@/hooks/intern/intern";
+import { useUpdateRecruiterPassword } from "@/hooks/recruiter/recruiter";
 
-const ResetPasswordForm = () => {
-  const [email, setEmail] = useState<string | null>("");
-  const router = useRouter();
+interface ResetPasswordFormProps {
+  userType: UserRole.INTERN | UserRole.RECRUITER;
+}
+
+const ResetPasswordForm = ({ userType }: ResetPasswordFormProps) => {
   const form = useForm<z.infer<typeof resetPasswordFormSchema>>({
     resolver: zodResolver(resetPasswordFormSchema),
     defaultValues: {
+      oldPassword: "",
       password: "",
       confirmPassword: "",
     },
   });
 
+  const { mutate: submitInternPassword, isPending: isInternPending } =
+    useUpdateInternPassword();
+  const { mutate: submitRecruiterPassword, isPending: isRecruiterPending } =
+    useUpdateRecruiterPassword();
+
   const onSubmit = async (values: z.infer<typeof resetPasswordFormSchema>) => {
-    try {
-      const response = await Axios.post("/api/business/reset-password", {
-        email: email,
+    if (userType === UserRole.INTERN) {
+      submitInternPassword({
         password: values.password,
+        currentPassword: values.confirmPassword,
       });
-      if (response.status === 200) {
-        toast.success("Password reset successful");
-        router.push("/signin");
-      }
-    } catch (error) {
-      console.log(error);
-      toast.error("An error occurred, please try again");
+    } else if (userType === UserRole.RECRUITER) {
+      submitRecruiterPassword({
+        password: values.password,
+        currentPassword: values.confirmPassword,
+      });
     }
   };
   return (
@@ -60,12 +64,30 @@ const ResetPasswordForm = () => {
           <div className="grid gap-5 sm:w-6/12">
             <FormField
               control={form.control}
+              name="oldPassword"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <PasswordInput
+                      placeholder="Current Password"
+                      {...field}
+                      autoComplete="off"
+                      className="bg-thrive-input"
+                    />
+                  </FormControl>
+
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
               name="password"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
                     <PasswordInput
-                      placeholder="Password "
+                      placeholder="New Password"
                       {...field}
                       autoComplete="off"
                       className="bg-thrive-input"
@@ -83,7 +105,7 @@ const ResetPasswordForm = () => {
                 <FormItem>
                   <FormControl>
                     <PasswordInput
-                      placeholder="Confirm Password "
+                      placeholder="Confirm Password"
                       {...field}
                       autoComplete="off"
                       className="bg-thrive-input"
@@ -101,7 +123,11 @@ const ResetPasswordForm = () => {
               type="submit"
               className="rounded-xl px-20 bg-black hover:bg-black/85"
             >
-              Change password
+              {isInternPending || isRecruiterPending ? (
+                <TbLoader2 className="ml-2 h-5 w-5 animate-spin" />
+              ) : (
+                "Update Password"
+              )}
             </Button>
           </div>
         </form>

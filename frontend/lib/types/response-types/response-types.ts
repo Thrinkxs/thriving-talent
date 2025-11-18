@@ -2,6 +2,7 @@ export type RecruiterResponse = {
   employer: {
     fullName: string;
     companyName: string;
+    companyPhoto: string;
     images: string[]; // or any[] if images can be other types
     email: string;
     isVerified: boolean;

@@ -1,8 +1,8 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import ProfileTab from "@/components/Tabs/SettingsTab/ProfileTab/ProfileTab";
-import PasswordTab from "@/components/Tabs/SettingsTab/PasswordTab/PasswordTab";
+import RecruiterProfileTab from "./RecruiterProfileTab/RecruiterProfileTab";
+import RecruiterPasswordTab from "./RecruiterPasswordTab/RecruiterPasswordTab";
 
-export function SettingsTab() {
+export function RecruiterSettingsTab() {
   return (
     <div className="flex w-full flex-col gap-6">
       <Tabs defaultValue="profile">
@@ -11,10 +11,10 @@ export function SettingsTab() {
           <TabsTrigger value="password">Password</TabsTrigger>
         </TabsList>
         <TabsContent value="profile">
-          <ProfileTab />
+          <RecruiterProfileTab />
         </TabsContent>
         <TabsContent value="password">
-          <PasswordTab />
+          <RecruiterPasswordTab />
         </TabsContent>
       </Tabs>
     </div>

@@ -7,37 +7,43 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { profileFormSchema } from "@/lib/schema";
+import { recruiterProfileFormSchema } from "@/lib/schema";
 import { toast } from "sonner";
-import { useCallback, useState } from "react";
-import { Axios } from "@/utils/Axios/Axios";
-import { useQueryClient } from "@tanstack/react-query";
+import { useCallback, useEffect, useState } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import { useDropzone } from "react-dropzone";
 import { cn } from "@/lib/utils";
 import { IconPhotoFilled } from "@tabler/icons-react";
 import { uploadFileToSupabase } from "@/utils/Supabase/Supabase";
+import { useUpdateRecruiterProfile } from "@/hooks/recruiter/recruiter";
+import { useRecruiterStore } from "@/lib/store/recruiter-store";
+import { TbLoader2 } from "react-icons/tb";
 
-const ProfileForm = () => {
+const RecruiterProfileForm = () => {
   const [isUploading, setIsUploading] = useState<boolean>(false);
   const [fileName, setFileName] = useState("");
-  const queryClient = useQueryClient();
 
-  const form = useForm<z.infer<typeof profileFormSchema>>({
-    resolver: zodResolver(profileFormSchema),
+  const { mutate: submitRecruiterProfile, isPending } =
+    useUpdateRecruiterProfile();
+
+  const recruiterUser = useRecruiterStore((state) => state.recruiter);
+  const updateRecruiter = useRecruiterStore((state) => state.updateRecruiter);
+
+  const form = useForm<z.infer<typeof recruiterProfileFormSchema>>({
+    resolver: zodResolver(recruiterProfileFormSchema),
     defaultValues: {
-      companyPhoto: "",
-      fullName: "",
-      companyName: "",
-      phoneNumber: "",
-      email: "",
-      description: "",
+      companyPhoto: recruiterUser?.companyPhoto || "",
+      fullName: recruiterUser?.fullName || "",
+      companyName: recruiterUser?.companyName || "",
+      email: recruiterUser?.email || "",
+      description: recruiterUser?.description || "",
     },
   });
 
@@ -76,9 +82,25 @@ const ProfileForm = () => {
     multiple: false,
   });
 
-  const onSubmit = async (values: z.infer<typeof profileFormSchema>) => {
-    console.log(values);
+  const onSubmit = async (
+    values: z.infer<typeof recruiterProfileFormSchema>
+  ) => {
+    submitRecruiterProfile(values);
+    updateRecruiter(values);
   };
+
+  // Reset form when internUser becomes available (hydrated)
+  useEffect(() => {
+    if (recruiterUser) {
+      form.reset({
+        companyPhoto: recruiterUser?.companyPhoto || "",
+        fullName: recruiterUser?.fullName || "",
+        companyName: recruiterUser?.companyName || "",
+        email: recruiterUser?.email || "",
+        description: recruiterUser?.description || "",
+      });
+    }
+  }, [recruiterUser]);
 
   return (
     <div className="w-full">
@@ -100,21 +122,35 @@ const ProfileForm = () => {
             )}
           >
             <Input {...getInputProps()} />
-            {isDragActive ? (
+            {/* Image Preview OR Default Upload UI */}
+            {!isUploading &&
+            (form.watch("companyPhoto") || recruiterUser?.companyPhoto) ? (
+              <img
+                src={form.watch("companyPhoto") || recruiterUser?.companyPhoto}
+                alt="Profile"
+                className="w-32 h-32 object-cover rounded-full"
+              />
+            ) : isDragActive ? (
               <p className="text-thrive-blue">Drop your file here...</p>
-            ) : (
+            ) : !isUploading ? (
               <>
-                <div className="">
+                <div className="flex flex-col items-center">
                   <IconPhotoFilled
                     color="black"
                     size={100}
                     stroke={2}
                     className="w-10 h-10 md:w-32 md:h-32"
                   />
-
                   <h1 className="text-xs sm:text-sm">UPLOAD YOUR PHOTO</h1>
                 </div>
               </>
+            ) : null}
+
+            {/* Uploading Loader */}
+            {isUploading && (
+              <div className="flex justify-center">
+                <TbLoader2 className="text-thrive-blue w-10 h-10 animate-spin text-center" />
+              </div>
             )}
           </div>
           <hr className="text-gray-400" />
@@ -167,33 +203,21 @@ const ProfileForm = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Email</FormLabel>
+
                   <FormControl>
                     <Input
                       placeholder="email"
                       type="email"
                       {...field}
                       className="bg-thrive-input"
+                      disabled={true}
                     />
                   </FormControl>
+                  <FormDescription className="text-gray-500 text-xs">
+                    Email address cannot be changed. Contact admin for support
+                  </FormDescription>
 
                   <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="phoneNumber"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Phone Number</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Phone Number"
-                      {...field}
-                      className="bg-thrive-input"
-                    />
-                  </FormControl>
                 </FormItem>
               )}
             />
@@ -221,7 +245,11 @@ const ProfileForm = () => {
           </div>
           <div className="flex justify-start">
             <Button className="px-20 bg-black hover:bg-black/85" type="submit">
-              Update
+              {isPending ? (
+                <TbLoader2 className="text-thrive-blue" />
+              ) : (
+                "Update"
+              )}
             </Button>
           </div>
         </form>
@@ -230,4 +258,4 @@ const ProfileForm = () => {
   );
 };
 
-export default ProfileForm;
+export default RecruiterProfileForm;
