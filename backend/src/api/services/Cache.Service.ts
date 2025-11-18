@@ -16,7 +16,7 @@ export class CacheService {
     email = `email-verification-${email.toLowerCase()}`;
     const verificationCode = await redisClient.get(email);
     if (!verificationCode) throw new AppError(404, "Expired OTP");
-    return verificationCode;
+    return verificationCode as string;
   }
 
   public async cache2FAOTP(email: string, verificationCode: string) {
@@ -33,7 +33,7 @@ export class CacheService {
     email = `2FA-${email.toLowerCase()}`;
     const verificationCode = await redisClient.get(email);
     if (!verificationCode) throw new AppError(404, "Expired OTP");
-    return verificationCode;
+    return verificationCode as string;
   }
 
   public async deleteCachedVerificationOTP(email: string) {
@@ -61,7 +61,7 @@ export class CacheService {
     const cacheResponse = await redisClient.get(email);
     console.log("cache response", cacheResponse);
     if (!cacheResponse) throw new AppError(404, "Expired OTP");
-    return cacheResponse;
+    return cacheResponse as string;
   }
 
   public async deleteCachedPasswordResetOTP(email: string) {
@@ -89,7 +89,7 @@ export class CacheService {
     userID = `password-update-${userID}`;
     const otp = await redisClient.get(userID);
     if (!otp) throw new AppError(404, "Expired OTP");
-    return otp;
+    return otp as string;
   }
 
   public async deleteCachedPasswordUpdateOTP(userID: string) {
@@ -179,7 +179,7 @@ export class CacheService {
     try {
       const refreshSecret = await redisClient.get(refreshToken);
       if (!refreshSecret) throw new AppError(404, "Expired Token");
-      return refreshSecret;
+      return refreshSecret as string;
     } catch (error: any) {
       throw new AppError(404, `Error Getting Cached Data: ${error.message}`);
     }
