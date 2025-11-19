@@ -29,6 +29,7 @@ export type InternResponse = {
     bio: string;
     isVerified: boolean;
     phone: string;
+    address: string;
     password: string;
     status: string; // or just string if other statuses are possible
     gender: string;

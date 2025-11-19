@@ -2,6 +2,8 @@ import { console } from "inspector";
 import AppError from "../../../utils/AppError";
 import { Hasher } from "../../../utils/HashPassword";
 import { IIntern, Intern } from "../../models/Intern";
+import { IInternFilter } from "../../../utils/Interface";
+import { paginateModelWithPopulate } from "../../../utils/Pagination.Helper";
 
 export class InternService {
   private hasher: Hasher;
@@ -77,5 +79,45 @@ export class InternService {
     } catch (error: any) {
       throw new Error("Error getting intern");
     }
+  }
+
+  public async getAllInterns(filter: IInternFilter) {
+    const { address, gender, search, status, page, limit } = filter;
+
+    const query: any = {
+      isDeleted: { $ne: true }, // exclude soft-deleted interns
+    };
+
+    if (search) {
+      query.$or = [
+        { fullName: { $regex: search, $options: "i" } },
+        { address: { $regex: search, $options: "i" } },
+        { gender: { $regex: search, $options: "i" } },
+      ];
+    }
+
+    if (address) {
+      query.address = { $regex: address, $options: "i" };
+    }
+
+    if (gender) {
+      query.gender = gender;
+    }
+
+    if (status) {
+      query.status = status;
+    }
+
+    const interns = await paginateModelWithPopulate(
+      Intern,
+      query,
+      parseInt(page || "1", 10),
+      parseInt(limit || "10", 10),
+      { createdAt: -1 },
+      null,
+      "-password -__v"
+    );
+
+    return interns;
   }
 }

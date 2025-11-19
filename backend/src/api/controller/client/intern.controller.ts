@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { InternService } from "../../services/client/Intern.Service";
-import { ExtendedRequest } from "../../../utils/Interface";
+import { ExtendedRequest, IInternFilter } from "../../../utils/Interface";
 
 const internService = new InternService();
 
@@ -80,5 +80,22 @@ export const getInternByIdController = async (req: Request, res: Response) => {
     });
   } catch (error: any) {
     res.status(400).json({ message: error.message });
+  }
+};
+
+export const getAllInternsController = async (
+  req: ExtendedRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  const filter = req.query as IInternFilter;
+  try {
+    const response = await internService.getAllInterns(filter);
+    return res.status(200).json({
+      message: "All interns retrieved successfully",
+      internsData: response,
+    });
+  } catch (error: any) {
+    next(error);
   }
 };

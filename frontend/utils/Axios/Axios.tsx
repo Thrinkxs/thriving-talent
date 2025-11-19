@@ -1,7 +1,6 @@
 // "use"
 import { UserRole } from "@/lib/types/user-types/user-types";
 import axios from "axios";
-import { is } from "date-fns/locale";
 import Cookies from "js-cookie";
 
 export const BASE_URL =
@@ -24,13 +23,6 @@ Axios.interceptors.response.use(
     return response;
   },
   async (error) => {
-    /**
-     * TODO: when users try to sign in we get a 401. But also when the access token has expired.
-     * We need to differentiate between these two cases so that we don't try to refresh the access token
-     * when the user is actually not signed in.
-     * Because right now we get a toast saying no access token found.
-     **/
-
     const originalRequest = error.config;
     // 🚨 Detect backend sign-in/signup endpoints, NOT frontend pages
     const authEndpoints = ["/auth/login", "/auth/register"];

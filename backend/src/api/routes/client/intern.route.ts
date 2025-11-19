@@ -2,6 +2,7 @@ import { Router } from "express";
 import { internVerification } from "../../middleware/AuthenticateUser";
 import {
   deleteProfileController,
+  getAllInternsController,
   getInternByIdController,
   getProfileController,
   updatePasswordController,
@@ -10,6 +11,7 @@ import {
 
 const router = Router();
 
+router.get("/get-all-interns", getAllInternsController);
 router.get("/:internId", getInternByIdController);
 
 router.use(internVerification);

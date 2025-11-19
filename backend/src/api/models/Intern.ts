@@ -6,6 +6,7 @@ export interface IIntern extends Document {
   bio?: string;
   isVerified: boolean;
   phone?: string;
+  address?: string;
   password?: string;
   gender: string;
   status: string;
@@ -22,6 +23,7 @@ const InternSchema = new Schema<IIntern>(
     bio: { type: String },
     isVerified: { type: Boolean, default: false },
     phone: { type: String },
+    address: { type: String },
     password: { type: String, required: true },
     status: { type: String, enum: ["active", "suspended"], default: "active" },
     gender: {

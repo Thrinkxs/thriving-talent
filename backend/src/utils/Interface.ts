@@ -27,4 +27,18 @@ export interface IJobFilter {
   limit?: string;
 }
 
+enum Gender {
+  MALE = "Male",
+  FEMALE = "Female",
+  OTHER = "Prefer not to say",
+}
+export interface IInternFilter {
+  address?: string;
+  gender?: Gender;
+  search?: string;
+  status?: string;
+  page?: string;
+  limit?: string;
+}
+
 export const OBJECT_ID_REGEX = /^[0-9a-fA-F]{24}$/;
