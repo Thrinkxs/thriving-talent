@@ -9,6 +9,7 @@ import {
   ToyotaLogo,
   ZoomLogo,
 } from "../../thriving-talent-ui/company-logos";
+import Link from "next/link";
 
 export function HeroSection() {
   const [isVisible, setIsVisible] = useState(false);
@@ -52,11 +53,12 @@ export function HeroSection() {
                   : "translate-y-10 opacity-0"
               }`}
             >
-              <Button className="rounded bg-blue-600 px-10 py-2 text-sm sm:text-base font-medium text-white transition-all hover:scale-105 hover:bg-blue-700 hover:shadow-xl active:scale-95">
-                Intern
+              <Button asChild className="rounded bg-blue-600 px-10 py-2 text-sm sm:text-base font-medium text-white transition-all hover:scale-105 hover:bg-blue-700 hover:shadow-xl active:scale-95">
+               <Link href="/user/signin"> Intern </Link>
               </Button>
               <Button className="rounded bg-red-600 px-10 py-2 text-sm sm:text-base font-medium text-white transition-all hover:scale-105 hover:bg-red-700 hover:shadow-xl active:scale-95">
-                Employer
+              <Link href="/employer/signin"> Employer </Link>
+                
               </Button>
             </div>
 
