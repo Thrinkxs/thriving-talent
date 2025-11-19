@@ -18,61 +18,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { DatePicker } from "@/components/ui/date-picker";
-import "@/components/SearchBar/google-autocomplete.css";
-import {
-  useJsApiLoader,
-  Autocomplete,
-  LoadScriptProps,
-} from "@react-google-maps/api";
-import { useRef, useState } from "react";
-import { TbLoader2 } from "react-icons/tb";
-import { SOUTH_AFRICAN_CITIES } from "@/utils/data";
-import { ChevronDown } from "lucide-react";
 
-const googleMapsLibraries: LoadScriptProps["libraries"] = ["places"];
+import { SOUTH_AFRICAN_CITIES } from "@/utils/data";
 
 export default function StepOneDetails() {
-  const { control, setValue, watch } = useFormContext();
-  const addressValue = watch("address"); // Watch the form value
-
-  const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY || "",
-    libraries: googleMapsLibraries,
-  });
-
-  const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
-
-  const onLoad = (autocomplete: google.maps.places.Autocomplete) => {
-    autocompleteRef.current = autocomplete;
-  };
-
-  const onPlaceChanged = () => {
-    if (autocompleteRef.current) {
-      const place = autocompleteRef.current.getPlace();
-      const address = place.formatted_address || place.name || "";
-
-      // Update the form value directly using react-hook-form
-      setValue("address", address, {
-        shouldValidate: true, // Trigger validation
-        shouldDirty: true, // Mark field as dirty
-      });
-    }
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // Update form value on manual input as well
-    setValue("address", e.target.value, {
-      shouldValidate: true,
-      shouldDirty: true,
-    });
-  };
-
-  if (!isLoaded)
-    return (
-      <div>
-        <TbLoader2 className="animate-spin text-thrive-blue" />
-      </div>
-    );
+  const { control } = useFormContext();
 
   return (
     <div className="space-y-5">

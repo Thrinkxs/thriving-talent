@@ -151,7 +151,7 @@ const fetchAllInterns = async ({
       gender: gender || "",
       status: status || "",
       page: pageParam,
-      limit: 10, // adjust as needed
+      limit: 2, // adjust as needed
     },
   });
 

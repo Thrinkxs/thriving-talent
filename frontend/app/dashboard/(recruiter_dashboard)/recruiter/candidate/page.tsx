@@ -9,6 +9,7 @@ import { Loader2, Search } from "lucide-react";
 import { SearchFilterBar } from "@/components/Candidates/SearchFilterBar";
 import { CandidateCard } from "@/components/Candidates/CandidateCard";
 import { FilterModal } from "@/components/Candidates/FilterModal";
+import InfiniteScrollTrigger from "@/components/InfiniteScrollTrigger/InfiniteScrollTrigger";
 
 const CandidatesPage = () => {
   const {
@@ -72,7 +73,7 @@ const CandidatesPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen bg-gray-50 py-8 rounded-3xl">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
@@ -121,20 +122,13 @@ const CandidatesPage = () => {
               ))}
             </div>
 
-            {/* Load More Button */}
             {hasNextPage && (
-              <div className="flex justify-center">
-                <Button
-                  onClick={() => fetchNextPage()}
-                  disabled={isFetchingNextPage}
-                  variant="outline"
-                  className="flex items-center gap-2"
-                >
-                  {isFetchingNextPage && (
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                  )}
-                  Load More
-                </Button>
+              <InfiniteScrollTrigger onLoadMore={() => fetchNextPage()} />
+            )}
+
+            {isFetchingNextPage && (
+              <div className="flex justify-center py-4">
+                <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
               </div>
             )}
           </>

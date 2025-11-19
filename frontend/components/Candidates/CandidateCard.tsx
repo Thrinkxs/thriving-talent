@@ -1,4 +1,3 @@
-// components/candidates/candidate-card.tsx
 "use client";
 
 import React from "react";
@@ -7,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import ThriveTalentDefaultImage from "@/public/default-image/TT_default_Image_2.jpg";
 import Image from "next/image";
+import Link from "next/link";
 
 export interface Candidate {
   _id: string;
@@ -92,7 +92,7 @@ export const CandidateCard: React.FC<CandidateCardProps> = ({ candidate }) => {
         )}
       </div>
 
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between flex-wrap">
         <div className="flex items-center space-x-2">
           {candidate.introVideo && (
             <Button variant="outline" size="sm" asChild>
@@ -119,7 +119,9 @@ export const CandidateCard: React.FC<CandidateCardProps> = ({ candidate }) => {
             </Button>
           )}
         </div>
-        <Button size="sm">View Profile</Button>
+        <Link href={`/dashboard/recruiter/candidate/${candidate._id}`}>
+          <Button size="sm">View Profile</Button>
+        </Link>
       </div>
     </div>
   );

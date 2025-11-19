@@ -1,4 +1,3 @@
-// components/candidates/search-filter-bar.tsx
 "use client";
 
 import React from "react";
