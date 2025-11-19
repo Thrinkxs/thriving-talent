@@ -45,7 +45,7 @@ const JobCard = ({
             width={200}
             height={200}
             alt="company logo"
-            className="h-10 w-10 object-cover"
+            className="h-10 w-10 object-cover rounded-full"
           />
         </div>
         <p className="text-base font-semibold">{title || ""}</p>

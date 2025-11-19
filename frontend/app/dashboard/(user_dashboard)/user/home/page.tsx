@@ -68,7 +68,7 @@ export default function UserDashboardPage() {
               key={job._id}
               jobId={job._id}
               internId={internUser?._id || ""}
-              logo={job.company.images[0] || "https://profileImage.com"}
+              logo={job.company.companyPhoto}
               title={job.title}
               description={job.description}
               type={job.type}

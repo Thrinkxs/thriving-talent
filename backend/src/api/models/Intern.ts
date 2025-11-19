@@ -1,4 +1,5 @@
 import { Document, model, Schema } from "mongoose";
+import { defaultThrivingTalentImageUrl } from "../../utils/DefaultImageUrl";
 
 export interface IIntern extends Document {
   fullName: string;
@@ -31,7 +32,7 @@ const InternSchema = new Schema<IIntern>(
       enum: ["Male", "Female", "Prefer not to say"],
       required: true,
     },
-    profileImage: { type: String },
+    profileImage: { type: String, default: defaultThrivingTalentImageUrl },
     introVideo: { type: String },
     resume: { type: String },
     isDeleted: { type: Boolean, default: false },

@@ -26,6 +26,8 @@ import {
 } from "@react-google-maps/api";
 import { useRef, useState } from "react";
 import { TbLoader2 } from "react-icons/tb";
+import { SOUTH_AFRICAN_CITIES } from "@/utils/data";
+import { ChevronDown } from "lucide-react";
 
 const googleMapsLibraries: LoadScriptProps["libraries"] = ["places"];
 
@@ -150,32 +152,31 @@ export default function StepOneDetails() {
       />
 
       <FormField
-        name="address"
         control={control}
+        name="address"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Location</FormLabel>
-            <FormControl>
-              <Autocomplete
-                onLoad={onLoad}
-                onPlaceChanged={onPlaceChanged}
-                options={{
-                  componentRestrictions: { country: ["ZA"] },
-                }}
-              >
-                <Input
-                  className="rounded text-gray-500 location-input"
-                  placeholder="Location"
-                  value={field.value || ""} // Use form value directly
-                  onChange={(e) => {
-                    field.onChange(e); // React-hook-form onChange
-                    handleInputChange(e); // Additional handler
-                  }}
-                  onBlur={field.onBlur} // Important for validation
-                  ref={field.ref} // Important for focus management
-                />
-              </Autocomplete>
-            </FormControl>
+            <FormLabel className="text-sm text-black">Location</FormLabel>
+            <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <FormControl>
+                <SelectTrigger className="h-12 border border-gray-300 text-black px-4 py-3 text-base focus:ring-0 focus:border-thrive-blue">
+                  <SelectValue
+                    placeholder="Select your city"
+                    className="text-gray-500 placeholder:text-gray-500"
+                  />
+                </SelectTrigger>
+              </FormControl>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Cities</SelectLabel>
+                  {SOUTH_AFRICAN_CITIES.map((city) => (
+                    <SelectItem key={city} value={city}>
+                      {city}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
             <FormMessage />
           </FormItem>
         )}

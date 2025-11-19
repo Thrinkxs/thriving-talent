@@ -1,4 +1,5 @@
 import { Document, model, Schema } from "mongoose";
+import { defaultThrivingTalentImageUrl } from "../../utils/DefaultImageUrl";
 
 export interface IEmployer extends Document {
   fullName: string;
@@ -26,7 +27,11 @@ const EmployerSchema = new Schema<IEmployer>(
   {
     fullName: { type: String, index: true, trim: true, required: true },
     companyName: { type: String, index: true, trim: true, required: true },
-    companyPhoto: { type: String, trim: true },
+    companyPhoto: {
+      type: String,
+      trim: true,
+      default: defaultThrivingTalentImageUrl,
+    },
     description: { type: String, trim: true },
     images: { type: [String], default: [] },
     email: { type: String, index: true, trim: true, required: true },
