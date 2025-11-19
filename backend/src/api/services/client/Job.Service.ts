@@ -130,7 +130,10 @@ export class JobService {
       parseInt(page || "1", 10),
       parseInt(limit || "10", 10),
       { createdAt: -1 },
-      { path: "company", select: "fullName companyName images email" }
+      {
+        path: "company",
+        select: "fullName companyName images email companyPhoto",
+      }
     );
 
     return jobs;

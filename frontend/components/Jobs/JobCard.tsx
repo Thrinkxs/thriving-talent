@@ -1,4 +1,4 @@
-import { Briefcase, Clock, MoreVertical, Users } from "lucide-react";
+import { Briefcase, MoreVertical } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
@@ -7,9 +7,10 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { JobResponse } from "@/lib/types/response-types/response-types";
 
 interface JobCardProps {
-  job: any;
+  job: JobResponse;
   onSelect: () => void;
   variant?: "list" | "grid";
 }
@@ -28,13 +29,15 @@ export default function JobCard({
         {variant === "list" ? (
           <div className="flex gap-4">
             <div className="w-20 h-20 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
-              <span className="text-red-600 font-bold text-sm">{job.logo}</span>
+              <span className="text-red-600 font-bold text-sm">
+                {job?.company?.companyPhoto}
+              </span>
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex items-start justify-between gap-2 mb-2">
                 <div>
                   <h3 className="text-xl font-bold text-gray-900">
-                    {job.company}
+                    {job.company.companyName}
                   </h3>
                   <p className="text-sm text-gray-600">{job.title}</p>
                 </div>
@@ -57,14 +60,6 @@ export default function JobCard({
                   <Briefcase className="h-3 w-3" />
                   {job.type}
                 </div>
-                <div className="flex items-center gap-1">
-                  <Users className="h-3 w-3" />
-                  {job.applied} Applied
-                </div>
-                <div className="flex items-center gap-1">
-                  <Clock className="h-3 w-3" />
-                  {job.daysLeft} days left
-                </div>
               </div>
 
               <p className="text-sm text-gray-600 mb-4 line-clamp-2">
@@ -81,7 +76,7 @@ export default function JobCard({
             <div className="flex items-start justify-between mb-4">
               <div className="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center">
                 <span className="text-red-600 font-bold text-xs">
-                  {job.logo}
+                  {job?.company?.companyPhoto}
                 </span>
               </div>
               <DropdownMenu>
@@ -99,7 +94,7 @@ export default function JobCard({
             </div>
 
             <h3 className="text-lg font-bold text-gray-900 mb-1">
-              {job.company}
+              {job.company.companyName}
             </h3>
             <p className="text-sm text-gray-600 mb-3">{job.title}</p>
 
@@ -108,14 +103,14 @@ export default function JobCard({
                 <Briefcase className="h-3 w-3" />
                 {job.type}
               </div>
-              <div className="flex items-center gap-1">
+              {/* <div className="flex items-center gap-1">
                 <Users className="h-3 w-3" />
                 {job.applied}
               </div>
               <div className="flex items-center gap-1">
                 <Clock className="h-3 w-3" />
-                {job.daysLeft}d
-              </div>
+                {job.daysLeft}
+              </div> */}
             </div>
 
             <p className="text-xs text-gray-600 mb-4 line-clamp-3">

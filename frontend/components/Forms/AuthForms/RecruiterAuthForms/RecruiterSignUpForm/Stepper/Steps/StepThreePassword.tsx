@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/form";
 import { PasswordInput } from "@/components/ui/password-input";
 
-export default function StepThreePassword({ prevStep }: any) {
+export default function StepThreePassword() {
   const { control } = useFormContext();
 
   return (

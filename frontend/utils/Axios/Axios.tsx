@@ -29,6 +29,7 @@ Axios.interceptors.response.use(
      * when the user is actually not signed in.
      * Because right now we get a toast saying no access token found.
      **/
+
     const originalRequest = error.config;
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;

@@ -15,7 +15,7 @@ import { recruiterSignUpSchema } from "@/lib/schema";
 import { Stepper } from "./Stepper/Stepper";
 import StepOneDetails from "./Stepper/Steps/StepOneBusinessDetails";
 import StepTwoBusinessInfo from "./Stepper/Steps/StepTwoBusinessInfo";
-import StepFourPassword from "./Stepper/Steps/StepThreePassword";
+import StepThreePassword from "./Stepper/Steps/StepThreePassword";
 import Cookies from "js-cookie";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -111,11 +111,9 @@ export default function RecruiterSignUpForm() {
             onSubmit={methods.handleSubmit(onSubmit)}
             className="space-y-6 mt-6"
           >
-            {step === 0 && <StepOneDetails nextStep={nextStep} />}
-            {step === 1 && (
-              <StepTwoBusinessInfo nextStep={nextStep} prevStep={prevStep} />
-            )}
-            {step === 2 && <StepFourPassword prevStep={prevStep} />}
+            {step === 0 && <StepOneDetails />}
+            {step === 1 && <StepTwoBusinessInfo />}
+            {step === 2 && <StepThreePassword />}
 
             <div className="flex justify-between mt-6">
               {step > 0 && (

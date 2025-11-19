@@ -1,6 +1,5 @@
-
 "use client";
-import {  useFormContext } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import {
   FormField,
   FormItem,
@@ -23,11 +22,7 @@ import {
   businessSectors,
 } from "@/lib/recruiterOnboardingData";
 
-export default function StepOneBusinessDetails({
-  nextStep,
-}: {
-  nextStep: () => void;
-}) {
+export default function StepOneBusinessDetails() {
   const { control } = useFormContext();
 
   return (

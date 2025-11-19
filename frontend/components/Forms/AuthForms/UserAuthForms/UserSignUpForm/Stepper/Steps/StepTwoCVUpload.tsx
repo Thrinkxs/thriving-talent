@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useFormContext } from "react-hook-form";
@@ -9,7 +8,7 @@ import { toast } from "sonner";
 import { uploadFileToSupabase } from "@/utils/Supabase/Supabase";
 import { Loader2 } from "lucide-react";
 
-export default function StepTwoCVUpload({ nextStep, prevStep }: any) {
+export default function StepTwoCVUpload() {
   const [isUploading, setIsUploading] = useState<boolean>(false);
   const [fileName, setFileName] = useState("");
 

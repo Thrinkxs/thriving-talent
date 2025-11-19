@@ -1,8 +1,6 @@
 import React from "react";
 import { Badge } from "@/components/ui/badge";
-import {
-  IconBriefcaseFilled,
-} from "@tabler/icons-react";
+import { IconBriefcaseFilled } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { useCreateApplication } from "@/hooks/application/application";
@@ -20,8 +18,8 @@ interface JobCardProps {
 }
 
 const JobCard = ({
-  jobId = "",
-  internId = "",
+  jobId,
+  internId,
   logo,
   title,
   description,
@@ -54,7 +52,9 @@ const JobCard = ({
       </div>
 
       <div className="mt-4">
-        <p className="text-sm text-gray-600 line-clamp-3">{description || ""}</p>
+        <p className="text-sm text-gray-600 line-clamp-3">
+          {description || ""}
+        </p>
       </div>
 
       <div className="mt-5 flex flex-wrap gap-3">

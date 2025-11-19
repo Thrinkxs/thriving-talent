@@ -65,6 +65,7 @@ export type JobResponse = {
     companyName: string;
     images: string[];
     email: string;
+    companyPhoto: string;
   };
   location: string;
   type: string;

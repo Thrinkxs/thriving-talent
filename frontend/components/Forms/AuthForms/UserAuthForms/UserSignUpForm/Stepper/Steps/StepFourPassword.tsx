@@ -1,4 +1,3 @@
-
 "use client";
 import { useFormContext } from "react-hook-form";
 import {
@@ -10,7 +9,7 @@ import {
 } from "@/components/ui/form";
 import { PasswordInput } from "@/components/ui/password-input";
 
-export default function StepFourPassword({ prevStep }: any) {
+export default function StepFourPassword() {
   const { control } = useFormContext();
 
   return (

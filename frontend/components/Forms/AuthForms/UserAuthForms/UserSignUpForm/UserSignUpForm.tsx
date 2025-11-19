@@ -109,14 +109,10 @@ export default function UserSignUpForm() {
             onSubmit={methods.handleSubmit(onSubmit)}
             className="space-y-6 mt-6"
           >
-            {step === 0 && <StepOneDetails nextStep={nextStep} />}
-            {step === 1 && (
-              <StepTwoCVUpload nextStep={nextStep} prevStep={prevStep} />
-            )}
-            {step === 2 && (
-              <StepThreeVideoUpload nextStep={nextStep} prevStep={prevStep} />
-            )}
-            {step === 3 && <StepFourPassword prevStep={prevStep} />}
+            {step === 0 && <StepOneDetails />}
+            {step === 1 && <StepTwoCVUpload />}
+            {step === 2 && <StepThreeVideoUpload />}
+            {step === 3 && <StepFourPassword />}
 
             <div className="flex justify-between mt-6">
               {step > 0 && (

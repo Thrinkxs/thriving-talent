@@ -1,4 +1,3 @@
-
 "use client";
 import { useFormContext } from "react-hook-form";
 import {
@@ -10,7 +9,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
-export default function StepTwoBusinessInfo({ nextStep, prevStep }: any) {
+export default function StepTwoBusinessInfo() {
   const { control } = useFormContext();
 
   return (

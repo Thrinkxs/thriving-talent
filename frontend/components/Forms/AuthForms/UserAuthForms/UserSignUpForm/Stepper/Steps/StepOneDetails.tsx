@@ -1,4 +1,3 @@
-
 "use client";
 import { useFormContext } from "react-hook-form";
 import {
@@ -20,7 +19,7 @@ import {
 } from "@/components/ui/select";
 import { DatePicker } from "@/components/ui/date-picker";
 
-export default function StepOneDetails({ nextStep }: { nextStep: () => void }) {
+export default function StepOneDetails() {
   const { control } = useFormContext();
 
   return (
