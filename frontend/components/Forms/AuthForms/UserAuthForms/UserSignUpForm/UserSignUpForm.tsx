@@ -24,6 +24,7 @@ import { TbLoader2 } from "react-icons/tb";
 import { useRouter } from "next/navigation";
 import { useInternStore } from "@/lib/store/intern-store";
 import { UserRole } from "@/lib/types/user-types/user-types";
+import { AxiosError } from "axios";
 
 export default function UserSignUpForm() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -93,7 +94,8 @@ export default function UserSignUpForm() {
       }
     } catch (err) {
       setIsLoading(false);
-      toast.error((err as Error).message || "Signup failed");
+      const axiosErr = err as AxiosError<{ message?: string }>;
+      toast.error(axiosErr.response?.data?.message || "Signup failed");
     } finally {
       setIsLoading(false);
     }

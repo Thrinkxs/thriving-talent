@@ -22,6 +22,7 @@ import { useRouter } from "next/navigation";
 import { useRecruiterStore } from "@/lib/store/recruiter-store";
 import { UserRole } from "@/lib/types/user-types/user-types";
 import { Loader2 } from "lucide-react";
+import { AxiosError } from "axios";
 
 export default function RecruiterSignUpForm() {
   const [loading, setLoading] = useState<boolean>(false);
@@ -94,8 +95,9 @@ export default function RecruiterSignUpForm() {
         Cookies.set("role", UserRole.RECRUITER);
         router.push("/dashboard/recruiter/home");
       }
-    } catch (error) {
-      toast.error((error as Error)?.message || "Signup failed");
+    } catch (error: unknown) {
+      const axiosErr = error as AxiosError<{ message?: string }>;
+      toast.error(axiosErr.response?.data?.message || "Signup failed");
     } finally {
       setLoading(false);
     }

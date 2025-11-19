@@ -28,6 +28,7 @@ import { PasswordInput } from "../../../../ui/password-input";
 import Cookies from "js-cookie";
 import { useRecruiterStore } from "@/lib/store/recruiter-store";
 import { UserRole } from "@/lib/types/user-types/user-types";
+import { AxiosError } from "axios";
 
 const RecruiterSignInForm = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -57,9 +58,9 @@ const RecruiterSignInForm = () => {
         Cookies.set("role", UserRole.RECRUITER);
         router.push("/dashboard/recruiter/home");
       }
-    } catch (error) {
-      setLoading(false);
-      toast.error((error as Error).message || "Error logging in");
+    } catch (err: unknown) {
+      const axiosErr = err as AxiosError<{ message?: string }>;
+      toast.error(axiosErr.response?.data?.message || "Signin failed");
     } finally {
       setLoading(false);
     }

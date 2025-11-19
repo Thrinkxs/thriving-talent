@@ -28,6 +28,7 @@ import { PasswordInput } from "../../../../ui/password-input";
 import Cookies from "js-cookie";
 import { useInternStore } from "@/lib/store/intern-store";
 import { UserRole } from "@/lib/types/user-types/user-types";
+import { AxiosError } from "axios";
 
 const UserSignInForm = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -60,7 +61,8 @@ const UserSignInForm = () => {
       }
     } catch (error) {
       setLoading(false);
-      toast.error((error as Error).message || "Error logging in");
+      const axiosErr = error as AxiosError<{ message?: string }>;
+      toast.error(axiosErr.response?.data?.message || "Signin failed");
     } finally {
       setLoading(false);
     }

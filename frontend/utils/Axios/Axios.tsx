@@ -1,6 +1,7 @@
 // "use"
 import { UserRole } from "@/lib/types/user-types/user-types";
 import axios from "axios";
+import { is } from "date-fns/locale";
 import Cookies from "js-cookie";
 
 export const BASE_URL =
@@ -31,8 +32,20 @@ Axios.interceptors.response.use(
      **/
 
     const originalRequest = error.config;
-    if (error.response.status === 401 && !originalRequest._retry) {
+    // 🚨 Detect backend sign-in/signup endpoints, NOT frontend pages
+    const authEndpoints = ["/auth/login", "/auth/register"];
+
+    const isAuthRequest = authEndpoints.some((endpoint) =>
+      originalRequest.url.includes(endpoint)
+    );
+
+    if (
+      error.response.status === 401 &&
+      !originalRequest._retry &&
+      !isAuthRequest
+    ) {
       originalRequest._retry = true;
+      console.log("auth request retrying...", isAuthRequest);
 
       const userCookieRole = Cookies.get("role");
       let refreshAccessTokenEndpoint = "";
