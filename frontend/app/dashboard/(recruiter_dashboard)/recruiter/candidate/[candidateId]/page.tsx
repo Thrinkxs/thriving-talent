@@ -4,13 +4,10 @@
 
 "use client";
 
-import CandidateInfoCard from "@/components/Cards/CandidatesCard/CandidateInfoCard";
-import CandidateOverViewCard from "@/components/Cards/CandidatesCard/CandidateOverViewCard";
-import CandidateVideoCard from "@/components/Cards/CandidatesCard/CandidateVideoCard";
-import {
-  IconGenderAndrogyne,
-  IconPhoneFilled
-} from "@tabler/icons-react";
+import CandidateInfoCard from "@/components/Cards/CandidatesDetailCard/CandidateInfoCard";
+import CandidateOverViewCard from "@/components/Cards/CandidatesDetailCard/CandidateOverViewCard";
+import CandidateVideoCard from "@/components/Cards/CandidatesDetailCard/CandidateVideoCard";
+import { IconGenderAndrogyne, IconPhoneFilled } from "@tabler/icons-react";
 
 import { useFetchInternById } from "@/hooks/intern/intern";
 import { useParams } from "next/navigation";

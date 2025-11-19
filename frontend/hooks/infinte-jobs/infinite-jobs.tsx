@@ -31,7 +31,7 @@ export const useInfiniteJobs = () => {
   const debouncedSearch = useDebounce(searchQuery, 400);
 
   return useInfiniteQuery<InfiniteJobsResponse>({
-    queryKey: ["infiniteJobs", debouncedSearch],
+    queryKey: ["jobsData", debouncedSearch],
     queryFn: fetchJobs,
     initialPageParam: 1,
     getNextPageParam: (lastPage) =>

@@ -214,3 +214,28 @@ export type InfiniteJobsResponse = {
     totalDocuments: number;
   };
 };
+
+export type InfiniteInternsResponse = {
+  internsData: {
+    data: {
+      fullName: string;
+      email: string;
+      bio: string;
+      isVerified: boolean;
+      phone: string;
+      address: string;
+      password: string;
+      status: string; // or just string if other statuses are possible
+      gender: string;
+      profileImage: string;
+      introVideo: string;
+      resume: string;
+      isDeleted: boolean;
+      _id: string;
+      __v: number;
+    }[];
+    currentPage: number;
+    totalPages: number;
+    totalDocuments: number;
+  };
+};

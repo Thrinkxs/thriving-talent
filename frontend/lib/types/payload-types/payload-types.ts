@@ -26,6 +26,15 @@ export type InternSignupPayload = {
   resume: string;
 };
 
+export interface FetchInternsParams {
+  search?: string;
+  address?: string;
+  gender?: string;
+  status?: string;
+  page?: number;
+  limit?: number;
+}
+
 export type SigninPayload = {
   email: string;
   password: string;

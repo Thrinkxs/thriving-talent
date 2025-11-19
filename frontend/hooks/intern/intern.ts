@@ -1,14 +1,23 @@
 import {
+  FetchInternsParams,
   InternSignupPayload,
   ResetUserPasswordPayload,
 } from "@/lib/types/payload-types/payload-types";
 import {
   InternByIdResponse,
   InternResponse,
+  InfiniteInternsResponse,
 } from "@/lib/types/response-types/response-types";
 import { Axios } from "@/utils/Axios/Axios";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  useInfiniteQuery,
+} from "@tanstack/react-query";
 import { toast } from "sonner";
+import { useDebounce } from "../use-debounce/use-debounce";
+import { useInternFiltersStore } from "@/lib/store/intern-filter-store/intern-filter-store";
 
 const fetchInternProfile = async () => {
   try {
@@ -125,5 +134,50 @@ export const useFetchInternById = (internId: string) => {
     queryFn: () => fetchInternById(internId),
     retry: 3,
     retryDelay: 500,
+  });
+};
+
+const fetchAllInterns = async ({
+  pageParam = 1,
+  queryKey,
+}: any): Promise<InfiniteInternsResponse> => {
+  const [_key, filters] = queryKey;
+  const { search, address, gender, status } = filters;
+
+  const response = await Axios.get("/api/client/intern/get-all-interns", {
+    params: {
+      search: search || "",
+      address: address || "",
+      gender: gender || "",
+      status: status || "",
+      page: pageParam,
+      limit: 10, // adjust as needed
+    },
+  });
+
+  return response.data;
+};
+
+export const useInfiniteFetchAllInterns = () => {
+  const { search, address, gender, status } = useInternFiltersStore();
+  const debouncedSearch = useDebounce(search, 400);
+  const debouncedAddress = useDebounce(address, 400);
+
+  const filters = {
+    search: debouncedSearch,
+    address: debouncedAddress,
+    gender,
+    status,
+  };
+
+  return useInfiniteQuery<InfiniteInternsResponse>({
+    queryKey: ["internsData", filters],
+    queryFn: fetchAllInterns,
+    initialPageParam: 1,
+    getNextPageParam: (lastPage) =>
+      lastPage.internsData.currentPage < lastPage.internsData.totalPages
+        ? lastPage.internsData.currentPage + 1
+        : undefined,
+    staleTime: 1000 * 30, // 30 seconds
   });
 };

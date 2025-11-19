@@ -18,9 +18,59 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { DatePicker } from "@/components/ui/date-picker";
+import "@/components/SearchBar/google-autocomplete.css";
+import {
+  useJsApiLoader,
+  Autocomplete,
+  LoadScriptProps,
+} from "@react-google-maps/api";
+import { useRef, useState } from "react";
+import { TbLoader2 } from "react-icons/tb";
+
+const googleMapsLibraries: LoadScriptProps["libraries"] = ["places"];
 
 export default function StepOneDetails() {
-  const { control } = useFormContext();
+  const { control, setValue, watch } = useFormContext();
+  const addressValue = watch("address"); // Watch the form value
+
+  const { isLoaded } = useJsApiLoader({
+    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY || "",
+    libraries: googleMapsLibraries,
+  });
+
+  const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
+
+  const onLoad = (autocomplete: google.maps.places.Autocomplete) => {
+    autocompleteRef.current = autocomplete;
+  };
+
+  const onPlaceChanged = () => {
+    if (autocompleteRef.current) {
+      const place = autocompleteRef.current.getPlace();
+      const address = place.formatted_address || place.name || "";
+
+      // Update the form value directly using react-hook-form
+      setValue("address", address, {
+        shouldValidate: true, // Trigger validation
+        shouldDirty: true, // Mark field as dirty
+      });
+    }
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Update form value on manual input as well
+    setValue("address", e.target.value, {
+      shouldValidate: true,
+      shouldDirty: true,
+    });
+  };
+
+  if (!isLoaded)
+    return (
+      <div>
+        <TbLoader2 className="animate-spin text-thrive-blue" />
+      </div>
+    );
 
   return (
     <div className="space-y-5">
@@ -93,6 +143,38 @@ export default function StepOneDetails() {
                 onChange={field.onChange}
                 label="When's your birthday?"
               />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+
+      <FormField
+        name="address"
+        control={control}
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Location</FormLabel>
+            <FormControl>
+              <Autocomplete
+                onLoad={onLoad}
+                onPlaceChanged={onPlaceChanged}
+                options={{
+                  componentRestrictions: { country: ["ZA"] },
+                }}
+              >
+                <Input
+                  className="rounded text-gray-500 location-input"
+                  placeholder="Location"
+                  value={field.value || ""} // Use form value directly
+                  onChange={(e) => {
+                    field.onChange(e); // React-hook-form onChange
+                    handleInputChange(e); // Additional handler
+                  }}
+                  onBlur={field.onBlur} // Important for validation
+                  ref={field.ref} // Important for focus management
+                />
+              </Autocomplete>
             </FormControl>
             <FormMessage />
           </FormItem>

@@ -8,6 +8,7 @@ import {
   IconBriefcaseFilled,
   IconSettingsFilled,
   IconLogout,
+  IconUsers,
 } from "@tabler/icons-react";
 
 export const RecruiterNavList = {
@@ -22,6 +23,11 @@ export const RecruiterNavList = {
           ),
           title: "Home",
           url: "/dashboard/recruiter/home",
+        },
+        {
+          icons: <IconUsers size={20} color="white" stroke={2} />,
+          title: "Candidates",
+          url: "/dashboard/recruiter/candidate",
         },
         {
           icons: <IconBriefcaseFilled size={20} color="white" stroke={2} />,

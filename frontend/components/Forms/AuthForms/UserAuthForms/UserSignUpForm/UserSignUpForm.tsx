@@ -35,6 +35,7 @@ export default function UserSignUpForm() {
       fullName: "",
       email: "",
       phone: "",
+      address: "",
       birthday: undefined,
       gender: undefined,
       resume: "",

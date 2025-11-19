@@ -12,6 +12,7 @@ export const userSignUpSchema = z
     fullName: z.string().min(2, "full name is required"),
     email: z.string().email("Invalid email"),
     phone: z.string().min(7, "Enter a valid phone number"),
+    address: z.string().min(7, "Location is required"),
     birthday: z.date({ error: "Birthday is required" }).refine(
       // Checking if the user is of valid age, 18 and above
       (birthday) => {
