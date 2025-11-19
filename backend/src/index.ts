@@ -28,6 +28,7 @@ const allowedOrigins = [
   "https://thriving-talent.vercel.app",
   "https://www.thriving-talent.vercel.app",
   "https://thriving-talent.onrender.com",
+  
 ];
 const corsOptions = {
   origin: (origin: any, callback: any) => {
