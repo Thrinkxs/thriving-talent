@@ -54,7 +54,7 @@ const CandidatesPage = () => {
 
   const handleRemoveFilter = (
     filterType: "gender" | "status",
-    value: string
+    // _value: string
   ) => {
     if (filterType === "gender") {
       setGender("");
