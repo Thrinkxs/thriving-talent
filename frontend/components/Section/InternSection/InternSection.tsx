@@ -35,12 +35,12 @@ export function InternsSection() {
           </p>
           <div className="mt-20">
             <Link
-              href="/"
+              href="/intern/signup"
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
               className=""
             >
-              <Button className="rounded cursor-pointer inline-flex items-center justify-center px-10 py-2 bg-thrive-blue hover:bg-thrive-blue/80 text-white text-xs sm:text-sm font-semibold transition-all duration-300 transform hover:scale-105 w-fit">
+              <Button asChild className="rounded cursor-pointer inline-flex items-center justify-center px-10 py-2 bg-thrive-blue hover:bg-thrive-blue/80 text-white text-xs sm:text-sm font-semibold transition-all duration-300 transform hover:scale-105 w-fit">
                 Start using Thriving Talents
               </Button>
             </Link>
