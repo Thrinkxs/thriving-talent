@@ -99,7 +99,7 @@ export const candidateColumns: ColumnDef<EmployerApplicantResponse>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <Link
-              href={`/dashboard/recruiter/candidate/${candidate.applicantId}`}
+              href={`/dashboard/employer/candidate/${candidate.applicantId}`}
             >
               <DropdownMenuItem>View Applicant Profile</DropdownMenuItem>
             </Link>

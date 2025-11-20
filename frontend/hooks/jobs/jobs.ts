@@ -198,13 +198,13 @@ export const useDeleteJob = () => {
   });
 };
 
-const fetchRecruiterDashboardMetrics = async () => {
+const fetchEmployerDashboardMetrics = async () => {
   try {
     const response = await Axios.get(
       "/api/client/job/employer-dashboard-metrics"
     );
     if (response.status !== 200) {
-      throw new Error("Could not recruiter dashboard metrics.");
+      throw new Error("Could not employer dashboard metrics.");
     }
 
     const data: RecuiterDashboardMetricsResponse =
@@ -216,10 +216,10 @@ const fetchRecruiterDashboardMetrics = async () => {
   }
 };
 
-export const useFetchRecruiterDashboardMetrics = () => {
+export const useFetchEmployerDashboardMetrics = () => {
   return useQuery({
     queryKey: ["employerJobMetricsData"],
-    queryFn: () => fetchRecruiterDashboardMetrics(),
+    queryFn: () => fetchEmployerDashboardMetrics(),
     retry: 3,
     retryDelay: 500,
   });

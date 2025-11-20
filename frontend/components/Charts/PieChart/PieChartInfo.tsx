@@ -3,12 +3,12 @@
 import { useMemo } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Loader2 } from "lucide-react";
-import { useFetchRecruiterDashboardMetrics } from "@/hooks/jobs/jobs";
+import { useFetchEmployerDashboardMetrics } from "@/hooks/jobs/jobs";
 import { ChartPie } from "@/components/Charts/PieChart/PieChart";
 import { JobTypeStats } from "@/lib/types/response-types/response-types";
 
 export default function PieChartInfo() {
-  const { data, isLoading } = useFetchRecruiterDashboardMetrics();
+  const { data, isLoading } = useFetchEmployerDashboardMetrics();
 
   // Provide fallback data
   const fallbackJobTypeStats: JobTypeStats = useMemo(

@@ -15,11 +15,11 @@ import { resetPasswordFormSchema } from "@/lib/schema";
 import { PasswordInput } from "@/components/ui/password-input";
 import { UserRole } from "@/lib/types/user-types/user-types";
 import { useUpdateInternPassword } from "@/hooks/intern/intern";
-import { useUpdateRecruiterPassword } from "@/hooks/recruiter/recruiter";
+import { useupdateEmployerPassword } from "@/hooks/employer/employer";
 import { Loader2 } from "lucide-react";
 
 interface ResetPasswordFormProps {
-  userType: UserRole.INTERN | UserRole.RECRUITER;
+  userType: UserRole.INTERN | UserRole.EMPLOYER;
 }
 
 const ResetPasswordForm = ({ userType }: ResetPasswordFormProps) => {
@@ -34,8 +34,8 @@ const ResetPasswordForm = ({ userType }: ResetPasswordFormProps) => {
 
   const { mutate: submitInternPassword, isPending: isInternPending } =
     useUpdateInternPassword();
-  const { mutate: submitRecruiterPassword, isPending: isRecruiterPending } =
-    useUpdateRecruiterPassword();
+  const { mutate: submitEmployerPassword, isPending: isEmployerPending } =
+    useupdateEmployerPassword();
 
   const onSubmit = async (values: z.infer<typeof resetPasswordFormSchema>) => {
     if (userType === UserRole.INTERN) {
@@ -43,8 +43,8 @@ const ResetPasswordForm = ({ userType }: ResetPasswordFormProps) => {
         password: values.password,
         currentPassword: values.confirmPassword,
       });
-    } else if (userType === UserRole.RECRUITER) {
-      submitRecruiterPassword({
+    } else if (userType === UserRole.EMPLOYER) {
+      submitEmployerPassword({
         password: values.password,
         currentPassword: values.confirmPassword,
       });
@@ -119,7 +119,7 @@ const ResetPasswordForm = ({ userType }: ResetPasswordFormProps) => {
               type="submit"
               className="rounded-xl px-20 bg-black hover:bg-black/85"
             >
-              {isInternPending || isRecruiterPending ? (
+              {isInternPending || isEmployerPending ? (
                 <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
               ) : (
                 "Update Password"

@@ -53,12 +53,14 @@ export function HeroSection() {
                   : "translate-y-10 opacity-0"
               }`}
             >
-              <Button asChild className="rounded bg-blue-600 px-10 py-2 text-sm sm:text-base font-medium text-white transition-all hover:scale-105 hover:bg-blue-700 hover:shadow-xl active:scale-95">
-               <Link href="/user/signin"> Intern </Link>
+              <Button
+                asChild
+                className="rounded bg-blue-600 px-10 py-2 text-sm sm:text-base font-medium text-white transition-all hover:scale-105 hover:bg-blue-700 hover:shadow-xl active:scale-95"
+              >
+                <Link href="/intern/signin"> Intern </Link>
               </Button>
               <Button className="rounded bg-red-600 px-10 py-2 text-sm sm:text-base font-medium text-white transition-all hover:scale-105 hover:bg-red-700 hover:shadow-xl active:scale-95">
-              <Link href="/employer/signin"> Employer </Link>
-                
+                <Link href="/employer/signin"> Employer </Link>
               </Button>
             </div>
 

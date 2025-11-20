@@ -43,7 +43,7 @@ Axios.interceptors.response.use(
       let refreshAccessTokenEndpoint = "";
       if (userCookieRole === UserRole.INTERN) {
         refreshAccessTokenEndpoint = "/api/client/intern/auth/access-token";
-      } else if (userCookieRole === UserRole.RECRUITER) {
+      } else if (userCookieRole === UserRole.EMPLOYER) {
         refreshAccessTokenEndpoint = "/api/client/employer/auth/access-token";
       }
 
@@ -57,14 +57,14 @@ Axios.interceptors.response.use(
         // Retry the original request
         return Axios(originalRequest);
       } catch (err) {
-        // if it's a recruiter or an intern log them out to their sign pages
+        // if it's a employer or an intern log them out to their sign pages
 
-        if (userCookieRole === UserRole.RECRUITER) {
+        if (userCookieRole === UserRole.EMPLOYER) {
           await Axios.delete(`/api/client/employer/auth/logout`);
-          window.location.replace("/recruiter/signin");
+          window.location.replace("/employer/signin");
         } else if (userCookieRole === UserRole.INTERN) {
           await Axios.delete("/api/client/intern/auth/logout/");
-          window.location.replace("/user/signin");
+          window.location.replace("/intern/signin");
         }
 
         console.log("an error occured", err);

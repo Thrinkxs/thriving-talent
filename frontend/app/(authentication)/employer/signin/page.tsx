@@ -1,12 +1,12 @@
-import RecruiterSignInForm from "@/components/Forms/AuthForms/RecruiterAuthForms/RecruiterSignInForm.tsx/RecruiterSignInForm";
+import EmployerSignInForm from "@/components/Forms/AuthForms/EmployerAuthForms/EmployerSignInForm.tsx/EmployerSignInForm";
 import React from "react";
 
-const RecruiterSignInPage = () => {
+const EmployerSignInPage = () => {
   return (
     <section className="">
-      <RecruiterSignInForm />
+      <EmployerSignInForm />
     </section>
   );
 };
 
-export default RecruiterSignInPage;
+export default EmployerSignInPage;

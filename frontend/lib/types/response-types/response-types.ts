@@ -1,4 +1,4 @@
-export type RecruiterResponse = {
+export type EmployerResponse = {
   employer: {
     fullName: string;
     companyName: string;

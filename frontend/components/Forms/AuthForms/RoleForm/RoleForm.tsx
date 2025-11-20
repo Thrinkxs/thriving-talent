@@ -19,9 +19,9 @@ export default function RoleForm() {
     if (!selectedRole) return;
 
     if (selectedRole === "intern") {
-      router.push("/user/signup");
+      router.push("/intern/signup");
     } else {
-      router.push("/recruiter/signup");
+      router.push("/employer/signup");
     }
   };
 

@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/sidebar";
 import Image from "next/image";
 import { useState } from "react";
-import { UserNavList } from "@/components/Navigation/UserNavList";
+import { InternNavList } from "@/components/Navigation/InternNavList";
 import { useInternStore } from "@/lib/store/intern-store";
 import { UserRole } from "@/lib/types/user-types/user-types";
 import ThriveTalentDefaultImage from "@/public/default-image/TT_default_Image_2.jpg";
@@ -31,7 +31,7 @@ const InternSideBar = ({ children }: Props) => {
         } as React.CSSProperties
       }
     >
-      <AppSidebar logoutUser={UserRole.INTERN} navList={UserNavList} />
+      <AppSidebar logoutUser={UserRole.INTERN} navList={InternNavList} />
       <SidebarInset className="min-h-screen bg-thrive-dashboard-background">
         <header className="grid grid-cols-12 px-4 sm:px-6">
           <div className="col-span-1 flex h-16 shrink-0 items-center gap-2 ">

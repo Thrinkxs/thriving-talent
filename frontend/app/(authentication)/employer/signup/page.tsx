@@ -1,9 +1,9 @@
 import React from "react";
 import Image from "next/image";
 import signUpImage from "@/public/signup-side-image.jpg";
-import RecruiterSignUpForm from "@/components/Forms/AuthForms/RecruiterAuthForms/RecruiterSignUpForm/RecruiterSignUpForm";
+import EmployerSignUpForm from "@/components/Forms/AuthForms/EmployerAuthForms/EmployerSignUpForm/EmployerSignUpForm";
 
-const RecruiterSignUpPage = () => {
+const EmployerSignUpPage = () => {
   return (
     <section>
       <div className="grid grid-cols-12">
@@ -15,11 +15,11 @@ const RecruiterSignUpPage = () => {
           />
         </div>
         <div className="col-span-12 mt-10 md:mt-0 md:col-span-6">
-          <RecruiterSignUpForm />
+          <EmployerSignUpForm />
         </div>
       </div>
     </section>
   );
 };
 
-export default RecruiterSignUpPage;
+export default EmployerSignUpPage;

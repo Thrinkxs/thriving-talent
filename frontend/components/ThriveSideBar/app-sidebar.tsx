@@ -50,23 +50,13 @@ interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
 export function AppSidebar({ navList, logoutUser, ...props }: AppSidebarProps) {
   const router = useRouter();
   const logoutIntern = useInternStore((state) => state.logout);
-  const logoutRecruiter = useInternStore((state) => state.logout);
-
-  // const accessToken = Cookies.get("accessToken") || "";
-  // const refreshToken = Cookies.get("refreshToken") || "";
+  const logoutEmployer = useInternStore((state) => state.logout);
 
   const logout = async () => {
-    // if (logoutUser === UserRole.RECRUITER) {
-    //   await logoutRecruiter(refreshToken, () =>
-    //     router.push("/recruiter/signin")
-    //   );
-    // } else {
-    //   await logoutIntern(refreshToken, () => router.push("/user/signin"));
-    // }
-    if (logoutUser === UserRole.RECRUITER) {
-      await logoutRecruiter(() => router.push("/recruiter/signin"));
+    if (logoutUser === UserRole.EMPLOYER) {
+      await logoutEmployer(() => router.push("/employer/signin"));
     } else {
-      await logoutIntern(() => router.push("/user/signin"));
+      await logoutIntern(() => router.push("/intern/signin"));
     }
   };
 

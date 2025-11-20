@@ -6,7 +6,7 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Form, FormLabel } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { userProfileFormResumeSchema } from "@/lib/schema";
+import { internProfileFormResumeSchema } from "@/lib/schema";
 import { toast } from "sonner";
 import { useCallback, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
@@ -17,7 +17,7 @@ import { useUpdateInternProfile } from "@/hooks/intern/intern";
 import { useInternStore } from "@/lib/store/intern-store";
 import { Loader2 } from "lucide-react";
 
-const UserProfileResumeForm = () => {
+const InternProfileResumeForm = () => {
   const [isUploading, setIsUploading] = useState(false);
   const [uploadedName, setUploadedName] = useState<string>("");
 
@@ -25,8 +25,8 @@ const UserProfileResumeForm = () => {
   const internUser = useInternStore((s) => s.intern);
   const updateIntern = useInternStore((s) => s.updateIntern);
 
-  const form = useForm<z.infer<typeof userProfileFormResumeSchema>>({
-    resolver: zodResolver(userProfileFormResumeSchema),
+  const form = useForm<z.infer<typeof internProfileFormResumeSchema>>({
+    resolver: zodResolver(internProfileFormResumeSchema),
     defaultValues: {
       resume: internUser?.resume || "",
     },
@@ -65,7 +65,7 @@ const UserProfileResumeForm = () => {
     multiple: false,
   });
 
-  const onSubmit = (values: z.infer<typeof userProfileFormResumeSchema>) => {
+  const onSubmit = (values: z.infer<typeof internProfileFormResumeSchema>) => {
     submitInternProfile(values);
     updateIntern(values);
   };
@@ -144,7 +144,11 @@ const UserProfileResumeForm = () => {
           <hr className="text-gray-300" />
 
           <Button className="px-20 bg-black hover:bg-black/85" type="submit">
-            {isPending ? <Loader2 className="w-6 h-6 animate-spin text-white" /> : "Update"}
+            {isPending ? (
+              <Loader2 className="w-6 h-6 animate-spin text-white" />
+            ) : (
+              "Update"
+            )}
           </Button>
         </form>
       </Form>
@@ -152,4 +156,4 @@ const UserProfileResumeForm = () => {
   );
 };
 
-export default UserProfileResumeForm;
+export default InternProfileResumeForm;

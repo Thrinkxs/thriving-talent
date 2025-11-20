@@ -61,7 +61,7 @@ const NavBar = () => {
             style={{ color: showBackground ? "white" : "black" }}
           >
             <li className="transition ease-in-out delay-150 hover:-translate-x-1 hover:text-thrive-blue duration-300 mx-1.5 sm:mx-6">
-              <Link href="/user/signup">Jobs</Link>
+              <Link href="/intern/signup">Jobs</Link>
             </li>
             {/* <li className="transition ease-in-out delay-150 hover:-translate-x-1 hover:text-thrive-blue duration-300 mx-1.5 sm:mx-6">
               <NavMenu showBackground={showBackground} />
@@ -80,7 +80,7 @@ const NavBar = () => {
         <div className="py-4">
           <Link href="/role">
             <Button className="bg-thrive-blue hover:bg-thrive-blue/80 px-10 py-2 cursor-pointer text-white rounded">
-              Sign In
+              Sign Up
             </Button>
           </Link>
         </div>

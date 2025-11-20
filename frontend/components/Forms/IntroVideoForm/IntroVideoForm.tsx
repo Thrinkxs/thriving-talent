@@ -6,7 +6,7 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Form, FormLabel } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { userProfileFormIntroVideoSchema } from "@/lib/schema";
+import { internProfileFormIntroVideoSchema } from "@/lib/schema";
 import { toast } from "sonner";
 import { useCallback, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
@@ -17,7 +17,7 @@ import { useUpdateInternProfile } from "@/hooks/intern/intern";
 import { useInternStore } from "@/lib/store/intern-store";
 import { Loader2 } from "lucide-react";
 
-const UserProfileIntroVideoForm = () => {
+const InternProfileIntroVideoForm = () => {
   const [isUploading, setIsUploading] = useState(false);
   const [uploadedName, setUploadedName] = useState("");
 
@@ -25,8 +25,8 @@ const UserProfileIntroVideoForm = () => {
   const internUser = useInternStore((s) => s.intern);
   const updateIntern = useInternStore((s) => s.updateIntern);
 
-  const form = useForm<z.infer<typeof userProfileFormIntroVideoSchema>>({
-    resolver: zodResolver(userProfileFormIntroVideoSchema),
+  const form = useForm<z.infer<typeof internProfileFormIntroVideoSchema>>({
+    resolver: zodResolver(internProfileFormIntroVideoSchema),
     defaultValues: {
       introVideo: internUser?.introVideo || "",
     },
@@ -68,7 +68,7 @@ const UserProfileIntroVideoForm = () => {
   });
 
   const onSubmit = (
-    values: z.infer<typeof userProfileFormIntroVideoSchema>
+    values: z.infer<typeof internProfileFormIntroVideoSchema>
   ) => {
     submitInternProfile(values);
     updateIntern(values);
@@ -175,4 +175,4 @@ const UserProfileIntroVideoForm = () => {
   );
 };
 
-export default UserProfileIntroVideoForm;
+export default InternProfileIntroVideoForm;

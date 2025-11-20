@@ -1,4 +1,4 @@
 export const enum UserRole {
-  RECRUITER = "recruiter",
+  EMPLOYER = "employer",
   INTERN = "intern",
 }

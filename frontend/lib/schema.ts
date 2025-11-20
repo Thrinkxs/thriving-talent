@@ -1,13 +1,13 @@
 import z from "zod";
 
-export const userSignInSchema = z.object({
+export const internSignInSchema = z.object({
   email: z.string().email({ message: "Enter a valid email address" }),
   password: z
     .string()
     .min(8, { message: "Password must be at least 8 characters long" }),
 });
 
-export const userSignUpSchema = z
+export const internSignUpSchema = z
   .object({
     fullName: z.string().min(2, "full name is required"),
     email: z.string().email("Invalid email"),
@@ -41,7 +41,7 @@ export const userSignUpSchema = z
     path: ["confirmPassword"],
   });
 
-export const recruiterSignUpSchema = z
+export const employerSignUpSchema = z
   .object({
     fullName: z.string().min(2, "Full name is required"),
     companyName: z.string().min(2, "Company name is required"),
@@ -63,7 +63,7 @@ export const recruiterSignUpSchema = z
     path: ["confirmPassword"],
   });
 
-export const recruiterProfileFormSchema = z.object({
+export const employerProfileFormSchema = z.object({
   companyPhoto: z.string().optional(),
   // images: z.array(z.string()).optional(),
   fullName: z
@@ -81,7 +81,7 @@ export const recruiterProfileFormSchema = z.object({
     .max(255, { message: "Description is too long" }),
 });
 
-export const userProfileFormSchema = z.object({
+export const internProfileFormSchema = z.object({
   profileImage: z.string().optional(),
   fullName: z
     .string()
@@ -98,11 +98,11 @@ export const userProfileFormSchema = z.object({
   introVideo: z.string().optional(),
 });
 
-export const userProfileFormResumeSchema = z.object({
+export const internProfileFormResumeSchema = z.object({
   resume: z.string().optional(),
 });
 
-export const userProfileFormIntroVideoSchema = z.object({
+export const internProfileFormIntroVideoSchema = z.object({
   introVideo: z.string().optional(),
 });
 

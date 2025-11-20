@@ -119,7 +119,7 @@ export const CandidateCard: React.FC<CandidateCardProps> = ({ candidate }) => {
             </Button>
           )}
         </div>
-        <Link href={`/dashboard/recruiter/candidate/${candidate._id}`}>
+        <Link href={`/dashboard/employer/candidate/${candidate._id}`}>
           <Button size="sm">View Profile</Button>
         </Link>
       </div>

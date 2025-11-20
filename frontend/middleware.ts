@@ -9,35 +9,35 @@ export default function middleware(req: NextRequest) {
   const isAuthenticated = req.cookies.has("access-token");
   const userRole = req.cookies.get("role")?.value;
 
-  const isRecruiterDashboard = path.startsWith("/dashboard/recruiter");
-  const isUserDashboard = path.startsWith("/dashboard/user");
+  const isEmployerDashboard = path.startsWith("/dashboard/employer");
+  const isInternDashboard = path.startsWith("/dashboard/intern");
 
   // ===============================
-  // 1. PROTECT RECRUITER DASHBOARD
+  // 1. PROTECT EMPLOYER DASHBOARD
   // ===============================
-  if (isRecruiterDashboard && !isAuthenticated) {
-    return NextResponse.redirect(new URL("/recruiter/signin", baseURL));
+  if (isEmployerDashboard && !isAuthenticated) {
+    return NextResponse.redirect(new URL("/employer/signin", baseURL));
   }
 
   // ===========================
   // 2. PROTECT USER DASHBOARD
   // ===========================
-  if (isUserDashboard && !isAuthenticated) {
-    return NextResponse.redirect(new URL("/user/signin", baseURL));
+  if (isInternDashboard && !isAuthenticated) {
+    return NextResponse.redirect(new URL("/intern/signin", baseURL));
   }
 
   // ===================================================
   // 3. IF AUTHENTICATED, ENFORCE ROLE-BASED DASHBOARDS
   // ===================================================
   if (isAuthenticated) {
-    if (userRole === UserRole.RECRUITER && !isRecruiterDashboard) {
+    if (userRole === UserRole.EMPLOYER && !isEmployerDashboard) {
       return NextResponse.redirect(
-        new URL("/dashboard/recruiter/home", baseURL)
+        new URL("/dashboard/employer/home", baseURL)
       );
     }
 
-    if (userRole === UserRole.INTERN && !isUserDashboard) {
-      return NextResponse.redirect(new URL("/dashboard/user/home", baseURL));
+    if (userRole === UserRole.INTERN && !isInternDashboard) {
+      return NextResponse.redirect(new URL("/dashboard/intern/home", baseURL));
     }
   }
 

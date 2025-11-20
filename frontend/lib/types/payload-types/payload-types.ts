@@ -1,4 +1,4 @@
-export type RecruiterSignupPayload = {
+export type EmployerSignupPayload = {
   fullName: string;
   companyName: string;
   description: string;
