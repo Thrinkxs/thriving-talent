@@ -30,7 +30,7 @@ export const registerAccountController = async (
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "none",
-      // domain: ".themuzestudios.com",
+      domain: ".themuzestudios.com",
 
       maxAge: 15 * 60 * 1000, // 15 minutes
     });
@@ -38,7 +38,7 @@ export const registerAccountController = async (
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "none",
-      // domain: ".themuzestudios.com",
+      domain: ".themuzestudios.com",
 
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
@@ -65,7 +65,7 @@ export const loginAccountController = async (
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "none",
-      // domain: ".themuzestudios.com",
+      domain: ".themuzestudios.com",
 
       maxAge: 15 * 60 * 1000, // 15 minutes
     });
@@ -73,7 +73,7 @@ export const loginAccountController = async (
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "none",
-      // domain: ".themuzestudios.com",
+      domain: ".themuzestudios.com",
 
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
@@ -183,7 +183,7 @@ export const getAccessTokenController = async (
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "none",
-      // domain: ".themuzestudios.com",
+      domain: ".themuzestudios.com",
 
       maxAge: 15 * 60 * 1000, // 15 minutes
     });
@@ -211,8 +211,20 @@ export const logoutAccountController = async (
 
     await authenticationService.logoutAccount(refreshToken);
     // Clear the cookies
-    res.clearCookie("access-token");
-    res.clearCookie("refresh-token");
+    // res.clearCookie("access-token");
+    // res.clearCookie("refresh-token");
+    res.clearCookie("access-token", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "none",
+      domain: ".themuzestudios.com",
+    });
+    res.clearCookie("refresh-token", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "none",
+      domain: ".themuzestudios.com",
+    });
 
     return res.status(200).json({ message: "Logged out successfully" });
   } catch (error: any) {
