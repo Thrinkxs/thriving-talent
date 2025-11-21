@@ -30,7 +30,7 @@ export const registerAccountController = async (
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "none",
-      domain: ".themuzestudios.com",
+      // // domain: ".themuzestudios.com",
 
       maxAge: 15 * 60 * 1000, // 15 minutes
     });
@@ -38,7 +38,7 @@ export const registerAccountController = async (
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "none",
-      domain: ".themuzestudios.com",
+      // // domain: ".themuzestudios.com",
 
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
@@ -65,7 +65,7 @@ export const loginAccountController = async (
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "none",
-      domain: ".themuzestudios.com",
+      // // domain: ".themuzestudios.com",
 
       maxAge: 15 * 60 * 1000, // 15 minutes
     });
@@ -73,7 +73,7 @@ export const loginAccountController = async (
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "none",
-      domain: ".themuzestudios.com",
+      // // domain: ".themuzestudios.com",
 
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
@@ -183,7 +183,7 @@ export const getAccessTokenController = async (
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "none",
-      domain: ".themuzestudios.com",
+      // domain: ".themuzestudios.com",
 
       maxAge: 15 * 60 * 1000, // 15 minutes
     });
