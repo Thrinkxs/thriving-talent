@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import woman from "@/public/woman2.png";
 
 export function CTASection() {
   return (
@@ -35,7 +36,7 @@ export function CTASection() {
         {/* Right Image — Inside but Slightly Cropped */}
         <div className="hidden mt-[250px] relative w-[500px] h-[500px] lg:flex justify-end items-end">
           <Image
-            src="/woman1.png"
+            src={woman}
             alt="Woman in magenta"
             width={800}
             height={800}

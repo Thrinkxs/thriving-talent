@@ -27,16 +27,16 @@ export const registerAccountController = async (
     const { accessToken, refreshToken } = response;
 
     res.cookie("access-token", accessToken, {
-      httpOnly: false,
-      secure: true,
-      sameSite: "none",
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
 
       maxAge: 15 * 60 * 1000, // 15 minutes
     });
     res.cookie("refresh-token", refreshToken, {
-      httpOnly: false,
-      secure: true,
-      sameSite: "none",
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
 
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
@@ -60,16 +60,16 @@ export const loginAccountController = async (
     const { accessToken, refreshToken } = response;
 
     res.cookie("access-token", accessToken, {
-      httpOnly: false,
-      secure: true,
-      sameSite: "none",
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
 
       maxAge: 15 * 60 * 1000, // 15 minutes
     });
     res.cookie("refresh-token", refreshToken, {
-      httpOnly: false,
-      secure: true,
-      sameSite: "none",
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
 
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
@@ -176,9 +176,9 @@ export const getAccessTokenController = async (
     const response = await authenticationService.getAccessToken(refreshToken);
     const { accessToken } = response;
     res.cookie("access-token", accessToken, {
-      httpOnly: false,
-      secure: true,
-      sameSite: "none",
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
 
       maxAge: 15 * 60 * 1000, // 15 minutes
     });
