@@ -18,10 +18,13 @@ export const tokenAuthentication = (
   next: NextFunction
 ) => {
   const token = (() => {
+    console.log("request header is", req.header)
     const authHeader = req.header("Authorization")?.replace("Bearer ", "");
     if (process.env.NODE_ENV === "production") {
       return req.headers.cookie ? cookie.parse(req.headers.cookie) : {};
     }
+    console.log("second reuqest header is", req.headers)
+
     const cookies = req.headers.cookie ? cookie.parse(req.headers.cookie) : {};
     return cookies["access-token"] || authHeader;
   })();
