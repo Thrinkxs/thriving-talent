@@ -14,7 +14,11 @@ export class AuthenticationTokenGenerator {
   public verifyToken(token: string) {
     try {
       const secret = process.env.JWT_SECRET!;
+      console.log("Secret is ", secret)
+
       const decoded = verify(token, secret);
+      console.log("decoded secret is ", decoded)
+
       return decoded;
     } catch (error: any) {
       throw new AppError(400, "Invalid Access Token!!!");

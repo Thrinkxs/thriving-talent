@@ -32,9 +32,11 @@ export const tokenAuthentication = (
       .json({ message: "Unauthenticated. Please login and provide a token" });
   }
   try {
+    console.log("This is the backend token", token)
     const authorizationInfo = new AuthenticationTokenGenerator().verifyToken(
       token
     );
+    console.log("Auth info", authorizationInfo)
     req.employer = authorizationInfo;
     req.intern = authorizationInfo;
     return next();
