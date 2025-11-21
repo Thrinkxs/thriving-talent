@@ -21,7 +21,8 @@ export const tokenAuthentication = (
     console.log("request header is", req.header)
     const authHeader = req.header("Authorization")?.replace("Bearer ", "");
     if (process.env.NODE_ENV === "production") {
-      return req.headers.cookie ? cookie.parse(req.headers.cookie) : {};
+      const cookies = req.headers.cookie ? cookie.parse(req.headers.cookie) : {};
+      return cookies["access-token"] || authHeader;
     }
     console.log("second reuqest header is", req.headers)
 
