@@ -28,7 +28,8 @@ const allowedOrigins = [
   "https://thriving-talent.vercel.app",
   "https://www.thriving-talent.vercel.app",
   "https://thriving-talent.onrender.com",
-  "https://thriving-talent.themuzestudios.com"
+  "https://thriving-talent.themuzestudios.com",
+  "https://www.thriving-talent.themuzestudios.com"
   
 ];
 const corsOptions = {
