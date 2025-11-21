@@ -7,6 +7,8 @@ export default function middleware(req: NextRequest) {
 
   // Get cookie + role
   const isAuthenticated = req.cookies.has("access-token");
+  console.log("cookies request", req)
+  console.log("User is authenticated", isAuthenticated)
   const userRole = req.cookies.get("role")?.value;
 
   const isEmployerDashboard = path.startsWith("/dashboard/employer");

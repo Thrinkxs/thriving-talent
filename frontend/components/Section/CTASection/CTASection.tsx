@@ -25,7 +25,7 @@ export function CTASection() {
             just 2 hours. No credit card required.
           </p>
 
-          <Link href="/">
+          <Link href="/employer/signup">
             <Button className="inline-flex items-center justify-center px-6 py-3 bg-black hover:bg-gray-900 text-white font-semibold rounded transition-all duration-300 transform hover:scale-105 w-fit">
               Start for free
             </Button>
