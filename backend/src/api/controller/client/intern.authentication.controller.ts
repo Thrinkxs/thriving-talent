@@ -27,14 +27,14 @@ export const registerAccountController = async (
     const { accessToken, refreshToken } = response;
 
     res.cookie("access-token", accessToken, {
-      httpOnly: true,
-      secure: true,
+      httpOnly: false,
+      secure: false,
       sameSite: "none",
       maxAge: 15 * 60 * 1000, // 15 minutes
     });
     res.cookie("refresh-token", refreshToken, {
-      httpOnly: true,
-      secure: true,
+      httpOnly: false,
+      secure: false,
       sameSite: "none",
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
@@ -58,14 +58,14 @@ export const loginAccountController = async (
     const { accessToken, refreshToken } = response;
 
     res.cookie("access-token", accessToken, {
-      httpOnly: true,
-      secure: true,
+      httpOnly: false,
+      secure: false,
       sameSite: "none",
       maxAge: 15 * 60 * 1000, // 15 minutes
     });
     res.cookie("refresh-token", refreshToken, {
-      httpOnly: true,
-      secure: true,
+      httpOnly: false,
+      secure: false,
       sameSite: "none",
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
@@ -172,8 +172,8 @@ export const getAccessTokenController = async (
     const response = await authenticationService.getAccessToken(refreshToken);
     const { accessToken } = response;
     res.cookie("access-token", accessToken, {
-      httpOnly: true,
-      secure: true,
+      httpOnly: false,
+      secure: false,
       sameSite: "none",
       maxAge: 15 * 60 * 1000, // 15 minutes
     });
